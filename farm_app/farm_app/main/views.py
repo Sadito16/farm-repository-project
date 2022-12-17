@@ -3,6 +3,6 @@ from django.shortcuts import render
 
 
 
-class IndexView(views.ListView):
+class IndexView(views.TemplateView):
     template_name = 'index.html'
 
