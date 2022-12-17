@@ -1,1 +1,1 @@
-web: gunicorn farm_app.farm_app.wsgi
+web: gunicorn --pythonpath farm_app.farm_app.wsgi
