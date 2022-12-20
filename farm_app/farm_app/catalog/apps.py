@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class MainConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'farm_app.main'
+    name = 'farm_app.catalog'

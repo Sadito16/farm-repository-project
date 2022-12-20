@@ -25,7 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'farm_app.accounts',
-    'farm_app.main',
+    'farm_app.catalog',
 ]
 
 MIDDLEWARE = [

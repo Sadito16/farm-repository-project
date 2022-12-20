@@ -4,5 +4,5 @@ from django.shortcuts import render
 
 
 class IndexView(views.TemplateView):
-    template_name = 'index.html'
+    template_name = 'main/home.html'
 

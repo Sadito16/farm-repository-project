@@ -34,9 +34,8 @@ class Profile(models.Model):
     DAIRY = 'Dairy products'
     ANIMAL = 'Animal products'
     NUTS = 'Nuts'
-    HERBS = 'Herbs'
 
-    PRODUCTION_VARIETY = [(production, production) for production in (VEG_FRUT, DAIRY, ANIMAL, NUTS, HERBS)]
+    PRODUCTION_VARIETY = [(production, production) for production in (VEG_FRUT, DAIRY, ANIMAL, NUTS)]
 
     first_name = models.CharField(
         max_length=FIRST_NAME_MAX_LENGTH,
