@@ -18,7 +18,6 @@
 {#Navigation#}
 
 
-
 <nav class="navbar navbar-expand-lg bg-light sticky-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Farm</a>
@@ -39,11 +38,11 @@
                         <a class="nav-link active" aria-current="page" href="{% url "profile create" %}">Register</a>
                     </li>
                 {% endif %}
-                            {% if  request.user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Log Out</a>
-                </li>
-            {% endif %}
+                {% if  request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'profile logout' %}">Log Out</a>
+                    </li>
+                {% endif %}
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -61,11 +60,11 @@
                         <li><a class="dropdown-item" href="#">Nuts</a></li>
                     </ul>
                 </li>
-            {% if request.user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Profile</a>
-                </li>
-            {% endif %}
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Profile</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>
@@ -79,16 +78,30 @@
 
 {#Footer#}
 <div class="container">
-  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <div class="col-md-4 d-flex align-items-center">
-      <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
 
-      </a>
-      <span class="text-muted">© 2022 Farm, Sadi's project</span>
-    </div>
+            </a>
+            <span class="text-muted">© 2022 Farm, Sadi's project</span>
+        </div>
 
-  </footer>
+    </footer>
 </div>
+
+<footer class="text-center text-white fixed-bottom" style="background-color: #21081a;">
+    <!-- Grid container -->
+    <div class="container p-4"></div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2022, December:
+        <a class="text-white" href="{% url 'home' %}">Farm</a>
+        , Sadi's project
+    </div>
+    <!-- Copyright -->
+</footer>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
