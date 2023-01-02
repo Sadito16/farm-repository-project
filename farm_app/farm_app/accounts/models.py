@@ -30,12 +30,18 @@ class Profile(models.Model):
     LAST_NAME_MIN_LENGTH = 2
     LAST_NAME_MAX_LENGTH = 25
 
-    VEG_FRUT = 'Vegetables and Fruits'
+    VEG_FRUIT = 'Vegetables and Fruits'
     DAIRY = 'Dairy products'
     ANIMAL = 'Animal products'
     NUTS = 'Nuts'
 
-    PRODUCTION_VARIETY = [(production, production) for production in (VEG_FRUT, DAIRY, ANIMAL, NUTS)]
+    PRODUCTION_VARIETY = [(production, production) for production in (VEG_FRUIT, DAIRY, ANIMAL, NUTS)]
+
+    MALE = 'Male'
+    FEMALE = 'Female'
+    DO_NOT_SHOW = 'Do not show'
+
+    GENDER_CHOICES = [(x, x) for x in (MALE, FEMALE, DO_NOT_SHOW)]
 
     first_name = models.CharField(
         max_length=FIRST_NAME_MAX_LENGTH,
@@ -63,12 +69,20 @@ class Profile(models.Model):
         blank=True,
     )
 
+    gender = models.CharField(
+        max_length=max(len(x) for (x, _) in GENDER_CHOICES),
+        choices=GENDER_CHOICES,
+        null=True,
+        blank=True,
+        default=DO_NOT_SHOW,
+    )
+
     production = models.CharField(
-        max_length=max(len(production) for (production, _) in PRODUCTION_VARIETY) ,
+        max_length=max(len(production) for (production, _) in PRODUCTION_VARIETY),
         choices=PRODUCTION_VARIETY,
         null=True,
         blank=True,
-        default=VEG_FRUT,
+        default=VEG_FRUIT,
     )
 
     user = models.OneToOneField(
@@ -79,5 +93,3 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
-
-
