@@ -46,9 +46,9 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
         return user
 
     class Meta:
-        model = get_user_model()
+        model = Profile
         fields = (
-            'username', 'password1', 'password2', 'first_name', 'last_name', 'image')
+            'username', 'password', 'password2', 'first_name', 'last_name', 'image')
         widgets = {
             'first_name': forms.TextInput(
                 attrs={
@@ -66,6 +66,10 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
                 }
             ),
         }
+
+
+class LoginProfileForm(BootstrapFormMixin, forms.ModelForm):
+    pass
 
 
 class EditProfileForm(BootstrapFormMixin, forms.ModelForm):
@@ -120,3 +124,4 @@ class EditProfileForm(BootstrapFormMixin, forms.ModelForm):
 #     class Meta:
 #         model = Profile
 #         fields = ()
+

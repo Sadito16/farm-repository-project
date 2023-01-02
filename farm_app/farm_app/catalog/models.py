@@ -50,6 +50,13 @@ class VegetableAndFruit(models.Model):
         UserModel,
         on_delete=models.CASCADE,
     )
+    publication_date = models.DateTimeField(
+        auto_now_add=True,
+    )
+    likes = models.IntegerField(
+        default=0
+    )
+
 
     def __str__(self):
         return f'{self.name} - {self.price} lv.'
@@ -76,10 +83,17 @@ class DairyProduct(models.Model):
     percent = models.IntegerField()
     price = models.IntegerField()
 
+    publication_date = models.DateTimeField(
+        auto_now_add=True,
+    )
+    likes = models.IntegerField(
+        default=0
+    )
     user = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
     )
+
 
     def __str__(self):
         return f'{self.name} - {self.price} lv.'
@@ -121,11 +135,17 @@ class AnimalProduct(models.Model):
         blank=True,
         unique=True,
     )
-
+    publication_date = models.DateTimeField(
+        auto_now_add=True,
+    )
+    likes = models.IntegerField(
+        default=0
+    )
     user = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
     )
+
 
     @property
     def age(self):
@@ -133,6 +153,7 @@ class AnimalProduct(models.Model):
 
     def __str__(self):
         return f'{self.name} the {self.type}'
+
 
 class Nuts(models.Model):
     NUTS_MAX_LENGTH = 35
@@ -143,7 +164,7 @@ class Nuts(models.Model):
     SEEDS = 'Seeds'
     OTHER = 'Other'
 
-    NUTS_CHOICES = [(x, x) for x in (DRIED_FRUIT,ROASTED,RAW,SEEDS,OTHER)]
+    NUTS_CHOICES = [(x, x) for x in (DRIED_FRUIT, ROASTED, RAW, SEEDS, OTHER)]
 
     type = models.CharField(
         max_length=max(len(x) for (x, _) in NUTS_CHOICES),
@@ -154,3 +175,14 @@ class Nuts(models.Model):
         max_length=NUTS_MAX_LENGTH,
     )
     package = models.IntegerField()
+    publication_date = models.DateTimeField(
+        auto_now_add=True,
+    )
+    likes = models.IntegerField(
+        default=0
+    )
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
+    )
+

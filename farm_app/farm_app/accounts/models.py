@@ -30,7 +30,7 @@ class Profile(models.Model):
     LAST_NAME_MIN_LENGTH = 2
     LAST_NAME_MAX_LENGTH = 25
 
-    VEG_FRUT = 'Vegetables or Fruits'
+    VEG_FRUT = 'Vegetables and Fruits'
     DAIRY = 'Dairy products'
     ANIMAL = 'Animal products'
     NUTS = 'Nuts'
@@ -64,7 +64,7 @@ class Profile(models.Model):
     )
 
     production = models.CharField(
-        max_length=max(len(production) for (production, _) in PRODUCTION_VARIETY),
+        max_length=max(len(production) for (production, _) in PRODUCTION_VARIETY) ,
         choices=PRODUCTION_VARIETY,
         null=True,
         blank=True,
