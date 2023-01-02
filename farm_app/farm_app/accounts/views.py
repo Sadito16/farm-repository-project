@@ -46,7 +46,7 @@ class ProfileDetailsView(views.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        if Profile.production == Profile.VEG_FRUT:
+        if Profile.production == Profile.VEG_FRUIT:
             production = list(VegetableAndFruit.objects.filter(user_id=self.object.user.id))
 
         elif Profile.production == Profile.DAIRY:
@@ -56,7 +56,6 @@ class ProfileDetailsView(views.DetailView):
             production = list(AnimalProduct.objects.filter(user_id=self.object.user.id))
 
         else:
-
             production = list(Nuts.objects.filter(user_id=self.object.user.id))
 
         total_likes_count = sum(prod.likes for prod in production)

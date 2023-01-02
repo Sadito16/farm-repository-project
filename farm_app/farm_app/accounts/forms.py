@@ -15,7 +15,7 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
         max_length=Profile.LAST_NAME_MAX_LENGTH,
     )
 
-    image = forms.URLField()
+    picture = forms.URLField()
 
     date_of_birth = forms.DateField()
 
@@ -23,6 +23,10 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
 
     production = forms.ChoiceField(
         choices=Profile.PRODUCTION_VARIETY,
+    )
+
+    gender = forms.ChoiceField(
+        choices=Profile.GENDER_CHOICES,
     )
 
     def __init__(self, *args, **kwargs):
@@ -36,6 +40,7 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
             last_name=self.cleaned_data['last_name'],
             picture=self.cleaned_data['picture'],
             date_of_birth=self.cleaned_data['date_of_birth'],
+            gender=self.cleaned_data['gender'],
             email=self.cleaned_data['email'],
             production=self.cleaned_data['production'],
             user=user,
@@ -46,9 +51,9 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
         return user
 
     class Meta:
-        model = Profile
+        model = get_user_model()
         fields = (
-            'username', 'password', 'password2', 'first_name', 'last_name', 'image')
+            'username', 'password1', 'password2', 'first_name', 'last_name', 'picture')
         widgets = {
             'first_name': forms.TextInput(
                 attrs={
@@ -76,7 +81,8 @@ class EditProfileForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
-        self.initial['production'] = Profile.VEG_FRUT
+        # self.initial['production'] = Profile.VEG_FRUIT
+        # self.initial['gender'] = Profile.DO_NOT_SHOW
 
     class Meta:
         model = Profile
@@ -92,7 +98,7 @@ class EditProfileForm(BootstrapFormMixin, forms.ModelForm):
                     'placeholder': 'Enter last name'
                 }
             ),
-            'image': forms.TextInput(
+            'picture': forms.TextInput(
                 attrs={
                     'placeholder': 'Enter URL'
                 }
@@ -124,4 +130,3 @@ class EditProfileForm(BootstrapFormMixin, forms.ModelForm):
 #     class Meta:
 #         model = Profile
 #         fields = ()
-

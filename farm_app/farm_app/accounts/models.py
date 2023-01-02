@@ -57,7 +57,7 @@ class Profile(models.Model):
         ),
     )
 
-    image = models.FileField()
+    picture = models.FileField()
 
     date_of_birth = models.DateField(
         null=True,
