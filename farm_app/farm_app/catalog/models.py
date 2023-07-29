@@ -1,12 +1,25 @@
 import datetime
+from enum import Enum
 
 from django.contrib.auth import get_user_model
 from django.db import models
 
-UserModel = get_user_model()
+UserModel = 'accounts.FarmerUser'
 
 
-class VegetableAndFruit(models.Model):
+class ChoicesMixin:
+    @classmethod
+    def choice(cls):
+        return [(choice.value, choice.name) for choice in cls]
+
+
+class ChoicesLengthMixin(ChoicesMixin):
+    @classmethod
+    def max_length(cls):
+        return max(len(ch.value) for ch in cls)
+
+
+class VegFruitChoice(ChoicesLengthMixin, Enum):
     CARROT = 'Carrot'
     POTATO = 'Potato'
     CABBAGE = 'Cabbage'
@@ -33,39 +46,7 @@ class VegetableAndFruit(models.Model):
     WATERMELON = 'Watermelon'
     OTHER = 'Other'
 
-    PLANT_CHOICES = [(x, x) for x in (ORANGE, OTHER, WATERMELON, MELON, PEACH, LEMON, BLACKBERRY,
-                                      CHERRY, PLUM, PEAR, STRAWBERRY, GRAPE, CARROT,
-                                      APPLE, PUMPKIN, CORN, PEPPER, EGGPLANT, BROCCOLI,
-                                      ONION, TOMATO, CUCUMBERS, CAULIFLOWER, CABBAGE, POTATO)]
-
-    name = models.CharField(
-        max_length=max(len(x) for (x, _) in PLANT_CHOICES),
-        choices=PLANT_CHOICES,
-        default=OTHER,
-    )
-
-    price = models.IntegerField()
-
-    user = models.ForeignKey(
-        UserModel,
-        on_delete=models.CASCADE,
-    )
-    publication_date = models.DateTimeField(
-        auto_now_add=True,
-    )
-    likes = models.IntegerField(
-        default=0
-    )
-
-
-    def __str__(self):
-        return f'{self.name} - {self.price} lv.'
-
-    class Meta:
-        unique_together = ('user', 'name')
-
-
-class DairyProduct(models.Model):
+class DairyChoice(ChoicesLengthMixin, Enum):
     MILK = 'Milk'
     BUTTER = 'Butter'
     CHEESE = 'Cheese'
@@ -73,36 +54,8 @@ class DairyProduct(models.Model):
     YOGURT = 'Yogurt'
     OTHER = 'Other'
 
-    DAIRY_CHOICES = [(x, x) for x in (BUTTER, CHEESE, CURD, MILK, YOGURT, OTHER)]
 
-    name = models.CharField(
-        max_length=max(len(x) for (x, _) in DAIRY_CHOICES),
-        choices=DAIRY_CHOICES,
-        default=OTHER,
-    )
-    percent = models.IntegerField()
-    price = models.IntegerField()
-
-    publication_date = models.DateTimeField(
-        auto_now_add=True,
-    )
-    likes = models.IntegerField(
-        default=0
-    )
-    user = models.ForeignKey(
-        UserModel,
-        on_delete=models.CASCADE,
-    )
-
-
-    def __str__(self):
-        return f'{self.name} - {self.price} lv.'
-
-    class Meta:
-        unique_together = ('user', 'name')
-
-
-class AnimalProduct(models.Model):
+class AnimalChoice(ChoicesLengthMixin,Enum):
     CHICKEN = 'Chicken'
     PIG = 'Pig'
     COW = 'Cow'
@@ -116,73 +69,113 @@ class AnimalProduct(models.Model):
     LAMB = 'Lamb'
     OTHER = 'Other'
 
-    ANIMAL_CHOICES = [(x, x) for x in
-                      (CHICKEN, COW, HORSE, DONKEY, GOAT, GOOSE, LAMB, PIG, RABBIT, SHEEP, TURKEY, OTHER)]
+class NutChoices(ChoicesLengthMixin,Enum):
+    ROASTED = 'Roasted'
+    RAW = 'Row'
+    DRIED_FRUIT = 'Dried'
+    OTHER = 'Other'
+class VegetableAndFruit(models.Model):
 
-    PRODUCT_MAX_LENGTH = 40
 
-    type = models.CharField(
-        max_length=max(len(x) for (x, _) in ANIMAL_CHOICES),
-        choices=ANIMAL_CHOICES,
-        default=OTHER,
+    name = models.CharField(choices=VegFruitChoice.choice(),
+                              max_length=VegFruitChoice.max_length(),
+                              default=VegFruitChoice.OTHER.value)
+
+    price = models.FloatField()
+
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
     )
-    name = models.CharField(
-        max_length=PRODUCT_MAX_LENGTH,
+    publication_date = models.DateField(
+        auto_now=True,
     )
 
-    date_of_birth = models.DateField(
-        null=True,
-        blank=True,
-        unique=True,
-    )
-    publication_date = models.DateTimeField(
-        auto_now_add=True,
-    )
-    likes = models.IntegerField(
-        default=0
+
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        unique_together = ('user', 'name')
+
+
+class DairyProduct(models.Model):
+
+    name = models.CharField(choices=DairyChoice.choice(),
+                              max_length=DairyChoice.max_length(),
+                              default=DairyChoice.OTHER.value)
+    percent = models.FloatField(null=True,blank=True)
+    price = models.FloatField()
+
+    publication_date = models.DateField(
+        auto_now=True,
     )
     user = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
     )
+    class Meta:
+        unique_together = ('user', 'name')
 
+    def __str__(self):
+        if self.percent:
+            return f'{self.percent}% {self.name}'
+        return f'{self.name}'
+
+
+
+class AnimalProduct(models.Model):
+
+    PRODUCT_MAX_LENGTH = 40
+
+    type = models.CharField(choices=AnimalChoice.choice(),
+                              max_length=AnimalChoice.max_length(),
+                              default=AnimalChoice.OTHER.value)
+    name = models.CharField(
+        max_length=PRODUCT_MAX_LENGTH,
+    )
+    price = models.FloatField()
+
+    date_of_birth = models.DateField(
+        null=True,
+        blank=True,
+        unique=True,)
+    publication_date = models.DateField(
+        auto_now=True,
+    )
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
+    )
 
     @property
     def age(self):
         return datetime.datetime.now().year - self.date_of_birth.year
 
     def __str__(self):
-        return f'{self.name} the {self.type}'
+        return f'{self.name} from {self.type}'
 
 
-class Nuts(models.Model):
+class Nut(models.Model):
     NUTS_MAX_LENGTH = 35
 
-    ROASTED = 'Roasted'
-    RAW = 'Row'
-    DRIED_FRUIT = 'Dried fruit'
-    SEEDS = 'Seeds'
-    OTHER = 'Other'
+    type = models.CharField(choices=NutChoices.choice(),
+                              max_length=NutChoices.max_length(),
+                              default=NutChoices.OTHER.value)
 
-    NUTS_CHOICES = [(x, x) for x in (DRIED_FRUIT, ROASTED, RAW, SEEDS, OTHER)]
-
-    type = models.CharField(
-        max_length=max(len(x) for (x, _) in NUTS_CHOICES),
-        choices=NUTS_CHOICES,
-        default=OTHER,
-    )
     name = models.CharField(
         max_length=NUTS_MAX_LENGTH,
     )
+    price = models.FloatField()
     package = models.IntegerField()
-    publication_date = models.DateTimeField(
-        auto_now_add=True,
-    )
-    likes = models.IntegerField(
-        default=0
+    publication_date = models.DateField(
+        auto_now=True,
     )
     user = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
     )
+
+    def __str__(self):
+        return f'{self.type} {self.name}'
 

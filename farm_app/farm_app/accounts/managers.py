@@ -1,8 +1,12 @@
-from django.contrib.auth import base_user as auth_base
+# from django.contrib.auth import base_user as auth_base
+# from django.contrib.auth.hashers import make_password
+#
+#
+from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.hashers import make_password
 
 
-class FarmerUserManager(auth_base.BaseUserManager):
+class FarmerUserManager(BaseUserManager):
 
     def _create_user(self, username, password, **extra_fields):
 

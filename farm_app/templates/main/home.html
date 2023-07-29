@@ -1,6 +1,48 @@
 {% extends 'base.html' %}
 {% block page_content %}
-<h1>Works!</h1>
+    {% if veg_fruit %}
+        Fruits and Vegetables:
+        {% for fruit in veg_fruit %}
+            <ul>
+            <li>
+                {{ fruit }}
+            </li>
+            </ul>
+        {% endfor %}
+        <br>
+    {% endif %}
+        {% if dairies %}
+        Dairies:
+        {% for dairy in dairies %}
+            <ul>
+            <li>
+                {{ dairy }}
+            </li>
+            </ul>
+        {% endfor %}
+    {% endif %}
+    <br>
+        {% if animal_products %}
+        Animal products:
+        {% for prod in animal_products %}
+            <ul>
+            <li>
+                {{ prod }}
+            </li>
+            </ul>
+        {% endfor %}
+    {% endif %}
+    <br>
+        {% if nuts %}
+        Nuts:
+        {% for nut in nuts %}
+            <ul>
+            <li>
+                {{ nut }}
+            </li>
+            </ul>
+        {% endfor %}
+    {% endif %}
 
 
 {% endblock %}

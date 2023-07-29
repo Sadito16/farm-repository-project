@@ -1,9 +1,9 @@
 from django.contrib import admin
+from django.contrib.auth import get_user_model
 
-from farm_app.accounts.models import Profile
+from farm_app.accounts.models import  FarmerUser
 
-
-@admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name')
-
+UserModel = 'accounts.FarmerUser'
+@admin.register(FarmerUser)
+class FarmerUserAdmin(admin.ModelAdmin):
+    pass
