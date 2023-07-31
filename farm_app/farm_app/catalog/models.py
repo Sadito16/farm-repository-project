@@ -4,6 +4,8 @@ from enum import Enum
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from farm_app.catalog.validators import validate_image_size
+
 UserModel = 'accounts.FarmerUser'
 
 
@@ -46,6 +48,7 @@ class VegFruitChoice(ChoicesLengthMixin, Enum):
     WATERMELON = 'Watermelon'
     OTHER = 'Other'
 
+
 class DairyChoice(ChoicesLengthMixin, Enum):
     MILK = 'Milk'
     BUTTER = 'Butter'
@@ -55,7 +58,7 @@ class DairyChoice(ChoicesLengthMixin, Enum):
     OTHER = 'Other'
 
 
-class AnimalChoice(ChoicesLengthMixin,Enum):
+class AnimalChoice(ChoicesLengthMixin, Enum):
     CHICKEN = 'Chicken'
     PIG = 'Pig'
     COW = 'Cow'
@@ -69,19 +72,24 @@ class AnimalChoice(ChoicesLengthMixin,Enum):
     LAMB = 'Lamb'
     OTHER = 'Other'
 
-class NutChoices(ChoicesLengthMixin,Enum):
+
+class NutChoices(ChoicesLengthMixin, Enum):
     ROASTED = 'Roasted'
     RAW = 'Row'
     DRIED_FRUIT = 'Dried'
     OTHER = 'Other'
+
+
 class VegetableAndFruit(models.Model):
-
-
+    MAX_LENGTH_OF_PRODUCTION_COUNTRY = 40
     name = models.CharField(choices=VegFruitChoice.choice(),
-                              max_length=VegFruitChoice.max_length(),
-                              default=VegFruitChoice.OTHER.value)
+                            max_length=VegFruitChoice.max_length(),
+                            default=VegFruitChoice.OTHER.value)
 
     price = models.FloatField()
+    production = models.CharField(null=True, blank=True, max_length=MAX_LENGTH_OF_PRODUCTION_COUNTRY)
+
+    photo = models.ImageField(upload_to='photos', blank=False, null=False, validators=(validate_image_size,))
 
     user = models.ForeignKey(
         UserModel,
@@ -90,7 +98,6 @@ class VegetableAndFruit(models.Model):
     publication_date = models.DateField(
         auto_now=True,
     )
-
 
     def __str__(self):
         return f'{self.name}'
@@ -100,12 +107,12 @@ class VegetableAndFruit(models.Model):
 
 
 class DairyProduct(models.Model):
-
     name = models.CharField(choices=DairyChoice.choice(),
-                              max_length=DairyChoice.max_length(),
-                              default=DairyChoice.OTHER.value)
-    percent = models.FloatField(null=True,blank=True)
+                            max_length=DairyChoice.max_length(),
+                            default=DairyChoice.OTHER.value)
+    percent = models.FloatField(null=True, blank=True)
     price = models.FloatField()
+    photo = models.ImageField(upload_to='photos', blank=False, null=False, validators=(validate_image_size,))
 
     publication_date = models.DateField(
         auto_now=True,
@@ -114,6 +121,7 @@ class DairyProduct(models.Model):
         UserModel,
         on_delete=models.CASCADE,
     )
+
     class Meta:
         unique_together = ('user', 'name')
 
@@ -123,26 +131,27 @@ class DairyProduct(models.Model):
         return f'{self.name}'
 
 
-
 class AnimalProduct(models.Model):
-
+    MAX_LENGTH_OF_PRODUCTION_COUNTRY = 40
     PRODUCT_MAX_LENGTH = 40
 
     type = models.CharField(choices=AnimalChoice.choice(),
-                              max_length=AnimalChoice.max_length(),
-                              default=AnimalChoice.OTHER.value)
+                            max_length=AnimalChoice.max_length(),
+                            default=AnimalChoice.OTHER.value)
     name = models.CharField(
         max_length=PRODUCT_MAX_LENGTH,
     )
     price = models.FloatField()
+    photo = models.ImageField(upload_to='photos', blank=False, null=False, validators=(validate_image_size,))
 
     date_of_birth = models.DateField(
         null=True,
         blank=True,
-        unique=True,)
-    publication_date = models.DateField(
+        unique=True, )
+    date_of_publication = models.DateField(
         auto_now=True,
     )
+    production = models.CharField(null=True, blank=True, max_length=MAX_LENGTH_OF_PRODUCTION_COUNTRY)
     user = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
@@ -160,14 +169,16 @@ class Nut(models.Model):
     NUTS_MAX_LENGTH = 35
 
     type = models.CharField(choices=NutChoices.choice(),
-                              max_length=NutChoices.max_length(),
-                              default=NutChoices.OTHER.value)
+                            max_length=NutChoices.max_length(),
+                            default=NutChoices.OTHER.value)
 
     name = models.CharField(
         max_length=NUTS_MAX_LENGTH,
     )
     price = models.FloatField()
     package = models.IntegerField()
+    photo = models.ImageField(upload_to='photos', blank=False, null=False, validators=(validate_image_size,))
+
     publication_date = models.DateField(
         auto_now=True,
     )
@@ -178,4 +189,3 @@ class Nut(models.Model):
 
     def __str__(self):
         return f'{self.type} {self.name}'
-

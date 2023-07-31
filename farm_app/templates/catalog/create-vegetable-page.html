@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+{% block page_content %}
+
+    <div>
+    <h1>Add Vegetable or Fruit:</h1>
+    <form action="{% url 'add vegetable' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add plant</button>
+    </form>
+    </div>
+{% endblock %}

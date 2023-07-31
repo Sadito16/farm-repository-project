@@ -29,10 +29,13 @@ class FarmerUser(AbstractUser):
 
     email =models.EmailField()
     profile_picture = models.URLField(null=True, blank=True)
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(null=True, blank=True)
     gender = models.CharField(choices=Gender.choice(),
                               max_length=Gender.max_length(),
                               default=Gender.DO_NOT_SHOW.value)
+
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
     def get_user_name(self):
         if self.first_name and self.last_name:

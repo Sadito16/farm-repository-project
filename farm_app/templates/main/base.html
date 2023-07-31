@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm</title>
+
+    <link rel="icon" type="image/x-icon" href="{% static "images/favicon.ico" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
+</head>
+
+<body>
+<header>
+    <nav class="background-nav navbar" id="navbar">
+
+        <div class="navbar">
+            <h1>{{ request.user.username }}</h1>
+
+            <ul class="sidenav">
+                <li>
+                    <a href="{% url 'home' %}">Farm</a>
+                </li>
+
+
+                <li class="items">
+                    <a href="{% url "home" %}">Home</a>
+                </li>
+
+
+                <li class="items">
+                    <div class="dropdown">
+
+                        <button class="dropbtn"><a>Catalog</a></button>
+                        <i class="fa-fa-caret-down"></i>
+                        <div class="dropdown-content">
+                            <a href="#">Animals</a>
+                            <a href="#">Dairy Products</a>
+                            <a href="#">Nuts</a>
+                            <a href="#">Vegetables and Fruits</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#">Mine</a>
+                        </div>
+                    </div>
+                </li>
+
+
+
+                {% if request.user.is_authenticated %}
+                    <li class="items">
+                        <a class="nav-link" href="{% url 'profile details' pk=request.user.pk %}">Profile</a>
+                    </li>
+
+                    <li class="items">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+
+                {% else %}
+
+                    <li class="items">
+                        <a class="nav-link" href="{% url "login" %}">Log In</a>
+                    </li>
+
+
+                    <li class="items">
+                        <a class="nav-link" href="{% url "register" %}">Register</a>
+                    </li>
+
+                {% endif %}
+
+
+            </ul>
+        </div>
+    </nav>
+
+</header>
+<div>
+    <a href="{% url 'add vegetable' %}">Add Vegetable and Fruit</a>
+    <a href="{%  url 'add animal' %}">Add Animal Product</a>
+    <a href="{% url 'add dairy' %}">Add Dairy Product</a>
+    <a href="{% url 'add nut' %}">Add Nut</a>
+</div>
+<div class="content">
+
+    {% block page_content %}
+
+    {% endblock %}
+</div>
+
+{#Footer#}
+<div class="container">
+
+
+    <footer class="footer text-white fixed-bottom" style="background-color: #21081a;">
+        <!-- Grid container -->
+        <div class="container p-4"></div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2023, June:
+            <a class="text-white" href="{% url 'home' %}">Farm</a>
+            , Sadi's project
+        </div>
+    </footer>
+</div>
+</body>
+
+</html>

@@ -7,13 +7,22 @@ from farm_app.catalog.models import VegetableAndFruit
 
 
 class CreateProfileForm(auth_forms.UserCreationForm):
+    class Meta(auth_forms.UserCreationForm.Meta):
+        model = FarmerUser
+        fields = ('email', 'username', 'password1', 'password2')
 
 
-
-
-
-class LoginProfileForm(BootstrapFormMixin, forms.ModelForm):
-    pass
+class LoginProfileForm(auth_forms.AuthenticationForm):
+    username = auth_forms.UsernameField(
+        widget=forms.TextInput(
+            attrs={"autofocus": True,
+                   "placeholder": "Username"}))
+    password = forms.CharField(
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={"autocomplete": "current-password",
+                   "placeholder": "Password"}),
+    )
 
 
 class EditProfileForm(BootstrapFormMixin, forms.ModelForm):
