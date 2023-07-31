@@ -136,7 +136,6 @@ class AnimalEditView(views.DetailView):
 
 
 class AnimalDetailsView(views.DetailView):
-    pass
 
 
 class AnimalDeleteView(views.DeleteView):

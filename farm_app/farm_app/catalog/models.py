@@ -89,7 +89,7 @@ class VegetableAndFruit(models.Model):
     price = models.FloatField()
     production = models.CharField(null=True, blank=True, max_length=MAX_LENGTH_OF_PRODUCTION_COUNTRY)
 
-    photo = models.ImageField(upload_to='photos', blank=False, null=False, validators=(validate_image_size,))
+    photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
 
     user = models.ForeignKey(
         UserModel,
@@ -112,7 +112,7 @@ class DairyProduct(models.Model):
                             default=DairyChoice.OTHER.value)
     percent = models.FloatField(null=True, blank=True)
     price = models.FloatField()
-    photo = models.ImageField(upload_to='photos', blank=False, null=False, validators=(validate_image_size,))
+    photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
 
     publication_date = models.DateField(
         auto_now=True,
@@ -142,7 +142,7 @@ class AnimalProduct(models.Model):
         max_length=PRODUCT_MAX_LENGTH,
     )
     price = models.FloatField()
-    photo = models.ImageField(upload_to='photos', blank=False, null=False, validators=(validate_image_size,))
+    photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
 
     date_of_birth = models.DateField(
         null=True,
@@ -177,7 +177,7 @@ class Nut(models.Model):
     )
     price = models.FloatField()
     package = models.IntegerField()
-    photo = models.ImageField(upload_to='photos', blank=False, null=False, validators=(validate_image_size,))
+    photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
 
     publication_date = models.DateField(
         auto_now=True,
