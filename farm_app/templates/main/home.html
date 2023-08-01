@@ -1,13 +1,12 @@
 {% extends 'main/base.html' %}
 {% block page_content %}
 
-    <a href=""></a>
     {% if veg_fruit %}
         Fruits and Vegetables:
         {% for fruit in veg_fruit %}
             <ul>
             <li>
-                {{ fruit }}
+                <a href="{% url 'details vegetable' fruit.pk %}">{{ fruit }}</a>
             </li>
             </ul>
         {% endfor %}
@@ -18,7 +17,7 @@
         {% for dairy in dairies %}
             <ul>
             <li>
-                {{ dairy }}
+                <a href="{%  url 'details dairy' dairy.pk %}">{{ dairy }}</a>
             </li>
             </ul>
         {% endfor %}
@@ -29,7 +28,7 @@
         {% for prod in animal_products %}
             <ul>
             <li>
-                {{ prod }}
+                <a href="{% url 'details animal' prod.pk %}">{{ prod }}</a>
             </li>
             </ul>
         {% endfor %}
@@ -40,7 +39,7 @@
         {% for nut in nuts %}
             <ul>
             <li>
-                {{ nut }}
+                <a href="{% url 'details nut' nut.pk %}">{{ nut }}</a>
             </li>
             </ul>
         {% endfor %}

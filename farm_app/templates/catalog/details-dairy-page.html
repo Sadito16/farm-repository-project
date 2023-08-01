@@ -1,5 +1,10 @@
 {% extends 'main/base.html' %}
 {% block page_content %}
-
-
+        <img src="{{ photo.url }}" alt="{{ dairy.name }} Photo">
+        <br>
+    {{ dairy.name }}
+    <br>
+    {{ dairy.percent }}
+    <br>
+    {{ dairy.price }}
 {% endblock %}

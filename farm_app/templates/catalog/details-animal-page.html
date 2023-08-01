@@ -1,5 +1,17 @@
 {% extends 'main/base.html' %}
 {% block page_content %}
+    <div>
+        <img src="{{ photo.url }}" alt="{{ meat.name }} Photo">
+        <br>
+        {{ meat.name }}
 
-    
+        <br>
+        {{ meat.type }}
+        <br>
+        {{ meat.price }}
+        <br>
+        {{ meat.date_of_birth }}
+        <br>
+        {{ meat.production }}
+    </div>
 {% endblock %}

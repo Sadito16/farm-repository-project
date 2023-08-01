@@ -1,5 +1,6 @@
 from itertools import chain
 
+from django.conf.urls.static import static
 from django.forms import formset_factory
 from django.urls import reverse
 from django.views import generic as views
@@ -39,7 +40,7 @@ class VegetableCreateView(views.CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.user_id=self.request.user.pk
+        self.object.user_id = self.request.user.pk
         self.object.save()
         return super().form_valid(form)
 
@@ -49,7 +50,25 @@ class VegetableEditView(views.DetailView):
 
 
 class VegetableDetailsView(views.DetailView):
-    pass
+    model = VegetableAndFruit
+    context_object_name = 'plant'
+    template_name = 'catalog/details-vegetable-page.html'
+    photo = static('images/fruit-and-veg.jpg')
+
+    def get_photo(self):
+        if self.object.photo is not None:
+            return self.object.photo
+        return self.photo
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'photo': self.get_photo,
+        })
+
+        return context
+
+
 
 
 class VegetableDeleteView(views.DeleteView):
@@ -78,7 +97,24 @@ class NutEditView(views.DetailView):
 
 
 class NutDetailsView(views.DetailView):
-    pass
+    model = Nut
+    context_object_name = 'nut'
+    template_name = 'catalog/details-nut-page.html'
+    photo = static('images/nuts-and-dry-fruits.jpg')
+
+    def get_photo(self):
+        if self.object.photo is not None:
+            return self.object.photo
+        return self.photo
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'photo': self.get_photo,
+        })
+
+        return context
+
 
 
 class NutDeleteView(views.DeleteView):
@@ -107,7 +143,24 @@ class DairyEditView(views.DetailView):
 
 
 class DairyDetailsView(views.DetailView):
-    pass
+    model = DairyProduct
+    context_object_name = 'dairy'
+    template_name = 'catalog/details-dairy-page.html'
+    photo = static('images/milk-products.jpg')
+
+    def get_photo(self):
+        if self.object.photo is not None:
+            return self.object.photo
+        return self.photo
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'photo': self.get_photo,
+        })
+
+        return context
+
 
 
 class DairyDeleteView(views.DeleteView):
@@ -136,6 +189,24 @@ class AnimalEditView(views.DetailView):
 
 
 class AnimalDetailsView(views.DetailView):
+    model = AnimalProduct
+    context_object_name = 'meat'
+    template_name = 'catalog/details-animal-page.html'
+    photo = static('images/meat.jpg')
+
+    def get_photo(self):
+        if self.object.photo is not None:
+            return self.object.photo
+        return self.photo
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'photo': self.get_photo,
+        })
+
+        return context
+
 
 
 class AnimalDeleteView(views.DeleteView):
