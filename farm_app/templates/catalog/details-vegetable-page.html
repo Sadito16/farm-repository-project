@@ -1,7 +1,13 @@
 {% extends 'main/base.html' %}
+{% load static %}
 {% block page_content %}
 
-    <img src="{{ photo.url }}" alt="{{ plant.name }} Photo">
+        {% if photo %}
+            <img src="{{ photo.url }}" alt="Photo">
+
+        {% else %}
+            <img src="{% static "images/fruit-and-veg.jpg" %}" alt="Photo">
+        {% endif %}
     <br>
     {% if plant.user_id == request.user.pk %}
         <a href="{% url 'edit vegetable' plant.pk %}">Edit</a>
