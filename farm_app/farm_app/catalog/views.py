@@ -1,7 +1,6 @@
 from itertools import chain
 
 from django.conf.urls.static import static
-from django.forms import formset_factory
 from django.urls import reverse, reverse_lazy
 from django.views import generic as views
 

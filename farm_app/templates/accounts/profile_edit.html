@@ -1,0 +1,8 @@
+{% extends 'main/base.html' %}
+{% block page_content %}
+    <form action="{% url 'profile edit' object.pk %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Changes</button>
+    </form>
+{% endblock %}d

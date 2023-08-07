@@ -1,16 +1,24 @@
 {% extends 'main/base.html' %}
+{% load static %}
 {% block page_content %}
 
 
     <div class="row justify-content-center">
         <div class="d-flex">
-            <div class="d-inline p-2 w-50">
-                <img src="{{ profile.profile_picture }}"
-                     class="w-50 rounded mx-auto d-block" alt="{{ profile.get_user_name }}">
-            </div>
+            {% if profile_picture %}
+            <img src="{{ profile_picture.url }}" alt="Photo">
+
+        {% else %}
+            <img src="{% static "images/profile.jpg" %}" alt="Photo">
+        {% endif %}
             <div class="d-inline p-2 w-50">
 
+
                 <div class="d-flex flex-column">
+                    <a href="{%  url 'profile edit' object.pk %}">Edit</a>
+                <br>
+                <a href="{%  url 'profile delete' object.pk %}">Delete</a>
+                <br>
                     <h5><u>Name:</u> {{ profile.get_user_name }}</h5>
 
                     <!-- If Date of Birth -->
@@ -28,12 +36,8 @@
                     {% endif %}
 
                 </div>
-                <p class="mt-2">Total Images: {{ total_images_count }}</p>
-                <p class="mt-2">Total Likes: {{ total_likes_count }}</p>
-                {% if is_owner %}
-{#                    <a href="{% url 'edit profile' %}" class="btn btn-primary">Edit</a>#}
-{#                    <a href="{% url 'delete profile' %}" class="btn btn-danger">Delete</a>#}
-                {% endif %}
+                <p>Total Products: {{ products_count }}</p>
+
             </div>
         </div>
     </div>
@@ -49,8 +53,8 @@
                 <div style="width: 18rem;">
                     {{ veg }}
                     {% if is_owner %}
-{#                        <a href="{% url 'edit pet' pet.pk %}" class="btn btn-primary">Edit</a>#}
-{#                        <a href="{% url 'delete pet' pet.pk %}" class="btn btn-danger">Delete</a>#}
+                        <a href="{% url 'edit vegetable' veg.pk %}" >Edit</a>
+                        <a href="{% url 'delete vegetable' veg.pk %}" >Delete</a>
                     {% endif %}
                 </div>
                 {% endif %}
@@ -62,8 +66,8 @@
                 <div style="width: 18rem;">
                     {{ dairy }}
                     {% if is_owner %}
-{#                        <a href="{% url 'edit pet' pet.pk %}" class="btn btn-primary">Edit</a>#}
-{#                        <a href="{% url 'delete pet' pet.pk %}" class="btn btn-danger">Delete</a>#}
+                        <a href="{% url 'edit dairy' dairy.pk %}" >Edit</a>
+                        <a href="{% url 'delete dairy' dairy.pk %}" >Delete</a>
                     {% endif %}
                 </div>
                 {% endif %}
@@ -75,8 +79,8 @@
                 <div style="width: 18rem;">
                     {{ nut }}
                     {% if is_owner %}
-{#                        <a href="{% url 'edit pet' pet.pk %}" class="btn btn-primary">Edit</a>#}
-{#                        <a href="{% url 'delete pet' pet.pk %}" class="btn btn-danger">Delete</a>#}
+                        <a href="{% url 'edit nut' nut.pk %}" >Edit</a>
+                        <a href="{% url 'delete nut' nut.pk %}" >Delete</a>
                     {% endif %}
                 </div>
                 {% endif %}
@@ -88,8 +92,8 @@
                 <div style="width: 18rem;">
                     {{ prod }}
                     {% if is_owner %}
-{#                        <a href="{% url 'edit pet' pet.pk %}" class="btn btn-primary">Edit</a>#}
-{#                        <a href="{% url 'delete pet' pet.pk %}" class="btn btn-danger">Delete</a>#}
+                        <a href="{% url 'edit animal' prod.pk %}">Edit</a>
+                        <a href="{% url 'delete animal' prod.pk %}">Delete</a>
                     {% endif %}
                 </div>
                 {% endif %}

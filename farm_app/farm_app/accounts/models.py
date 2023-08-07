@@ -6,6 +6,7 @@ from django.core.validators import MinLengthValidator
 from django.db import models
 
 from farm_app.catalog.models import ChoicesLengthMixin
+from farm_app.catalog.validators import validate_image_size
 
 
 class Gender(ChoicesLengthMixin, Enum):
@@ -28,7 +29,7 @@ class FarmerUser(AbstractUser):
     last_name = models.CharField(null=True,blank=True,max_length=LAST_NAME_MAX_LENGTH)
 
     email =models.EmailField()
-    profile_picture = models.URLField(null=True, blank=True)
+    profile_picture = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
     date_of_birth = models.DateField(null=True, blank=True)
     gender = models.CharField(choices=Gender.choice(),
                               max_length=Gender.max_length(),
