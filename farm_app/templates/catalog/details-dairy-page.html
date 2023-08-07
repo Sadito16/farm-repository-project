@@ -2,6 +2,12 @@
 {% block page_content %}
         <img src="{{ photo.url }}" alt="{{ dairy.name }} Photo">
         <br>
+            {% if dairy.user_id == request.user.pk %}
+            <a href="{% url 'edit dairy' dairy.pk %}">Edit</a>
+            <a href="{% url 'delete dairy' dairy.pk %}">Delete</a>
+                <br>
+        {% endif %}
+
     {{ dairy.name }}
     <br>
     {{ dairy.percent }}

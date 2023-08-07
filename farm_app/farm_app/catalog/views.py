@@ -2,7 +2,7 @@ from itertools import chain
 
 from django.conf.urls.static import static
 from django.forms import formset_factory
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic as views
 
 from farm_app.catalog.forms import *
@@ -45,8 +45,19 @@ class VegetableCreateView(views.CreateView):
         return super().form_valid(form)
 
 
-class VegetableEditView(views.DetailView):
-    pass
+class VegetableEditView(views.UpdateView):
+    model = VegetableAndFruit
+    template_name = 'catalog/edit-vegetable-page.html'
+    fields = ['name', 'price','production']
+    context_object_name = 'plant'
+    def get_success_url(self):
+        return reverse('details vegetable', kwargs={
+            'pk': self.object.pk,
+        })
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class VegetableDetailsView(views.DetailView):
@@ -54,6 +65,7 @@ class VegetableDetailsView(views.DetailView):
     context_object_name = 'plant'
     template_name = 'catalog/details-vegetable-page.html'
     photo = static('images/fruit-and-veg.jpg')
+    model_name = object.__class__.__name__
 
     def get_photo(self):
         if self.object.photo is not None:
@@ -64,6 +76,7 @@ class VegetableDetailsView(views.DetailView):
         context = super().get_context_data(**kwargs)
         context.update({
             'photo': self.get_photo,
+            'model_name': self.model_name,
         })
 
         return context
@@ -72,7 +85,14 @@ class VegetableDetailsView(views.DetailView):
 
 
 class VegetableDeleteView(views.DeleteView):
-    pass
+    model = VegetableAndFruit
+    context_object_name = 'product'
+    template_name = 'catalog/delete-page.html'
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class NutCreateView(views.CreateView):
@@ -92,8 +112,20 @@ class NutCreateView(views.CreateView):
         return super().form_valid(form)
 
 
-class NutEditView(views.DetailView):
-    pass
+class NutEditView(views.UpdateView):
+    model = Nut
+    template_name = 'catalog/edit-nut-page.html'
+    fields = ['type','name', 'price','package']
+    context_object_name = 'nut'
+
+    def get_success_url(self):
+        return reverse('details nut', kwargs={
+            'pk': self.object.pk,
+        })
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class NutDetailsView(views.DetailView):
@@ -101,6 +133,7 @@ class NutDetailsView(views.DetailView):
     context_object_name = 'nut'
     template_name = 'catalog/details-nut-page.html'
     photo = static('images/nuts-and-dry-fruits.jpg')
+    model_name = object.__class__.__name__
 
     def get_photo(self):
         if self.object.photo is not None:
@@ -111,6 +144,7 @@ class NutDetailsView(views.DetailView):
         context = super().get_context_data(**kwargs)
         context.update({
             'photo': self.get_photo,
+            'model_name': self.model_name,
         })
 
         return context
@@ -118,7 +152,14 @@ class NutDetailsView(views.DetailView):
 
 
 class NutDeleteView(views.DeleteView):
-    pass
+    model = Nut
+    context_object_name = 'product'
+    template_name = 'catalog/delete-page.html'
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class DairyCreateView(views.FormView):
@@ -138,8 +179,20 @@ class DairyCreateView(views.FormView):
         return super().form_valid(form)
 
 
-class DairyEditView(views.DetailView):
-    pass
+class DairyEditView(views.UpdateView):
+    model = DairyProduct
+    template_name = 'catalog/edit-dairy-page.html'
+    fields = ['name','percent', 'price']
+    context_object_name = 'dairy'
+
+    def get_success_url(self):
+        return reverse('details dairy', kwargs={
+            'pk': self.object.pk,
+        })
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class DairyDetailsView(views.DetailView):
@@ -147,6 +200,7 @@ class DairyDetailsView(views.DetailView):
     context_object_name = 'dairy'
     template_name = 'catalog/details-dairy-page.html'
     photo = static('images/milk-products.jpg')
+    model_name = object.__class__.__name__
 
     def get_photo(self):
         if self.object.photo is not None:
@@ -157,6 +211,7 @@ class DairyDetailsView(views.DetailView):
         context = super().get_context_data(**kwargs)
         context.update({
             'photo': self.get_photo,
+            'model_name': self.model_name,
         })
 
         return context
@@ -164,7 +219,14 @@ class DairyDetailsView(views.DetailView):
 
 
 class DairyDeleteView(views.DeleteView):
-    pass
+    model = Nut
+    context_object_name = 'product'
+    template_name = 'catalog/delete-page.html'
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class AnimalCreateView(views.FormView):
@@ -184,8 +246,20 @@ class AnimalCreateView(views.FormView):
         return super().form_valid(form)
 
 
-class AnimalEditView(views.DetailView):
-    pass
+class AnimalEditView(views.UpdateView):
+    model = AnimalProduct
+    template_name = 'catalog/edit-animal-page.html'
+    fields = ['type','name', 'price', 'production']
+    context_object_name = 'animal'
+
+    def get_success_url(self):
+        return reverse('details animal', kwargs={
+            'pk': self.object.pk,
+        })
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class AnimalDetailsView(views.DetailView):
@@ -193,6 +267,7 @@ class AnimalDetailsView(views.DetailView):
     context_object_name = 'meat'
     template_name = 'catalog/details-animal-page.html'
     photo = static('images/meat.jpg')
+    model_name = object.__class__.__name__
 
     def get_photo(self):
         if self.object.photo is not None:
@@ -203,6 +278,7 @@ class AnimalDetailsView(views.DetailView):
         context = super().get_context_data(**kwargs)
         context.update({
             'photo': self.get_photo,
+            'model_name': self.model_name,
         })
 
         return context
@@ -210,4 +286,11 @@ class AnimalDetailsView(views.DetailView):
 
 
 class AnimalDeleteView(views.DeleteView):
-    pass
+    model = AnimalProduct
+    context_object_name = 'product'
+    template_name = 'catalog/delete-page.html'
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context

@@ -3,6 +3,11 @@
     <div>
         <img src="{{ photo.url }}" alt="{{ meat.name }} Photo">
         <br>
+        {% if meat.user_id == request.user.pk %}
+            <a href="{% url 'edit animal' meat.pk %}">Edit</a>
+            <a href="{% url 'delete animal' meat.pk %}">Delete</a>
+        {% endif %}
+        <br>
         {{ meat.name }}
 
         <br>

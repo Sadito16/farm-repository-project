@@ -2,6 +2,11 @@
 {% block page_content %}
         <img src="{{ photo.url }}" alt="{{ nut.name }} Photo">
         <br>
+            {% if nut.user_id == request.user.pk %}
+            <a href="{% url 'edit nut' nut.pk %}">Edit</a>
+            <a href="{% url 'delete nut' nut.pk %}">Delete</a>
+                <br>
+        {% endif %}
     {{ nut.name }}
     <br>
     {{ nut.type }}

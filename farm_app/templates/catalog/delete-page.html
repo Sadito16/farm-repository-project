@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+{% load model_tags %}
+{% block page_content %}
+
+    <h1>Are you sure you want to delete the {{ product.name }}?</h1>
+    <form action="{% url 'delete vegetable' product.pk %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Confirm">
+    </form>
+    {% if model_name == 'VegetableVndFruit' %}
+        <a href="{% url 'home' %}">Cancel</a>
+
+    {% elif model_name == 'Nut' %}
+        <a href="{% url 'home' %}">Cancel</a>
+
+    {% elif model_name == 'DairyProduct' %}
+        <a href="{% url 'home' %}">Cancel</a>
+
+    {% elif model_name == 'AnimalProduct' %}
+        <a href="{% url 'home' %}">Cancel</a>
+
+    {% endif %}
+{% endblock %}

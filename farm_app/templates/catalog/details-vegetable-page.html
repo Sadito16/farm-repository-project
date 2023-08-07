@@ -1,7 +1,13 @@
 {% extends 'main/base.html' %}
 {% block page_content %}
-        <img src="{{ photo.url }}" alt="{{ plant.name }} Photo">
-        <br>
+
+    <img src="{{ photo.url }}" alt="{{ plant.name }} Photo">
+    <br>
+    {% if plant.user_id == request.user.pk %}
+        <a href="{% url 'edit vegetable' plant.pk %}">Edit</a>
+        <a href="{% url 'delete vegetable' plant.pk %}">Delete</a>
+    {% endif %}
+    <br>
     {{ plant.name }}
     <br>
     {{ plant.price }}
