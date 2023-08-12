@@ -1,4 +1,5 @@
 {% extends 'main/base.html' %}
+{% block title %} My profile {% endblock %}
 {% load static %}
 {% block page_content %}
 
@@ -14,11 +15,13 @@
             <div class="d-inline p-2 w-50">
 
 
-                <div class="d-flex flex-column">
+                <div>
+                {% if request.user.id == object.id %}
                     <a href="{%  url 'profile edit' object.pk %}">Edit</a>
                 <br>
                 <a href="{%  url 'profile delete' object.pk %}">Delete</a>
                 <br>
+                {% endif %}
                     <h5><u>Name:</u> {{ profile.get_user_name }}</h5>
 
                     <!-- If Date of Birth -->

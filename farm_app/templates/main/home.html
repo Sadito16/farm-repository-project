@@ -1,49 +1,23 @@
 {% extends 'main/base.html' %}
+
+{% block title %}
+    {% if request.user.is_authenticated %}
+        Home
+    {% else %}
+        Welcome
+    {% endif %}
+{% endblock %}
+
 {% block page_content %}
 
-    {% if veg_fruit %}
-        Fruits and Vegetables:
-        {% for fruit in veg_fruit %}
-            <ul>
-            <li>
-                <a href="{% url 'details vegetable' fruit.pk %}">{{ fruit }}</a>
-            </li>
-            </ul>
-        {% endfor %}
-        <br>
-    {% endif %}
-        {% if dairies %}
-        Dairies:
-        {% for dairy in dairies %}
-            <ul>
-            <li>
-                <a href="{%  url 'details dairy' dairy.pk %}">{{ dairy }}</a>
-            </li>
-            </ul>
-        {% endfor %}
-    {% endif %}
-    <br>
-        {% if animal_products %}
-        Animal products:
-        {% for prod in animal_products %}
-            <ul>
-            <li>
-                <a href="{% url 'details animal' prod.pk %}">{{ prod }}</a>
-            </li>
-            </ul>
-        {% endfor %}
-    {% endif %}
-    <br>
-        {% if nuts %}
-        Nuts:
-        {% for nut in nuts %}
-            <ul>
-            <li>
-                <a href="{% url 'details nut' nut.pk %}">{{ nut }}</a>
-            </li>
-            </ul>
-        {% endfor %}
-    {% endif %}
+
+    {% include 'main/vegetable-card.html' %}
+
+    {% include 'main/dairy-card.html' %}
+
+    {% include 'main/animal-card.html' %}
+
+    {% include 'main/nut-card.html' %}
 
 
 {% endblock %}

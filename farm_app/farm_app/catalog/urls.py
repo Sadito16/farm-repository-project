@@ -31,4 +31,5 @@ urlpatterns = [
         path('delete/', views.AnimalDeleteView.as_view(), name='delete animal'),
     ])),
 
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,18 +1,26 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block page_content %}
-        {% if photo %}
-            <img src="{{ photo.url }}" alt="Photo">
+{% block title %} {{ nut.type }} {{ nut.name }} {% endblock %}
 
-        {% else %}
-            <img src="{% static "images/nuts-and-dry-fruits.jpg" %}" alt="Photo">
-        {% endif %}
+{% block page_content %}
+    <a href="#"
+       class="buy-button"
+       hx-get="{% url 'add to cart' nut.id %}"
+       hx-target="#menu-cart-button"
+       hx-swap="outerHTML"
+    >Add to cart</a>
+    {% if photo %}
+        <img src="{{ photo.url }}" alt="Photo">
+
+    {% else %}
+        <img src="{% static "images/nuts-and-dry-fruits.jpg" %}" alt="Photo">
+    {% endif %}
+    <br>
+    {% if nut.user_id == request.user.pk %}
+        <a href="{% url 'edit nut' nut.pk %}">Edit</a>
+        <a href="{% url 'delete nut' nut.pk %}">Delete</a>
         <br>
-            {% if nut.user_id == request.user.pk %}
-            <a href="{% url 'edit nut' nut.pk %}">Edit</a>
-            <a href="{% url 'delete nut' nut.pk %}">Delete</a>
-                <br>
-        {% endif %}
+    {% endif %}
     {{ nut.name }}
     <br>
     {{ nut.type }}

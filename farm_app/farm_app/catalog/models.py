@@ -82,6 +82,7 @@ class NutChoices(ChoicesLengthMixin, Enum):
 
 class VegetableAndFruit(models.Model):
     MAX_LENGTH_OF_PRODUCTION_COUNTRY = 40
+
     name = models.CharField(choices=VegFruitChoice.choice(),
                             max_length=VegFruitChoice.max_length(),
                             default=VegFruitChoice.OTHER.value)
@@ -107,12 +108,14 @@ class VegetableAndFruit(models.Model):
 
 
 class DairyProduct(models.Model):
+    MAX_LENGTH_OF_PACKAGE= 100
     name = models.CharField(choices=DairyChoice.choice(),
                             max_length=DairyChoice.max_length(),
                             default=DairyChoice.OTHER.value)
     percent = models.FloatField(null=True, blank=True)
     price = models.FloatField()
     photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
+    package = models.CharField(null =False,blank=False, max_length=MAX_LENGTH_OF_PACKAGE)
 
     publication_date = models.DateField(
         auto_now=True,
@@ -121,9 +124,6 @@ class DairyProduct(models.Model):
         UserModel,
         on_delete=models.CASCADE,
     )
-
-    class Meta:
-        unique_together = ('user', 'name')
 
     def __str__(self):
         if self.percent:
@@ -134,6 +134,7 @@ class DairyProduct(models.Model):
 class AnimalProduct(models.Model):
     MAX_LENGTH_OF_PRODUCTION_COUNTRY = 40
     PRODUCT_MAX_LENGTH = 40
+    MAX_LENGTH_OF_PACKAGE= 100
 
     type = models.CharField(choices=AnimalChoice.choice(),
                             max_length=AnimalChoice.max_length(),
@@ -143,11 +144,8 @@ class AnimalProduct(models.Model):
     )
     price = models.FloatField()
     photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
-
-    date_of_birth = models.DateField(
-        null=True,
-        blank=True,
-        unique=True, )
+    package = models.CharField(null=False, blank=False, max_length=MAX_LENGTH_OF_PACKAGE)
+    date_of_birth = models.DateField(null=True,blank=True)
     date_of_publication = models.DateField(
         auto_now=True,
     )

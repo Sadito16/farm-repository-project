@@ -1,13 +1,20 @@
 {% extends 'main/base.html' %}
+{% block title %} {{ plant.name }}{% endblock %}
+
 {% load static %}
 {% block page_content %}
+    <a href="#"
+       class="buy-button"
+       hx-get="{% url 'add to cart' plant.id %}"
+       hx-target="#menu-cart-button"
+       hx-swap="outerHTML"
+    >Add to cart</a>
+    {% if photo %}
+        <img src="{{ photo.url }}" alt="Photo">
 
-        {% if photo %}
-            <img src="{{ photo.url }}" alt="Photo">
-
-        {% else %}
-            <img src="{% static "images/fruit-and-veg.jpg" %}" alt="Photo">
-        {% endif %}
+    {% else %}
+        <img src="{% static "images/fruit-and-veg.jpg" %}" alt="Photo">
+    {% endif %}
     <br>
     {% if plant.user_id == request.user.pk %}
         <a href="{% url 'edit vegetable' plant.pk %}">Edit</a>

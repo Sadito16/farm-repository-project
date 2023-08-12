@@ -1,7 +1,15 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% block title %} {{ meat }} {% endblock %}
+
 {% block page_content %}
     <div>
+        <a href="#"
+           class="buy-button"
+           hx-get="{% url 'add to cart' meat.id %}"
+           hx-target="#menu-cart-button"
+           hx-swap="outerHTML"
+        >Add to cart</a>
         {% if photo %}
             <img src="{{ photo.url }}" alt="Photo">
 

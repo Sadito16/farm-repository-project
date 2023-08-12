@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farm</title>
+    <title>{% block title %} {% endblock %} | Farm</title>
 
     <link rel="icon" type="image/x-icon" href="{% static "images/favicon.ico" %}">
     <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
@@ -15,7 +15,6 @@
     <nav class="background-nav navbar" id="navbar">
 
         <div class="navbar">
-            <h1>{{ request.user.username }}</h1>
 
             <ul class="sidenav">
                 <li>
@@ -67,19 +66,29 @@
                     </li>
 
                 {% endif %}
-
-
+                {% if request.user.is_authenticated %}
+                    <li>
+                        <div
+                                hx-get="{% url 'menu cart' %}"
+                                hx-trigger="update-menu-cart from:body"
+                                hx-swap="innerHTML">
+                            {% include 'cart/menu_cart.html' %}
+                        </div>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
 
 </header>
-<div>
-    <a href="{% url 'add vegetable' %}">Add Vegetable and Fruit</a>
-    <a href="{%  url 'add animal' %}">Add Animal Product</a>
-    <a href="{% url 'add dairy' %}">Add Dairy Product</a>
-    <a href="{% url 'add nut' %}">Add Nut</a>
-</div>
+{% if request.user.is_authenticated %}
+    <div>
+        <a href="{% url 'add vegetable' %}">Add Vegetable and Fruit</a>
+        <a href="{% url 'add animal' %}">Add Animal Product</a>
+        <a href="{% url 'add dairy' %}">Add Dairy Product</a>
+        <a href="{% url 'add nut' %}">Add Nut</a>
+    </div>
+{% endif %}
 <div class="content">
 
     {% block page_content %}
@@ -88,22 +97,23 @@
 </div>
 
 {#Footer#}
-<div class="container">
 
 
-    <footer class="footer text-white fixed-bottom" style="background-color: #21081a;">
-        <!-- Grid container -->
-        <div class="container p-4"></div>
-        <!-- Grid container -->
+<footer class="footer text-white fixed-bottom" style="background-color: #21081a;">
+    <!-- Grid container -->
+    <div class="container p-4"></div>
+    <!-- Grid container -->
 
-        <!-- Copyright -->
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            © 2023, June:
-            <a class="text-white" href="{% url 'home' %}">Farm</a>
-            , Sadi's project
-        </div>
-    </footer>
-</div>
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2023, June:
+        <a class="text-white" href="{% url 'home' %}">Farm</a>
+        , Sadi's project
+    </div>
+</footer>
+
+<script src="https://unpkg.com/htmx.org@1.7.0"></script>
+
 </body>
 
 </html>

@@ -1,0 +1,52 @@
+{% load static %}
+{% for vegetable in veg_fruit %}
+    <div>
+        <div>
+            <a href="{% url "profile details" vegetable.user_id %}">
+                <div>
+
+                    {% if vegetable.user.profile_picture %}
+                        <img height="50px" width="50px" src="{{ vegetable.user.profile_picture }}" alt="Profile Photo">
+                    {% else %}
+                        <img height="50px" width="50px" src="{% static 'images/profile.jpg' %}"
+                             alt="Default profile Photo">
+                    {% endif %}
+                </div>
+            </a>
+
+            <h3>
+                <a href="{% url 'profile details' vegetable.user_id %}">
+                    {{ vegetable.user.get_user_name }}
+                </a>
+                <br>
+            </h3>
+        </div>
+
+        <div>
+            {% if vegetable.photo %}
+                <img width="300px" height="300px" src="{{ vegetable.photo.url }}" alt="post">
+            {% else %}
+                <img width="300px" height="300px" src="{% static 'images/fruit-and-veg.jpg' %}" alt="post">
+            {% endif %}
+        </div>
+
+
+        <a href="{% url 'details vegetable' vegetable.pk %}">
+            <h4>See details</h4>
+        </a>
+
+        <h5>{{ vegetable.publication_date }}</h5>
+        {% if vegetable.user != request.user %}
+            <button>
+                <a href="#"
+                   class="buy-button"
+                   hx-get="{% url 'add to cart' vegetable.pk %}"
+                   hx-target="#menu-cart-button"
+                   hx-swap="outerHTML"
+                >Add to cart</a>
+            </button>
+        {% endif %}
+    </div>
+    <br><br><br>
+{% endfor %}
+

@@ -1,4 +1,6 @@
 {% extends 'main/base.html' %}
+{% block title %} Update {{ dairy.name }} - {{ dairy.percent }} {% endblock %}
+
 {% block page_content %}
     <form action="{% url 'edit dairy' dairy.pk %}" method="post">
         {% csrf_token %}

@@ -1,4 +1,7 @@
+from collections import Counter
+
 from django.conf.urls.static import static
+from django.http import JsonResponse, HttpResponse
 from django.views import generic as views
 from django.contrib.auth import views as auth_views, login, get_user_model
 from django.urls import reverse_lazy, reverse
@@ -47,17 +50,23 @@ class ProfileDetailsView(views.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         user = self.get_object()
-        context['veg_fruit'] = VegetableAndFruit.objects.filter(user_id=user.id)
-        context['dairies'] = DairyProduct.objects.filter(user_id=user.id)
-        context['nuts'] = Nut.objects.filter(user_id=user.id)
-        context['animal_products'] = AnimalProduct.objects.filter(user_id=user.id)
+        vegetable = VegetableAndFruit.objects.filter(user_id=user.id)
+        dairy = DairyProduct.objects.filter(user_id=user.id)
+        nut = Nut.objects.filter(user_id=user.id)
+        animal = AnimalProduct.objects.filter(user_id=user.id)
+
+        context['veg_fruit'] = vegetable
+        context['dairies'] = dairy
+        context['nuts'] = nut
+        context['animal_products'] = animal
         context['profile_picture'] = self.get_profile_image()
-        context['products_count'] = (VegetableAndFruit.objects.all().filter(user_id=user.id).count()
-                                     + DairyProduct.objects.all().filter(user_id=user.id).count()
-                                     + Nut.objects.all().filter(user_id=user.id).count()
-                                     + AnimalProduct.objects.all().filter(user_id=user.id).count())
+        context['products_count'] = (vegetable.count() + dairy.count() + nut.count() + animal.count())
+
         return context
+
+
 
 
 class ProfileEditView(views.UpdateView):

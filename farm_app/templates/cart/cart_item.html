@@ -1,0 +1,36 @@
+{% load static %}
+
+{% if item %}
+    <div class="first_product" id="cart-item-{{ item.vegetable.id }}">
+        <a href="#">
+            {% if item.vegetable.photo %}
+                <img width="200" height="200" src="{{ item.vegetable.photo.url }}" alt="Photo">
+            {% else %}
+                <img width="200" height="200" src="{% static "images/nuts-and-dry-fruits.jpg" %}" alt="Photo">
+            {% endif %}
+        </a>
+        <div>
+            <div>
+                <a href="#">{{ item.vegetable.name }}</a>
+
+                <span>${{ item.total_price }}</span>
+            </div>
+            <hr>
+
+            <div>
+                <a
+                        hx-get="{% url 'update cart' item.vegetable.id 'decrement' %}"
+                        hx-target="#cart-item-{{ item.vegetable.id }}"
+                        hx-swap="outerHTML"
+                >-</a>
+                <span>{{ item.quantity }}</span>
+                <a
+                        hx-get="{% url 'update cart' item.vegetable.id 'increment' %}"
+                        hx-target="#cart-item-{{ item.vegetable.id }}"
+                        hx-swap="outerHTML"
+                >+</a>
+            </div>
+        </div>
+    </div>
+
+{% endif %}

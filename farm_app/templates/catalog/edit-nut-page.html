@@ -1,4 +1,6 @@
 {% extends 'main/base.html' %}
+{% block title %} Update {{ nut.type }} {{ nut.name }} {% endblock %}
+
 {% block page_content %}
     <form action="{% url 'edit nut' nut.pk %}" method="post">
         {% csrf_token %}

@@ -9,6 +9,7 @@ labels = {
     'production': 'Country of production',
     'date_of_birth': 'Birthdate of the animal',
     'photo': 'Photo of product',
+    'package': 'Product weight',
 
 }
 
@@ -16,21 +17,21 @@ labels = {
 class VegetableCreationForm(forms.ModelForm):
     class Meta:
         model = VegetableAndFruit
-        fields = ('name', 'price', 'photo')
+        fields = ('name', 'price', 'photo','production')
         labels = labels
 
 
 class DairyCreationForm(forms.ModelForm):
     class Meta:
         model = DairyProduct
-        fields = ('name', 'percent', 'price', 'photo')
+        fields = ('name', 'percent', 'price', 'photo','package')
         labels = labels
 
 
 class AnimalCreationForm(forms.ModelForm):
     class Meta:
         model = AnimalProduct
-        fields = ('type', 'name', 'price', 'date_of_birth', 'production', 'photo')
+        fields = ('type', 'name', 'price', 'date_of_birth', 'production', 'photo','package')
         labels = labels
 
 
