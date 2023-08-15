@@ -1,15 +1,20 @@
 from itertools import chain
 
+from django.core.serializers.json import DjangoJSONEncoder
 from django.conf.urls.static import static
 from django.urls import reverse, reverse_lazy
 from django.views import generic as views
+import json
 
 from farm_app.accounts.models import FarmerUser
 from farm_app.catalog.forms import *
 from farm_app.catalog.models import *
+from farm_app.catalog.serializers import VegetableAndFruitSerializer, DairyProductSerializer, NutSerializer, \
+    AnimalProductSerializer
 
 
 class IndexView(views.ListView):
+
     template_name = 'main/home.html'
 
     def get_queryset(self):
@@ -21,12 +26,15 @@ class IndexView(views.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         context['users'] = FarmerUser.objects.all()
         context['veg_fruit'] = VegetableAndFruit.objects.all()
         context['dairies'] = DairyProduct.objects.all()
         context['nuts'] = Nut.objects.all()
         context['animal_products'] = AnimalProduct.objects.all()
+
         return context
+
 
 
 class VegetableCreateView(views.CreateView):

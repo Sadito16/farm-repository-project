@@ -1,51 +1,64 @@
+from django.apps import apps
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-
+from django.urls import reverse
+from rest_framework.renderers import JSONRenderer
+from django.core import serializers
 from farm_app.cart.cart import Cart
-from farm_app.catalog.models import VegetableAndFruit
+from farm_app.catalog.models import VegetableAndFruit, DairyProduct, AnimalProduct, Nut
+from farm_app.catalog.serializers import AnimalProductSerializer, VegetableAndFruitSerializer, NutSerializer, \
+    DairyProductSerializer
+from json import JSONEncoder
 
+def _default(self, obj):
+    return getattr(obj.__class__, "to_json", _default.default)(obj)
 
-def add_to_cart(request,product_id):
+_default.default = JSONEncoder().default
+JSONEncoder.default = _default
+
+def add_to_cart(request, item_type, product_id):
     cart = Cart(request)
-    cart.add(product_id)
+    cart.add(product_id, item_type)
     cart.save()
 
     return render(request, 'cart/menu_cart.html')
-
 def cart(request):
     return render(request, 'cart/cart.html')
 
-def update_cart(request,product_id,action):
+
+
+def update_cart(request, product_id, action, item_type):
     cart = Cart(request)
 
     if action == 'increment':
-        cart.add(product_id,1,True)
+        cart.add(product_id, item_type, 1, True)
     else:
-        cart.add(product_id, quantity=-1,update_quantity=True)
+        cart.add(product_id, item_type, quantity=-1, update_quantity=True)
 
-    vegetable = VegetableAndFruit.objects.get(pk=product_id)
+    product_model = apps.get_model(app_label='catalog', model_name=item_type)
+    product = product_model.objects.get(pk=product_id)
     quantity = cart.get_item(product_id)
 
     if quantity:
         quantity = quantity['quantity']
 
         item = {
-            'vegetable': {
-                'id': vegetable.id,
-                'name': vegetable.name,
-                'photo': vegetable.photo,
-                'price': vegetable.price,
+            item_type: {
+                'id': product.id,
+                'name': product.name,
+                'photo': product.photo,
+                'price': product.price,
             },
-            'total_price': (quantity * vegetable.price),
+            'total_price': (quantity * product.price),
             'quantity': quantity,
         }
-
     else:
         item = None
-
-
-
-    response = render(request, 'cart/cart_item.html', {'item': item})
+    context = {
+        'item': item,
+        'total_cart_price': cart.get_total_cost,
+    }
+    response = render(request, 'cart/cart_item.html', context)
     response['HX-Trigger'] = 'update-menu-cart'
 
     return response

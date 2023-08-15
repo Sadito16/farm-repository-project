@@ -5,7 +5,7 @@
 {% block page_content %}
     <a href="#"
        class="buy-button"
-       hx-get="{% url 'add to cart' dairy.id %}"
+       hx-get="{% url 'add to cart' 'DairyProduct' dairy.id %}"
        hx-target="#menu-cart-button"
        hx-swap="outerHTML"
     >Add to cart</a>

@@ -22,16 +22,11 @@
                 </li>
 
 
-                <li class="items">
-                    <a href="{% url "home" %}">Home</a>
-                </li>
-
 
                 <li class="items">
                     <div class="dropdown">
 
                         <button class="dropbtn"><a>Catalog</a></button>
-                        <i class="fa-fa-caret-down"></i>
                         <div class="dropdown-content">
                             <a href="#">Animals</a>
                             <a href="#">Dairy Products</a>
@@ -53,6 +48,15 @@
                     <li class="items">
                         <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
                     </li>
+                                    <li>
+                    <div
+                            hx-get="{% url 'menu cart' %}"
+                            hx-trigger="update-menu-cart from:body"
+                            hx-swap="innerHTML"
+                    >
+                        {% include 'cart/menu_cart.html' %}
+                    </div>
+                </li>
 
                 {% else %}
 
@@ -66,16 +70,7 @@
                     </li>
 
                 {% endif %}
-                {% if request.user.is_authenticated %}
-                    <li>
-                        <div
-                                hx-get="{% url 'menu cart' %}"
-                                hx-trigger="update-menu-cart from:body"
-                                hx-swap="innerHTML">
-                            {% include 'cart/menu_cart.html' %}
-                        </div>
-                    </li>
-                {% endif %}
+
             </ul>
         </div>
     </nav>
@@ -96,9 +91,6 @@
     {% endblock %}
 </div>
 
-{#Footer#}
-
-
 <footer class="footer text-white fixed-bottom" style="background-color: #21081a;">
     <!-- Grid container -->
     <div class="container p-4"></div>
@@ -112,8 +104,17 @@
     </div>
 </footer>
 
-<script src="https://unpkg.com/htmx.org@1.7.0"></script>
+<script src="https://unpkg.com/htmx.org@1.9.4"></script>
+<script>
+    function addToCart(productId) {
+        console.log('addToCart function called');
+        document.getElementById("add-to-cart-" + productId).innerText = "Added!";
+    }
+</script>
 
 </body>
 
 </html>
+
+
+

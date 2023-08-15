@@ -5,16 +5,13 @@
 {% block page_content %}
     <a href="#"
        class="buy-button"
-       hx-get="{% url 'add to cart' plant.id %}"
+       hx-get="{% url 'add to cart' item_type='VegetableAndFruit' product_id=plant.id %}"
        hx-target="#menu-cart-button"
        hx-swap="outerHTML"
+       data-serialized="{{ vegetable|json_script }}"
     >Add to cart</a>
-    {% if photo %}
-        <img src="{{ photo.url }}" alt="Photo">
 
-    {% else %}
-        <img src="{% static "images/fruit-and-veg.jpg" %}" alt="Photo">
-    {% endif %}
+    <img src="{{ photo.url }}" alt="Photo">
     <br>
     {% if plant.user_id == request.user.pk %}
         <a href="{% url 'edit vegetable' plant.pk %}">Edit</a>

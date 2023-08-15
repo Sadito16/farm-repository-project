@@ -1,17 +1,22 @@
 {% load static %}
 
 {% if item %}
-    <div class="first_product" id="cart-item-{{ item.vegetable.id }}">
+    <div class="first_product" id="cart-item-{{ item.product.id }}">
         <a href="#">
-            {% if item.vegetable.photo %}
-                <img width="200" height="200" src="{{ item.vegetable.photo.url }}" alt="Photo">
-            {% else %}
-                <img width="200" height="200" src="{% static "images/nuts-and-dry-fruits.jpg" %}" alt="Photo">
-            {% endif %}
+            <img class="product-photo" width="200" height="200" src="{{ item.product.photo.url }}" alt="Photo">
         </a>
         <div>
             <div>
-                <a href="#">{{ item.vegetable.name }}</a>
+                {% if item.item_type == 'VegetableAndFruit' %}
+                    <a href="{% url 'details vegetable' item.product.pk %}">{{ item.product.name }}</a>
+                {% elif item.item_type == 'AnimalProduct' %}
+                    <a href="{% url 'details animal'  item.product.pk %}">{{ item.product.name }}</a>
+                {% elif item.item_type == 'DairyProduct' %}
+                    <a href="{% url 'details dairy'  item.product.pk %}">{{ item.product.name }}</a>
+                {% elif item.item_type == 'Nut' %}
+                    <a href="{% url 'details nut'  item.product.pk %}">{{ item.product.name }}</a>
+                {% endif %}
+
 
                 <span>${{ item.total_price }}</span>
             </div>
@@ -19,14 +24,14 @@
 
             <div>
                 <a
-                        hx-get="{% url 'update cart' item.vegetable.id 'decrement' %}"
-                        hx-target="#cart-item-{{ item.vegetable.id }}"
+                        hx-get="{% url 'update cart'  item.product.id  'increment'  item.item_type  %}"
+                        hx-target="#cart-item-{{ item.product.id }}"
                         hx-swap="outerHTML"
                 >-</a>
                 <span>{{ item.quantity }}</span>
                 <a
-                        hx-get="{% url 'update cart' item.vegetable.id 'increment' %}"
-                        hx-target="#cart-item-{{ item.vegetable.id }}"
+                        hx-get="{% url 'update cart'  item.product.id  'decrement' item.item_type  %}"
+                        hx-target="#cart-item-{{ item.product.id }}"
                         hx-swap="outerHTML"
                 >+</a>
             </div>

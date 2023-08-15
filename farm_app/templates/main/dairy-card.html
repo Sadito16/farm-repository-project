@@ -1,10 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load static %}
+{% for dairy in dairies %}
+    <div>
+        <div>
+            <a href="{% url "profile details" dairy.user_id %}">
+                <div>
 
-</body>
-</html>
+                    {% if dairy.user.profile_picture %}
+                        <img height="50px" width="50px" src="{{ dairy.user.profile_picture }}" alt="Profile Photo">
+                    {% else %}
+                        <img height="50px" width="50px" src="{% static 'images/profile.jpg' %}"
+                             alt="Default profile Photo">
+                    {% endif %}
+                </div>
+            </a>
+
+            <h3>
+                <a href="{% url 'profile details' dairy.user_id %}">
+                    {{ dairy.user.get_user_name }}
+                </a>
+                <br>
+            </h3>
+        </div>
+
+        <div>
+            {% if dairy.photo %}
+                <img width="300px" height="300px" src="{{ dairy.photo.url }}" alt="post">
+            {% else %}
+                <img width="300px" height="300px" src="{% static 'images/milk-products.jpg' %}" alt="post">
+            {% endif %}
+        </div>
+
+
+        <a href="{% url 'details dairy' dairy.pk %}">
+            <h4>See details</h4>
+        </a>
+
+        <h5>{{ dairy.publication_date }}</h5>
+        {% if dairy.user != request.user %}
+            <button id="add-to-cart-{{ dairy.pk }}" onclick="addToCart({{ dairy.pk }})">
+                <a
+                        hx-get="{% url 'add to cart' item_type='DairyProduct' product_id=dairy.id %}"
+                        hx-target="#menu-cart-button"
+                        hx-swap="outerHTML"
+                >
+                    Add to cart
+                </a>
+            </button>
+        {% endif %}
+
+    </div>
+    <br><br><br>
+{% endfor %}

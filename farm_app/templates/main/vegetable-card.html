@@ -37,16 +37,18 @@
 
         <h5>{{ vegetable.publication_date }}</h5>
         {% if vegetable.user != request.user %}
-            <button>
-                <a href="#"
-                   class="buy-button"
-                   hx-get="{% url 'add to cart' vegetable.pk %}"
-                   hx-target="#menu-cart-button"
-                   hx-swap="outerHTML"
-                >Add to cart</a>
+            <button id="add-to-cart-{{ vegetable.pk }}" onclick="addToCart({{ vegetable.pk }})">
+                <a
+                        hx-get="{% url 'add to cart' item_type='VegetableAndFruit' product_id=vegetable.id %}"
+                        hx-target="#menu-cart-button"
+                        hx-swap="outerHTML"
+                >
+                    Add to cart
+                </a>
             </button>
         {% endif %}
+
+
     </div>
     <br><br><br>
 {% endfor %}
-

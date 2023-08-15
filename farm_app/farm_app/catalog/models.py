@@ -1,12 +1,15 @@
 import datetime
 from enum import Enum
 
-from django.contrib.auth import get_user_model
+from rest_framework import serializers
 from django.db import models
 
 from farm_app.catalog.validators import validate_image_size
 
 UserModel = 'accounts.FarmerUser'
+
+
+
 
 
 class ChoicesMixin:
@@ -79,7 +82,6 @@ class NutChoices(ChoicesLengthMixin, Enum):
     DRIED_FRUIT = 'Dried'
     OTHER = 'Other'
 
-
 class VegetableAndFruit(models.Model):
     MAX_LENGTH_OF_PRODUCTION_COUNTRY = 40
 
@@ -100,12 +102,15 @@ class VegetableAndFruit(models.Model):
         auto_now=True,
     )
 
+
+    def to_json(self):
+        return '{"name": "%s"}' % self.name
+
     def __str__(self):
         return f'{self.name}'
 
     class Meta:
         unique_together = ('user', 'name')
-
 
 class DairyProduct(models.Model):
     MAX_LENGTH_OF_PACKAGE= 100
@@ -125,6 +130,8 @@ class DairyProduct(models.Model):
         on_delete=models.CASCADE,
     )
 
+    def to_json(self):
+        return '{"name": "%s"}' % self.name
     def __str__(self):
         if self.percent:
             return f'{self.percent}% {self.name}'
@@ -159,6 +166,8 @@ class AnimalProduct(models.Model):
     def age(self):
         return datetime.datetime.now().year - self.date_of_birth.year
 
+    def to_json(self):
+        return '{"name": "%s"}' % self.name
     def __str__(self):
         return f'{self.name} from {self.type}'
 
@@ -185,5 +194,7 @@ class Nut(models.Model):
         on_delete=models.CASCADE,
     )
 
+    def to_json(self):
+        return '{"name": "%s"}' % self.name
     def __str__(self):
         return f'{self.type} {self.name}'

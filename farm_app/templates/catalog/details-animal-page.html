@@ -6,7 +6,7 @@
     <div>
         <a href="#"
            class="buy-button"
-           hx-get="{% url 'add to cart' meat.id %}"
+           hx-get="{% url 'add to cart' 'AnimalProduct' meat.id %}"
            hx-target="#menu-cart-button"
            hx-swap="outerHTML"
         >Add to cart</a>
