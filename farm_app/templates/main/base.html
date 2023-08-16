@@ -3,114 +3,112 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %} {% endblock %} | Farm</title>
-
+    <script type="text/javascript" src="{% static 'functions.js' %}"></script>
     <link rel="icon" type="image/x-icon" href="{% static "images/favicon.ico" %}">
     <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
 </head>
 
 <body>
-<header>
-    <nav class="background-nav navbar" id="navbar">
-
-        <div class="navbar">
-
-            <ul class="sidenav">
-                <li>
-                    <a href="{% url 'home' %}">Farm</a>
-                </li>
 
 
+<ul class="navbar">
+    <li class="left-item">
+        <a href="{% url 'home' %}">Farm</a>
+    </li>
 
-                <li class="items">
-                    <div class="dropdown">
-
-                        <button class="dropbtn"><a>Catalog</a></button>
-                        <div class="dropdown-content">
-                            <a href="#">Animals</a>
-                            <a href="#">Dairy Products</a>
-                            <a href="#">Nuts</a>
-                            <a href="#">Vegetables and Fruits</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#">Mine</a>
-                        </div>
-                    </div>
-                </li>
-
-
-
-                {% if request.user.is_authenticated %}
-                    <li class="items">
-                        <a class="nav-link" href="{% url 'profile details' pk=request.user.pk %}">Profile</a>
-                    </li>
-
-                    <li class="items">
-                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                    </li>
-                                    <li>
-                    <div
-                            hx-get="{% url 'menu cart' %}"
-                            hx-trigger="update-menu-cart from:body"
-                            hx-swap="innerHTML"
-                    >
-                        {% include 'cart/menu_cart.html' %}
-                    </div>
-                </li>
-
-                {% else %}
-
-                    <li class="items">
-                        <a class="nav-link" href="{% url "login" %}">Log In</a>
-                    </li>
-
-
-                    <li class="items">
-                        <a class="nav-link" href="{% url "register" %}">Register</a>
-                    </li>
-
-                {% endif %}
-
-            </ul>
+    <li class="left-item dropdownli">
+        <div class="dropdown">
+            <button class="dropbtn"><a>Catalog</a></button>
+            <div class="dropdown-content">
+                <a class="filter-btn" id="animals-button" onclick="filterSelection('animals')">Animals</a>
+                <a class="filter-btn" id="dairies-button" onclick="filterSelection('dairies')">Dairy Products</a>
+                <a class="filter-btn" id="nuts-button" onclick="filterSelection('nuts')">Nuts</a>
+                <a class="filter-btn" id="vegetables-button" onclick="filterSelection('vegetables')">Vegetables and Fruits</a>
+                <hr class="dropdown-divider">
+                <a class="filter-btn active" id="mine-button" onclick="filterSelection('all')">Mine</a>
+            </div>
         </div>
-    </nav>
+    </li>
 
-</header>
+{#    <li class="left-item">#}
+{#        <form method="get" action=".">#}
+{#            <a><label for="query">Search:</label></a>#}
+{#            <input type="text" id="query" name="query" placeholder="Search...">#}
+{#            <button>#}
+{#                <img alt="Search" width="10px" height="10px" src="{% static 'images/search-icon.png' %}">#}
+{#            </button>#}
+{##}
+{#        </form>#}
+{#    </li>#}
+
+
+
+    {% if request.user.is_authenticated %}
+        <li class="right-item">
+            <a class="nav-link" href="{% url 'profile details' pk=request.user.pk %}">Profile</a>
+        </li>
+        <li
+                class="right-item"
+                hx-get="{% url 'menu cart' %}"
+                hx-trigger="update-menu-cart from:body"
+                hx-swap="innerHTML"
+        >
+            {% include 'cart/menu_cart.html' %}
+        </li>
+        <li class="right-item">
+            <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+        </li>
+
+
+
+    {% else %}
+
+        <li class="right-item">
+            <a class="nav-link" href="{% url "login" %}">Log In</a>
+        </li>
+        <li class="right-item">
+            <a class="nav-link" href="{% url "register" %}">Register</a>
+        </li>
+
+
+    {% endif %}
+
+</ul>
+
 {% if request.user.is_authenticated %}
-    <div>
-        <a href="{% url 'add vegetable' %}">Add Vegetable and Fruit</a>
-        <a href="{% url 'add animal' %}">Add Animal Product</a>
-        <a href="{% url 'add dairy' %}">Add Dairy Product</a>
-        <a href="{% url 'add nut' %}">Add Nut</a>
-    </div>
+
+    <ul class="add-products-list">
+        <li><a href="{% url 'add vegetable' %}">Add Vegetable and Fruit</a></li>
+        <li><a href="{% url 'add animal' %}">Add Animal Product</a></li>
+        <li><a href="{% url 'add dairy' %}">Add Dairy Product</a></li>
+        <li><a style="margin-right:0" href="{% url 'add nut' %}">Add Nut</a></li>
+    </ul>
+
 {% endif %}
-<div class="content">
+
+
+
+<div class="main">
 
     {% block page_content %}
 
     {% endblock %}
 </div>
 
-<footer class="footer text-white fixed-bottom" style="background-color: #21081a;">
-    <!-- Grid container -->
-    <div class="container p-4"></div>
-    <!-- Grid container -->
+<footer class="footer">
 
-    <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    <div class="container p-4"></div>
+    <div class="text-center p-3">
         © 2023, June:
-        <a class="text-white" href="{% url 'home' %}">Farm</a>
+        <a class="farm-link" href="{% url 'home' %}">Farm</a>
         , Sadi's project
     </div>
 </footer>
 
 <script src="https://unpkg.com/htmx.org@1.9.4"></script>
-<script>
-    function addToCart(productId) {
-        console.log('addToCart function called');
-        document.getElementById("add-to-cart-" + productId).innerText = "Added!";
-    }
-</script>
+
 
 </body>
 

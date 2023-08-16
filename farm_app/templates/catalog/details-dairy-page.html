@@ -3,18 +3,25 @@
 {% block title %} {{ dairy.name }} - {{ dairy.percent }} {% endblock %}
 
 {% block page_content %}
+    {% if dairy.user_id != request.user.id %}
     <a href="#"
        class="buy-button"
        hx-get="{% url 'add to cart' 'DairyProduct' dairy.id %}"
        hx-target="#menu-cart-button"
        hx-swap="outerHTML"
     >Add to cart</a>
-    {% if photo %}
-        <img src="{{ photo.url }}" alt="Photo">
+    {% endif %}
+
+    {% if   item.product.photo %}
+        <img class="details-image" width="200" height="200" src="{{ photo.url }}" alt="Photo">
 
     {% else %}
-        <img src="{% static "images/milk-products.jpg" %}" alt="Photo">
+        <img class="details-image" width="200" height="200"
+             src="{% static 'images/milk-products.jpg' %}"
+             alt="Milk Photo">
     {% endif %}
+
+
     <br>
     {% if dairy.user_id == request.user.pk %}
         <a href="{% url 'edit dairy' dairy.pk %}">Edit</a>

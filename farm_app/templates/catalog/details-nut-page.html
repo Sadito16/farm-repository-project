@@ -3,18 +3,25 @@
 {% block title %} {{ nut.type }} {{ nut.name }} {% endblock %}
 
 {% block page_content %}
+    {% if nut.user_id != request.user.id %}
     <a href="#"
        class="buy-button"
        hx-get="{% url 'add to cart' 'Nut' nut.id %}"
        hx-target="#menu-cart-button"
        hx-swap="outerHTML"
     >Add to cart</a>
-    {% if photo %}
-        <img src="{{ photo.url }}" alt="Photo">
+    {% endif %}
+
+         {% if  photo %}
+        <img class="details-image" width="200" height="200" src="{{ photo.url }}" alt="Photo">
 
     {% else %}
-        <img src="{% static "images/nuts-and-dry-fruits.jpg" %}" alt="Photo">
+        <img class="details-image" width="200" height="200"
+             src="{% static 'images/nuts-and-dry-fruits.jpg' %}"
+             alt="Nut Photo">
     {% endif %}
+
+
     <br>
     {% if nut.user_id == request.user.pk %}
         <a href="{% url 'edit nut' nut.pk %}">Edit</a>

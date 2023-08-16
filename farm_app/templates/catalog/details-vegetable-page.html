@@ -3,15 +3,23 @@
 
 {% load static %}
 {% block page_content %}
+    {% if plant.user_id != request.user.id %}
     <a href="#"
        class="buy-button"
-       hx-get="{% url 'add to cart' item_type='VegetableAndFruit' product_id=plant.id %}"
+       hx-get="{% url 'add to cart' 'VegetableAndFruit' plant.id %}"
        hx-target="#menu-cart-button"
        hx-swap="outerHTML"
-       data-serialized="{{ vegetable|json_script }}"
     >Add to cart</a>
+    {% endif %}
 
-    <img src="{{ photo.url }}" alt="Photo">
+    {% if   item.product.photo %}
+        <img class="details-image" width="200" height="200" src="{{ photo.url }}" alt="Photo">
+
+    {% else %}
+        <img class="details-image" width="200" height="200"
+             src="{% static 'images/fruit-and-veg.jpg' %}"
+             alt="Vegetable Photo">
+    {% endif %}
     <br>
     {% if plant.user_id == request.user.pk %}
         <a href="{% url 'edit vegetable' plant.pk %}">Edit</a>

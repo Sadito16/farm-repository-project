@@ -1,21 +1,33 @@
 from itertools import chain
 
-from django.core.serializers.json import DjangoJSONEncoder
+from django.db.models import Q
 from django.conf.urls.static import static
+from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import generic as views
-import json
+
 
 from farm_app.accounts.models import FarmerUser
 from farm_app.catalog.forms import *
 from farm_app.catalog.models import *
-from farm_app.catalog.serializers import VegetableAndFruitSerializer, DairyProductSerializer, NutSerializer, \
-    AnimalProductSerializer
 
+def search(request):
+    products = VegetableAndFruit.objects.all() + Nut.objects.all() + AnimalProduct.objects.all() + DairyProduct.objects.all()
+    query = request.GET.get('query')
+    if query:
+        products = products.filter(Q(name__icontains=query))
 
+    context = {
+        'products': products,
+        'query': query,
+    }
+
+    return render(request,'main/home.html', context)
 class IndexView(views.ListView):
 
     template_name = 'main/home.html'
+    all_products = list(chain(VegetableAndFruit.objects.all(),Nut.objects.all(),AnimalProduct.objects.all(),DairyProduct.objects.all()))
+
 
     def get_queryset(self):
         veg_fruit = VegetableAndFruit.objects.all()
@@ -32,6 +44,7 @@ class IndexView(views.ListView):
         context['dairies'] = DairyProduct.objects.all()
         context['nuts'] = Nut.objects.all()
         context['animal_products'] = AnimalProduct.objects.all()
+        context['all_products'] = self.all_products
 
         return context
 
@@ -101,6 +114,7 @@ class VegetableDeleteView(views.DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context ['product_model'] = 'VegetableAndFruit'
         return context
 
 
@@ -168,6 +182,7 @@ class NutDeleteView(views.DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context ['product_model'] = 'Nut'
         return context
 
 
@@ -228,13 +243,14 @@ class DairyDetailsView(views.DetailView):
 
 
 class DairyDeleteView(views.DeleteView):
-    model = Nut
+    model = DairyProduct
     context_object_name = 'product'
     template_name = 'catalog/delete-page.html'
     success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context ['product_model'] = 'DairyProduct'
         return context
 
 
@@ -302,4 +318,5 @@ class AnimalDeleteView(views.DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context ['product_model'] = 'AnimalProduct'
         return context
