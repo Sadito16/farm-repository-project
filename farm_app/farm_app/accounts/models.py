@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
 from django.db import models
 
+from farm_app.accounts.validators import validate_only_letter_value
 from farm_app.catalog.models import ChoicesLengthMixin
 from farm_app.catalog.validators import validate_image_size
 
@@ -24,9 +25,9 @@ class FarmerUser(AbstractUser):
         max_length=USERNAME_MAX_LENGTH,
         unique=True,
     )
-    first_name = models.CharField(null=True,blank=True,max_length=FIRST_NAME_MAX_LENGTH)
+    first_name = models.CharField(null=True,blank=True,max_length=FIRST_NAME_MAX_LENGTH, validators=[validate_only_letter_value])
 
-    last_name = models.CharField(null=True,blank=True,max_length=LAST_NAME_MAX_LENGTH)
+    last_name = models.CharField(null=True,blank=True,max_length=LAST_NAME_MAX_LENGTH, validators=[validate_only_letter_value])
 
     email =models.EmailField()
     profile_picture = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))

@@ -5,6 +5,7 @@ from django.utils import timezone
 from rest_framework import serializers
 from django.db import models
 
+from farm_app.accounts.validators import validate_only_letter_value
 from farm_app.catalog.validators import validate_image_size
 
 UserModel = 'accounts.FarmerUser'
@@ -91,7 +92,7 @@ class VegetableAndFruit(models.Model):
                             default=VegFruitChoice.OTHER.value)
 
     price = models.FloatField()
-    production = models.CharField(null=True, blank=True, max_length=MAX_LENGTH_OF_PRODUCTION_COUNTRY)
+    production = models.CharField(null=True, blank=True, max_length=MAX_LENGTH_OF_PRODUCTION_COUNTRY , validators=[validate_only_letter_value])
 
     photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
 
@@ -141,13 +142,13 @@ class AnimalProduct(models.Model):
                             max_length=AnimalChoice.max_length(),
                             default=AnimalChoice.OTHER.value)
     name = models.CharField(
-        max_length=PRODUCT_MAX_LENGTH,
+        max_length=PRODUCT_MAX_LENGTH, validators = [validate_only_letter_value]
     )
     price = models.FloatField()
     photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
     date_of_birth = models.DateField(null=True,blank=True)
 
-    production = models.CharField(null=True, blank=True, max_length=MAX_LENGTH_OF_PRODUCTION_COUNTRY)
+    production = models.CharField(null=True, blank=True, max_length=MAX_LENGTH_OF_PRODUCTION_COUNTRY , validators=[validate_only_letter_value])
     user = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
@@ -171,7 +172,7 @@ class Nut(models.Model):
                             default=NutChoices.OTHER.value)
 
     name = models.CharField(
-        max_length=NUTS_MAX_LENGTH,
+        max_length=NUTS_MAX_LENGTH, validators=[validate_only_letter_value]
     )
     price = models.FloatField()
     photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))

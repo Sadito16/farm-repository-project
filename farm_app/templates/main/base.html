@@ -14,24 +14,50 @@
 
 
 <ul class="navbar">
-    <li class="left-item">
+    <li class="left-item navitem first-nav" style="background-color: #f9c33b">
         <a href="{% url 'home' %}">Farm</a>
     </li>
+    <div class="vertical-line"></div>
+    <li class="left-item navitem"><a href="{% url 'add vegetable' %}">Add Vegetable and Fruit</a></li>
+    <div class="vertical-line"></div>
+    <li class="left-item navitem"><a href="{% url 'add animal' %}">Add Animal Product</a></li>
+    <div class="vertical-line"></div>
+    <li class="left-item navitem"><a href="{% url 'add dairy' %}">Add Dairy Product</a></li>
+    <div class="vertical-line"></div>
+    <li class="left-item navitem first-nav"><a href="{% url 'add nut' %}">Add Nut</a></li>
 
-    <li class="left-item dropdownli">
-        <div class="dropdown">
-            <button class="dropbtn"><a>Catalog</a></button>
-            <div class="dropdown-content">
-                <a class="filter-btn" id="animals-button" onclick="filterSelection('animals')">Animals</a>
-                <a class="filter-btn" id="dairies-button" onclick="filterSelection('dairies')">Dairy Products</a>
-                <a class="filter-btn" id="nuts-button" onclick="filterSelection('nuts')">Nuts</a>
-                <a class="filter-btn" id="vegetables-button" onclick="filterSelection('vegetables')">Vegetables and
-                    Fruits</a>
-                <hr class="dropdown-divider">
-                <a class="filter-btn active" id="mine-button" onclick="filterSelection('all')">Mine</a>
-            </div>
-        </div>
-    </li>
+    {#    <li class="left-item dropdownli">#}
+    {#        <div class="dropdown">#}
+    {#            <button class="dropbtn"><a>Catalog</a></button>#}
+    {#            <div class="dropdown-content">#}
+    {#                <a class="filter-btn" id="animals-button" onclick="filterSelection('animals')">Animals</a>#}
+    {#                <a class="filter-btn" id="dairies-button" onclick="filterSelection('dairies')">Dairy Products</a>#}
+    {#                <a class="filter-btn" id="nuts-button" onclick="filterSelection('nuts')">Nuts</a>#}
+    {#                <a class="filter-btn" id="vegetables-button" onclick="filterSelection('vegetables')">Vegetables and#}
+    {#                    Fruits</a>#}
+    {#                <hr class="dropdown-divider">#}
+    {#                <a class="filter-btn active" id="mine-button" onclick="filterSelection('all')">Mine</a>#}
+    {#            </div>#}
+    {#        </div>#}
+    {##}
+    {##}
+    {#    </li>#}
+
+    {#    <li class="left-item dropdownli">#}
+
+    {#        <div class="dropdown">#}
+    {#            <button class="dropbtn"><a>Add Product</a></button>#}
+    {#            <div class="dropdown-content">#}
+    {#                <a class="filter-btn" id="animals-button" href="{% url 'add vegetable' %}">Add Vegetable and Fruit</a>#}
+    {#                <a class="filter-btn" id="dairies-button" href="{% url 'add animal' %}">Add Animal Product</a>#}
+    {#                <a class="filter-btn" id="nuts-button" href="{% url 'add dairy' %}">Add Dairy Product</a>#}
+    {#                <a class="filter-btn" id="vegetables-button" href="{% url 'add nut' %}">Add Nut</a>#}
+    {#                <hr class="dropdown-divider">#}
+    {#                <a class="filter-btn active" id="mine-button" onclick="filterSelection('all')">Mine</a>#}
+    {#            </div>#}
+    {##}
+    {#        </div>#}
+    {#    </li>#}
 
     {#    <li class="left-item">#}
     {#        <form method="get" action=".">#}
@@ -47,18 +73,18 @@
 
 
     {% if request.user.is_authenticated %}
-        <li class="right-item">
+        <li class="right-item navitem first-nav">
             <a class="nav-link" href="{% url 'profile details' pk=request.user.pk %}">Profile</a>
         </li>
         <li
-                class="right-item"
+                class="right-item navitem"
                 hx-get="{% url 'menu cart' %}"
                 hx-trigger="update-menu-cart from:body"
                 hx-swap="innerHTML"
         >
             {% include 'cart/menu_cart.html' %}
         </li>
-        <li class="right-item">
+        <li class="right-item navitem">
             <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
         </li>
 
@@ -66,10 +92,10 @@
 
     {% else %}
 
-        <li class="right-item">
+        <li class="right-item navitem">
             <a class="nav-link" href="{% url "login" %}">Log In</a>
         </li>
-        <li class="right-item">
+        <li class="right-item navitem first-nav">
             <a class="nav-link" href="{% url "register" %}">Register</a>
         </li>
 
@@ -77,18 +103,6 @@
     {% endif %}
 
 </ul>
-
-{% if request.user.is_authenticated %}
-
-    <ul class="add-products-list">
-        <li><a href="{% url 'add vegetable' %}">Add Vegetable and Fruit</a></li>
-        <li><a href="{% url 'add animal' %}">Add Animal Product</a></li>
-        <li><a href="{% url 'add dairy' %}">Add Dairy Product</a></li>
-        <li><a style="margin-right:0" href="{% url 'add nut' %}">Add Nut</a></li>
-    </ul>
-
-{% endif %}
-
 
 
 <div class="main">

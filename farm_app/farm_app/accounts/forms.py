@@ -20,13 +20,14 @@ class CreateProfileForm(auth_forms.UserCreationForm):
 
     class Meta(auth_forms.UserCreationForm.Meta):
         model = FarmerUser
-        fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
+        fields = ('first_name', 'last_name', 'username', 'email', 'profile_picture', 'password1', 'password2')
 
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-field'}),
             'last_name': forms.TextInput(attrs={'class': 'form-field'}),
             'username': forms.TextInput(attrs={'class': 'form-field'}),
             'email': forms.EmailInput(attrs={'class': 'form-field'}),
+            'profile_picture': forms.FileInput(attrs={'class': 'form-field'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -51,7 +52,7 @@ class LoginProfileForm(auth_forms.AuthenticationForm):
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = FarmerUser
-        fields = ['username', 'first_name', 'last_name', 'email', 'date_of_birth', 'gender']
+        fields = ['username', 'first_name', 'last_name', 'email', 'date_of_birth', 'gender', 'profile_picture']
         widgets = {
             'username': forms.TextInput(
                 attrs={
@@ -68,12 +69,6 @@ class EditProfileForm(forms.ModelForm):
                     'class': 'form-field',
                 }
             ),
-            'profile_picture': forms.TextInput(
-                attrs={
-                    'class': 'form-field',
-                }
-
-            ),
             'email': forms.EmailInput(
                 attrs={
                     'class': 'form-field',
@@ -84,20 +79,16 @@ class EditProfileForm(forms.ModelForm):
                 attrs={
                     'class': 'form-field',
                 }
+            ),
+            'gender': forms.Select(
+                attrs={
+                    'class': 'form-field',
+                }
+            ),
+            'profile_picture': forms.FileInput(
+                attrs={
+                    'class': 'form-field',
+                }
             )
 
         }
-
-#
-# class DeleteProfileForm(forms.ModelForm):
-#     def save(self, commit=True):
-#         pets = list(self.instance.pet_set.all())
-#         # should be done with signals
-#         PetPhoto.objects.filter(tagged_pets__in=pets).delete()
-#
-#         self.instance.delete()
-#         return self.instance
-#
-#     class Meta:
-#         model = Profile
-#         fields = ()
