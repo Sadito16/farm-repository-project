@@ -1,6 +1,7 @@
 import datetime
 from enum import Enum
 
+from django.utils import timezone
 from rest_framework import serializers
 from django.db import models
 
@@ -98,9 +99,6 @@ class VegetableAndFruit(models.Model):
         UserModel,
         on_delete=models.CASCADE,
     )
-    publication_date = models.DateField(
-        auto_now=True,
-    )
 
 
     def to_json(self):
@@ -120,11 +118,7 @@ class DairyProduct(models.Model):
     percent = models.FloatField(null=True, blank=True)
     price = models.FloatField()
     photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
-    package = models.CharField(null =False,blank=False, max_length=MAX_LENGTH_OF_PACKAGE)
 
-    publication_date = models.DateField(
-        auto_now=True,
-    )
     user = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
@@ -141,7 +135,7 @@ class DairyProduct(models.Model):
 class AnimalProduct(models.Model):
     MAX_LENGTH_OF_PRODUCTION_COUNTRY = 40
     PRODUCT_MAX_LENGTH = 40
-    MAX_LENGTH_OF_PACKAGE= 100
+
 
     type = models.CharField(choices=AnimalChoice.choice(),
                             max_length=AnimalChoice.max_length(),
@@ -151,11 +145,8 @@ class AnimalProduct(models.Model):
     )
     price = models.FloatField()
     photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
-    package = models.CharField(null=False, blank=False, max_length=MAX_LENGTH_OF_PACKAGE)
     date_of_birth = models.DateField(null=True,blank=True)
-    date_of_publication = models.DateField(
-        auto_now=True,
-    )
+
     production = models.CharField(null=True, blank=True, max_length=MAX_LENGTH_OF_PRODUCTION_COUNTRY)
     user = models.ForeignKey(
         UserModel,
@@ -183,12 +174,8 @@ class Nut(models.Model):
         max_length=NUTS_MAX_LENGTH,
     )
     price = models.FloatField()
-    package = models.IntegerField()
     photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
 
-    publication_date = models.DateField(
-        auto_now=True,
-    )
     user = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,

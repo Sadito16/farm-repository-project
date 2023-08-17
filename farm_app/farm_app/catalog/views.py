@@ -138,7 +138,7 @@ class NutCreateView(views.CreateView):
 class NutEditView(views.UpdateView):
     model = Nut
     template_name = 'catalog/edit-nut-page.html'
-    fields = ['type','name', 'price','package']
+    fields = ['type','name', 'price']
     context_object_name = 'nut'
 
     def get_success_url(self):

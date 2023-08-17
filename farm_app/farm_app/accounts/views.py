@@ -1,4 +1,5 @@
 from collections import Counter
+from itertools import chain
 
 from django.conf.urls.static import static
 from django.http import JsonResponse, HttpResponse
@@ -12,6 +13,7 @@ from farm_app.catalog.models import VegetableAndFruit, DairyProduct, Nut, Animal
 
 UserModel = get_user_model()
 
+
 class ProfileLoginView(auth_views.LoginView):
     form_class = LoginProfileForm
     template_name = 'accounts/profile_login.html'
@@ -22,7 +24,7 @@ class ProfileLoginView(auth_views.LoginView):
 
 
 class ProfileRegisterView(views.CreateView):
-    model  = FarmerUser
+    model = FarmerUser
     form_class = CreateProfileForm
     template_name = 'accounts/profile_create.html'
     success_url = reverse_lazy('home')
@@ -31,6 +33,7 @@ class ProfileRegisterView(views.CreateView):
         result = super().form_valid(form)
         login(self.request, self.object)
         return result
+
 
 class ProfileLogoutView(auth_views.LogoutView):
     pass
@@ -47,6 +50,8 @@ class ProfileDetailsView(views.DetailView):
             return self.object.profile_picture
         return self.picture
 
+    def model_name(self, product):
+        return str(product.__class__.__name__)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -56,23 +61,25 @@ class ProfileDetailsView(views.DetailView):
         dairy = DairyProduct.objects.filter(user_id=user.id)
         nut = Nut.objects.filter(user_id=user.id)
         animal = AnimalProduct.objects.filter(user_id=user.id)
+        all_products = list(chain(vegetable, dairy, nut, animal))
 
         context['veg_fruit'] = vegetable
         context['dairies'] = dairy
         context['nuts'] = nut
         context['animal_products'] = animal
         context['profile_picture'] = self.get_profile_image()
+        context['all_my_products'] = [
+            {'product': product, 'model_name': self.model_name(product)} for product in all_products
+        ]
         context['products_count'] = (vegetable.count() + dairy.count() + nut.count() + animal.count())
 
         return context
 
 
-
-
 class ProfileEditView(views.UpdateView):
     model = UserModel
     template_name = 'accounts/profile_edit.html'
-    fields = ['username','first_name','last_name','email','date_of_birth','gender']
+    fields = ['username', 'first_name', 'last_name', 'email', 'date_of_birth', 'gender']
 
     def get_success_url(self):
         return reverse('profile details', kwargs={
@@ -82,6 +89,7 @@ class ProfileEditView(views.UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
 
 class ProfileDeleteView(views.DeleteView):
     model = FarmerUser

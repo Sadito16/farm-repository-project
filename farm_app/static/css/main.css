@@ -1,6 +1,11 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin-top: 0;
 }
 
 
@@ -17,8 +22,13 @@ html, body {
     display: flex;
     flex-wrap: wrap;
     height: 100%;
-    justify-content: center;
-    padding: 70px 0 50px 0 ;
+    justify-content: space-evenly;
+    padding: 40px 0;
+
+}
+
+.main::after {
+    clear: right;
 }
 
 .main > div.card {
@@ -32,18 +42,18 @@ html, body {
 
 
 .navbar {
+    overflow: hidden;
     position: fixed;
     top: 0;
+    width: 100%;
     right: 0;
     left: 0;
-    width: 100%;
     list-style-type: none;
     margin: 0;
     padding: 0;
     background-color: #FBE19D;
     height: 75px;
     z-index: 10;
-
 }
 
 .navbar li a {
@@ -180,21 +190,6 @@ li.dropdown {
     color: #1E1501;
 }
 
-.farm-link {
-    text-decoration: none;
-    color: #1E1501;
-}
-
-
-footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: #FBE19D;
-    text-align: center;
-}
-
 
 .card {
     display: inline-block;
@@ -202,22 +197,24 @@ footer {
     width: 40%;
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    max-width: 250px;
+    max-width: 275px;
     margin: auto;
     text-align: center;
     font-family: arial, serif;
     align-items: center;
     text-decoration: none;
-    opacity: 0.9;
+    opacity: 0.8;
 }
+
 .card:hover {
-  box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.2);
     opacity: 1;
 }
-.product-card-image{
-  border-radius: 5px 5px 0 0;
-    width:250px;
-    height:250px;
+
+.product-card-image {
+    border-radius: 5px 5px 0 0;
+    width: 275px;
+    height: 275px;
 }
 
 .price {
@@ -243,6 +240,65 @@ footer {
     opacity: 0.7;
 }
 
-.card{
+.farm-link {
+    text-decoration: none;
+    color: #1E1501;
+}
+
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 25px;
+    background-color: #FBE19D;
+    text-align: center;
+}
+
+
+
+
+.cust-button {
+    appearance: none;
+    background-color: #fbe19d;
+    border-radius: 40em;
+    border-style: none;
+    box-shadow: #fad77f 0 -12px 6px inset;
+    box-sizing: border-box;
+    color: #1e1501;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -.24px;
+    margin: 15px 0 0 215px;
+    outline: none;
+    quotes: auto;
+    text-align: center;
+    text-decoration: none;
+    transition: all .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+
 
 }
+
+.cust-button:hover {
+    background-color: #c58f07;
+    box-shadow: #a77906 0 -6px 8px inset;
+    transform: scale(1.125);
+}
+
+.cust-button:active {
+    transform: scale(1.025);
+}
+
+@media (min-width: 768px) {
+    .cust-button {
+        font-size: 1.5rem;
+        padding: .75rem 2rem;
+    }
+}
+

@@ -1,6 +1,4 @@
 {% load static %}
-{% for animal in animal_products %}
-
     <div class="card animals">
         <a href="{% url 'details animal' animal.pk %}">
             {% if animal.photo %}
@@ -26,4 +24,3 @@
         </a>
     </div>
 
-{% endfor %}

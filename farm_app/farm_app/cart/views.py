@@ -1,13 +1,8 @@
 from django.apps import apps
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from django.urls import reverse
-from rest_framework.renderers import JSONRenderer
-from django.core import serializers
+
 from farm_app.cart.cart import Cart
-from farm_app.catalog.models import VegetableAndFruit, DairyProduct, AnimalProduct, Nut
-from farm_app.catalog.serializers import AnimalProductSerializer, VegetableAndFruitSerializer, NutSerializer, \
-    DairyProductSerializer
 from json import JSONEncoder
 
 def _default(self, obj):
@@ -16,6 +11,7 @@ def _default(self, obj):
 _default.default = JSONEncoder().default
 JSONEncoder.default = _default
 
+@login_required(login_url='login')
 def add_to_cart(request, item_type, product_id):
     cart = Cart(request)
     cart.add(product_id, item_type)

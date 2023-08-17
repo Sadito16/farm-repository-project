@@ -3,104 +3,134 @@
 {% load static %}
 {% block page_content %}
 
+    <div class="everything">
 
-    <div class="row justify-content-center">
-        <div class="d-flex">
+        <div class="profile-image">
             {% if profile_picture %}
-            <img src="{{ profile_picture.url }}" alt="Photo">
+                <img src="{{ profile_picture.url }}" alt="Photo">
 
-        {% else %}
-            <img src="{% static "images/profile.jpg" %}" alt="Photo">
-        {% endif %}
-            <div class="d-inline p-2 w-50">
+            {% elif profile.gender == 'Female' %}
+                <img src="{% static 'images/undraw_female_avatar_efig.svg' %}" alt="Female Icon">
+            {% else %}
+                <img src="{% static 'images/undraw_male_avatar_g98d.svg' %}" alt="Male Icon">
+            {% endif %}
+            <h1> {{ profile.get_user_name }}</h1>
 
-
-                <div>
+        </div>
+        <div class="profile-information">
+            <div id="profile-buttons">
                 {% if request.user.id == object.id %}
-                    <a href="{%  url 'profile edit' object.pk %}">Edit</a>
-                <br>
-                <a href="{%  url 'profile delete' object.pk %}">Delete</a>
-                <br>
+                    <a class="cust-button prof-button" href="{% url 'profile edit' object.pk %}">Edit</a>
+
+                    <a class="cust-button prof-button" href="{% url 'profile delete' object.pk %}">Delete</a>
                 {% endif %}
-                    <h5><u>Name:</u> {{ profile.get_user_name }}</h5>
-
-                    <!-- If Date of Birth -->
-                    {% if profile.date_of_birth %}
-                        <h5>
-                            <u>Birthdate:</u> {{ profile.date_of_birth }}
-                        </h5>
-                    {% endif %}
-
-
-                        <h5><u>Email:</u> {{ profile.email }}</h5>
-
-                    {% if profile.gender %}
-                        <h5><u>Gender:</u> {{ profile.gender }}</h5>
-                    {% endif %}
-
-                </div>
-                <p>Total Products: {{ products_count }}</p>
-
             </div>
+            <table>
+                <tr>
+                    <th>
+                        <p> Email</p>
+                    </th>
+                    <th>
+                        <p>{{ profile.email }}</p>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <p> Birthdate</p>
+                    </th>
+                    <th>
+                        <p>
+                            {% if profile.date_of_birth %}
+                                {{ profile.date_of_birth }}
+                            {% else %}
+                                Not mentioned
+                            {% endif %}
+                        </p>
+                    </th>
+                </tr>
+
+                <tr>
+                    <th>
+                        <p>Gender</p>
+                    </th>
+                    <th>
+                        <p>
+                            {% if profile.gender %}
+                                {{ profile.gender }}
+                            {% else %}
+                                Not mentioned
+                            {% endif %}
+                        </p>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <p>
+                            Total Products
+                        </p>
+                    </th>
+                    <th>
+                        <p>{{ products_count }}</p>
+                    </th>
+                </tr>
+            </table>
+        </div>
+
+        <h1 class="text-center big-text">My Products</h1>
+        <div class="profile-products">
+
+            {% for item in all_my_products %}
+
+                {% if item.model_name == 'VegetableAndFruit' %}
+                    <a href="{% url 'details vegetable' item.product.id %}">
+                {% elif item.model_name == 'Nut' %}
+                    <a href="{% url 'details nut' item.product.id %}">
+                {% elif item.model_name == 'DairyProduct' %}
+                    <a href="{% url 'details dairy' item.product.id %}">
+                {% elif item.model_name == 'AnimalProduct' %}
+                    <a href="{% url 'details animal' item.product.id %}">
+                {% endif %}
+            <div class="product-card">
+
+
+                {% if not  item.product.photo %}
+                    {% if item.model_name == 'VegetableAndFruit' %}
+                        <img class="small-card-image" src="{% static 'images/fruit-and-veg.jpg' %}"
+                             alt="Veggie Photo">
+                    {% elif item.model_name == 'Nut' %}
+                        <img class="small-card-image" src="{% static 'images/nuts-and-dry-fruits.jpg' %}"
+                             alt="Nut Photo">
+                    {% elif item.model_name == 'DairyProduct' %}
+                        <img class="small-card-image" src="{% static 'images/milk-products.jpg' %}"
+                             alt="Milk Photo">
+                    {% elif item.model_name == 'AnimalProduct' %}
+                        <img class="small-card-image" src="{% static 'images/meat.jpg' %}" alt="Meat Photo">
+                    {% endif %}
+                {% else %}
+                    <img class="small-card-image" src="{{ item.product.photo.url }}" alt="Photo">
+                {% endif %}
+
+                <h1>{{ product }}</h1>
+                <p class="price">${{ item.product.price|floatformat:2 }}</p>
+
+
+                <button id="add-to-cart-{{ item.product.pk }}" onclick="addToCart({{ item.product.pk }})">
+                    <a
+                            hx-get="{% url 'add to cart' item_type=item.model_name product_id=item.product.id %}"
+                            hx-target="#menu-cart-button"
+                            hx-swap="outerHTML"
+                    >
+                        Add to cart
+                    </a>
+                </button>
+                </div>
+            </a>
+            </a>
+            </a>
+            </a>
+
+            {% endfor %}
         </div>
     </div>
 
-    <h2 class="text-center">My Products</h2>
-    <div class="container mb-4">
-        <div class="d-flex justify-content-start mb-5">
-
-
-            <h3>Vegetables and Fruits</h3>
-            {% for veg in veg_fruit %}
-                {% if veg.user_id == profile.pk %}
-                <div style="width: 18rem;">
-                    {{ veg }}
-                    {% if is_owner %}
-                        <a href="{% url 'edit vegetable' veg.pk %}" >Edit</a>
-                        <a href="{% url 'delete vegetable' veg.pk %}" >Delete</a>
-                    {% endif %}
-                </div>
-                {% endif %}
-            {% endfor %}
-
-            <h3>Dairy Products</h3>
-            {% for dairy in dairies %}
-                {% if dairy.user_id == profile.pk %}
-                <div style="width: 18rem;">
-                    {{ dairy }}
-                    {% if is_owner %}
-                        <a href="{% url 'edit dairy' dairy.pk %}" >Edit</a>
-                        <a href="{% url 'delete dairy' dairy.pk %}" >Delete</a>
-                    {% endif %}
-                </div>
-                {% endif %}
-            {% endfor %}
-
-                    <h3>Nuts</h3>
-            {% for nut in nuts %}
-                {% if nut.user_id == profile.pk %}
-                <div style="width: 18rem;">
-                    {{ nut }}
-                    {% if is_owner %}
-                        <a href="{% url 'edit nut' nut.pk %}" >Edit</a>
-                        <a href="{% url 'delete nut' nut.pk %}" >Delete</a>
-                    {% endif %}
-                </div>
-                {% endif %}
-            {% endfor %}
-
-                    <h3>Animal Products</h3>
-            {% for prod in animal_products %}
-                {% if prod.user_id == profile.pk %}
-                <div style="width: 18rem;">
-                    {{ prod }}
-                    {% if is_owner %}
-                        <a href="{% url 'edit animal' prod.pk %}">Edit</a>
-                        <a href="{% url 'delete animal' prod.pk %}">Delete</a>
-                    {% endif %}
-                </div>
-                {% endif %}
-            {% endfor %}
-
-        </div>
 {% endblock %}

@@ -25,23 +25,24 @@
                 <a class="filter-btn" id="animals-button" onclick="filterSelection('animals')">Animals</a>
                 <a class="filter-btn" id="dairies-button" onclick="filterSelection('dairies')">Dairy Products</a>
                 <a class="filter-btn" id="nuts-button" onclick="filterSelection('nuts')">Nuts</a>
-                <a class="filter-btn" id="vegetables-button" onclick="filterSelection('vegetables')">Vegetables and Fruits</a>
+                <a class="filter-btn" id="vegetables-button" onclick="filterSelection('vegetables')">Vegetables and
+                    Fruits</a>
                 <hr class="dropdown-divider">
                 <a class="filter-btn active" id="mine-button" onclick="filterSelection('all')">Mine</a>
             </div>
         </div>
     </li>
 
-{#    <li class="left-item">#}
-{#        <form method="get" action=".">#}
-{#            <a><label for="query">Search:</label></a>#}
-{#            <input type="text" id="query" name="query" placeholder="Search...">#}
-{#            <button>#}
-{#                <img alt="Search" width="10px" height="10px" src="{% static 'images/search-icon.png' %}">#}
-{#            </button>#}
-{##}
-{#        </form>#}
-{#    </li>#}
+    {#    <li class="left-item">#}
+    {#        <form method="get" action=".">#}
+    {#            <a><label for="query">Search:</label></a>#}
+    {#            <input type="text" id="query" name="query" placeholder="Search...">#}
+    {#            <button>#}
+    {#                <img alt="Search" width="10px" height="10px" src="{% static 'images/search-icon.png' %}">#}
+    {#            </button>#}
+    {##}
+    {#        </form>#}
+    {#    </li>#}
 
 
 
@@ -97,15 +98,18 @@
     {% endblock %}
 </div>
 
-<footer class="footer">
-
+<div id="footer">
     <div class="container p-4"></div>
     <div class="text-center p-3">
-        © 2023, June:
-        <a class="farm-link" href="{% url 'home' %}">Farm</a>
-        , Sadi's project
+        <a>
+            © 2023, June:
+            <a class="farm-link" href="{% url 'home' %}">
+                <img alt="Icon" src="{% static 'images/favicon.ico' %}">
+                Farm</a>
+            , Sadi's project
+        </a>
     </div>
-</footer>
+</div>
 
 <script src="https://unpkg.com/htmx.org@1.9.4"></script>
 

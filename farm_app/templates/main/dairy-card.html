@@ -1,6 +1,4 @@
 {% load static %}
-{% for dairy in dairies %}
-
     <div class="card dairies">
         <a href="{% url 'details dairy' dairy.pk %}">
             {% if dairy.photo %}
@@ -26,5 +24,3 @@
         </a>
     </div>
 
-
-{% endfor %}

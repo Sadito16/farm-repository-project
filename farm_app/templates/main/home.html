@@ -9,15 +9,23 @@
 {% endblock %}
 
 {% block page_content %}
-<div class="main">
+    <div class="main">
+        {% for vegetable in veg_fruit %}
+            {% include 'main/vegetable-card.html' %}
+        {% endfor %}
 
-    {% include 'main/vegetable-card.html' %}
+        {% for dairy in dairies %}
+        {% include 'main/dairy-card.html' %}
+        {% endfor %}
 
-    {% include 'main/dairy-card.html' %}
+        {% for animal in animal_products %}
+        {% include 'main/animal-card.html' %}
+        {% endfor %}
 
-    {% include 'main/animal-card.html' %}
+        {% for nut in nuts %}
+        {% include 'main/nut-card.html' %}
+        {% endfor %}
 
-    {% include 'main/nut-card.html' %}
-</div>
+    </div>
 {% endblock %}
 
