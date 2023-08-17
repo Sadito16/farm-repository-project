@@ -115,7 +115,7 @@
                 <p class="price">${{ item.product.price|floatformat:2 }}</p>
 
 
-                <button id="add-to-cart-{{ item.product.pk }}" onclick="addToCart({{ item.product.pk }})">
+                <button id="add-to-cart-{{ item.product.pk }}" onclick="addToCart({{ item.product.id }})">
                     <a
                             hx-get="{% url 'add to cart' item_type=item.model_name product_id=item.product.id %}"
                             hx-target="#menu-cart-button"

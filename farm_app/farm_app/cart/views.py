@@ -11,7 +11,7 @@ def _default(self, obj):
 _default.default = JSONEncoder().default
 JSONEncoder.default = _default
 
-@login_required(login_url='login')
+@login_required
 def add_to_cart(request, item_type, product_id):
     cart = Cart(request)
     cart.add(product_id, item_type)
