@@ -93,7 +93,6 @@ class ProfileEditView(views.UpdateView):
 
 class ProfileDeleteView(views.DeleteView):
     model = FarmerUser
-    template_name = 'accounts/profile_delete.html'
     success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):

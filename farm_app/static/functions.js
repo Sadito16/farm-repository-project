@@ -13,3 +13,11 @@ function addToCart(productId) {
 //     this.className += " active";
 //   });
 // }
+
+var modal = document.getElementById('modal-delete');
+
+window.onclick = function(event) {
+  if (event.target !== modal) {
+    modal.style.display = "none";
+  }
+}

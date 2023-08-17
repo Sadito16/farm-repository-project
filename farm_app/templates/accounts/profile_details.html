@@ -22,7 +22,8 @@
                 {% if request.user.id == object.id %}
                     <a class="cust-button prof-button" href="{% url 'profile edit' object.pk %}">Edit</a>
 
-                    <a class="cust-button prof-button" href="{% url 'profile delete' object.pk %}">Delete</a>
+                    <a id="deleteProfileBtn" class="cust-button prof-button"
+                       onclick="document.getElementById('modal-delete').style.display='block'">Delete</a>
                 {% endif %}
             </div>
             <table>
@@ -123,7 +124,7 @@
                         Add to cart
                     </a>
                 </button>
-                </div>
+            </div>
             </a>
             </a>
             </a>
@@ -131,6 +132,27 @@
 
             {% endfor %}
         </div>
+    </div>
+
+
+    <div id="modal-delete" class="modal">
+    <span onclick="document.getElementById('modal-delete').style.display='none'" class="close"
+          title="Close Modal">×</span>
+        <form class="modal-content" action="{% url 'profile delete' object.pk %}" method="post">
+            <div class="container">
+                <h1>Delete Account</h1>
+                <p>Are you sure you want to delete your account?</p>
+                {% csrf_token %}
+                <div class="clearfix">
+                    <button type="button" onclick="document.getElementById('modal-delete').style.display='none'"
+                            class="cancelbtn">
+                        Cancel
+                    </button>
+                    <input onclick="document.getElementById('modal-delete').style.display='none'" class="deletebtn"
+                           type="submit" value="Delete">
+                </div>
+            </div>
+        </form>
     </div>
 
 {% endblock %}
