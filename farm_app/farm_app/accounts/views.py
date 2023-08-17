@@ -7,7 +7,7 @@ from django.views import generic as views
 from django.contrib.auth import views as auth_views, login, get_user_model
 from django.urls import reverse_lazy, reverse
 
-from farm_app.accounts.forms import CreateProfileForm, LoginProfileForm
+from farm_app.accounts.forms import CreateProfileForm, LoginProfileForm, EditProfileForm
 from farm_app.accounts.models import FarmerUser
 from farm_app.catalog.models import VegetableAndFruit, DairyProduct, Nut, AnimalProduct
 
@@ -77,9 +77,9 @@ class ProfileDetailsView(views.DetailView):
 
 
 class ProfileEditView(views.UpdateView):
-    model = UserModel
+    model = FarmerUser
+    form_class = EditProfileForm
     template_name = 'accounts/profile_edit.html'
-    fields = ['username', 'first_name', 'last_name', 'email', 'date_of_birth', 'gender']
 
     def get_success_url(self):
         return reverse('profile details', kwargs={

@@ -19,34 +19,6 @@
     height: 400px;
 }
 
-.create-field {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 3px solid #ccc;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-    outline: none;
-}
-
-.create-field:focus {
-    border: 3px solid #555;
-}
-
-.create-field {
-    background-color: #fafafa;
-    border: 0;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-    transition: .3s box-shadow;
-}
-
-.create-field:hover {
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
-}
-
-
-
 
 .login-link > a {
     float: right;
