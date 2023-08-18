@@ -122,7 +122,8 @@ class VegetableAndFruit(models.Model):
     def __str__(self):
         return f'{self.name}'
 
-
+    class Meta:
+        ordering = ['-price']
 
 class DairyProduct(models.Model):
     MAX_LENGTH_OF_PACKAGE= 100
@@ -151,7 +152,8 @@ class DairyProduct(models.Model):
         if self.percent:
             return f'{self.name} {self.percent}%'
         return f'{self.name}'
-
+    class Meta:
+        ordering = ['-price']
 
 class AnimalProduct(models.Model):
     MAX_LENGTH_OF_PRODUCTION_COUNTRY = 40
@@ -195,7 +197,8 @@ class AnimalProduct(models.Model):
     def __str__(self):
         return f'{self.name} from {self.type}'
 
-
+    class Meta:
+        ordering = ['-price']
 class Nut(models.Model):
     NUTS_MAX_LENGTH = 35
 
@@ -228,3 +231,5 @@ class Nut(models.Model):
         return f'{self.type} {self.name}'
 
 
+    class Meta:
+        ordering = ['-price']
