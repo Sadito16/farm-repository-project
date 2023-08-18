@@ -1,7 +1,9 @@
 import datetime
 from enum import Enum
 
+from django.core.exceptions import ValidationError
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 from rest_framework import serializers
 from django.db import models
 
@@ -100,7 +102,19 @@ class VegetableAndFruit(models.Model):
         UserModel,
         on_delete=models.CASCADE,
     )
-
+    def clean(self):
+        if len(self.name) > 15:
+            raise ValidationError(
+                {'name': "Name should have less than 15 letters"})
+        elif len(self.name) <= 2:
+            raise ValidationError(
+                {'name': "Name should have at least 3 letters"})
+        if len(self.production) > 15:
+            raise ValidationError(
+                {'name': "Production should have less than 15 letters"})
+        elif len(self.production) <= 2:
+            raise ValidationError(
+                {'name': "Production should have at least 3 letters"})
 
     def to_json(self):
         return '{"name": "%s"}' % self.name
@@ -123,6 +137,13 @@ class DairyProduct(models.Model):
         UserModel,
         on_delete=models.CASCADE,
     )
+    def clean(self):
+        if len(self.name) > 15:
+            raise ValidationError(
+                {'name': "Name should have less than 15 letters"})
+        elif len(self.name) <= 2:
+            raise ValidationError(
+                {'name': "Name should have at least 3 letters"})
 
     def to_json(self):
         return '{"name": "%s"}' % self.name
@@ -156,7 +177,19 @@ class AnimalProduct(models.Model):
     @property
     def age(self):
         return datetime.datetime.now().year - self.date_of_birth.year
-
+    def clean(self):
+        if len(self.name) > 15:
+            raise ValidationError(
+                {'name': "Name should have less than 15 letters"})
+        elif len(self.name) <= 2:
+            raise ValidationError(
+                {'name': "Name should have at least 3 letters"})
+        if len(self.production) > 15:
+            raise ValidationError(
+                {'name': "Production should have less than 15 letters"})
+        elif len(self.production) <= 2:
+            raise ValidationError(
+                {'name': "Production should have at least 3 letters"})
     def to_json(self):
         return '{"name": "%s"}' % self.name
     def __str__(self):
@@ -181,7 +214,17 @@ class Nut(models.Model):
         on_delete=models.CASCADE,
     )
 
+    def clean(self):
+        if len(self.name) > 15:
+            raise ValidationError(
+                {'name': "Name should have less than 15 letters"})
+        if len(self.name) <= 2:
+            raise ValidationError(
+                {'name': "Name should have at least 3 letters"})
+
     def to_json(self):
         return '{"name": "%s"}' % self.name
     def __str__(self):
         return f'{self.type} {self.name}'
+
+

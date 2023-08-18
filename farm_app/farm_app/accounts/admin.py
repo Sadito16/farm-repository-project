@@ -6,4 +6,6 @@ from farm_app.accounts.models import  FarmerUser
 UserModel = 'accounts.FarmerUser'
 @admin.register(FarmerUser)
 class FarmerUserAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('username','first_name', 'last_name', 'date_of_birth',)
+    search_fields = ('username', 'first_name',)
+    list_filter = ('date_of_birth',)

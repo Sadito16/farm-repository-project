@@ -2,6 +2,7 @@ from enum import Enum
 
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator
 from django.db import models
 
@@ -47,7 +48,20 @@ class FarmerUser(AbstractUser):
         else:
             return self.username
 
+    def clean(self):
+        if len(self.first_name) > 25:
+            raise ValidationError(
+                {'first_name': "First name should have less than 15 letters"})
+        elif len(self.first_name) < 2:
+            raise ValidationError(
+                {'first_name': "First name should have at least 2 letters"})
 
+        if len(self.last_name) > 25:
+            raise ValidationError(
+                {'last_name': "Last name should have less than 15 letters"})
+        elif len(self.first_name) < 2:
+            raise ValidationError(
+                {'last_name': "Last name should have at least 2 letters"})
 
 
 

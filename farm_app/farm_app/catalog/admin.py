@@ -6,14 +6,26 @@ from farm_app.catalog.models import VegetableAndFruit, DairyProduct, AnimalProdu
 
 @admin.register(VegetableAndFruit)
 class VegetableAndFruitAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'price', 'user',)
+    search_fields = ('name', 'user',)
+    list_filter = ('price',)
 
 @admin.register(DairyProduct)
 class DairyProductAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'percent', 'price', 'user',)
+    search_fields = ('name', 'user',)
+    list_filter = ('price',)
+
 @admin.register(AnimalProduct)
 class AnimalProductAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('type','name', 'price', 'user',)
+    search_fields = ('type','name', 'user',)
+    list_filter = ('price',)
+
 @admin.register(Nut)
 class Nut(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'price', 'user',)
+    search_fields = ('name', 'user',)
+    list_filter = ('price',)
+
+
