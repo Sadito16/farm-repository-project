@@ -5,11 +5,14 @@ from django.shortcuts import render
 from farm_app.cart.cart import Cart
 from json import JSONEncoder
 
+
 def _default(self, obj):
     return getattr(obj.__class__, "to_json", _default.default)(obj)
 
+
 _default.default = JSONEncoder().default
 JSONEncoder.default = _default
+
 
 @login_required
 def add_to_cart(request, item_type, product_id):
@@ -18,14 +21,15 @@ def add_to_cart(request, item_type, product_id):
     cart.save()
 
     return render(request, 'cart/menu_cart.html')
+
+
 def cart(request):
     return render(request, 'cart/cart.html')
 
 
-
 def update_cart(request, product_id, action, item_type):
+    print(f"item_type: {item_type}")
     cart = Cart(request)
-
     if action == 'increment':
         cart.add(product_id, item_type, 1, True)
     else:
@@ -35,11 +39,12 @@ def update_cart(request, product_id, action, item_type):
     product = product_model.objects.get(pk=product_id)
     quantity = cart.get_item(product_id)
 
+
     if quantity:
         quantity = quantity['quantity']
 
         item = {
-            item_type: {
+            product_model: {
                 'id': product.id,
                 'name': product.name,
                 'photo': product.photo,
@@ -59,12 +64,15 @@ def update_cart(request, product_id, action, item_type):
 
     return response
 
+
 @login_required
 def checkout(request):
     return render(request, 'cart/checkout.html')
 
+
 def menu_cart(request):
     return render(request, 'cart/menu_cart.html')
+
 
 def cart_total(request):
     return render(request, 'cart/cart_total.html')

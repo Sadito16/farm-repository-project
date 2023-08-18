@@ -1,62 +1,56 @@
 {% load static %}
 
-{% if item %}
-    <div class="first_product" id="cart-item-{{ item.product.id }}">
-        <a href="#">
-            {% if item.product.photo %}
-                <img class="product-photo" width="200" height="200" src="{{ item.product.photo.url }}" alt="Photo">
+<div class="cart-product" id="cart-item-{{ item.product.id }}">
+    <a href="#">
+        {% if item.product.photo %}
+            <img class="product-photo" src="{{ item.product.photo.url }}" alt="Photo">
+        {% else %}
+            {% if item.item_type == 'VegetableAndFruit' %}
+                <img alt="Vegetable Image" class="product-photo"
+                     src="{% static 'images/fruit-and-veg.jpg' %}">
+            {% elif item.item_type == 'AnimalProduct' %}
+                <img class="product-photo"
+                     src="{% static 'images/meat.jpg' %}"
+                     alt="Meal Photo">
+            {% elif item.item_type == 'DairyProduct' %}
+                <img class="product-photo"
+                     src="{% static 'images/milk-products.jpg' %}"
+                     alt="Dairy Photo">
+            {% elif item.item_type == 'Nut' %}
+                <img class="product-photo"
+                     src="{% static 'images/nuts-and-dry-fruits.jpg' %}"
+                     alt="Nut Photo">
             {% endif %}
-        </a>
-        <div>
-            <div>
-                {% if item.item_type == 'VegetableAndFruit' %}
-                    {% if not  item.product.photo %}
-                        <img class="product-photo" width="200" height="200"
-                             src="{% static 'images/fruit-and-veg.jpg' %}"
-                             alt="Vegetable Photo">
-                    {% endif %}
-                    <a href="{% url 'details vegetable' item.product.pk %}">{{ item.product.name }}</a>
-                {% elif item.item_type == 'AnimalProduct' %}
-                    {% if not  item.product.photo %}
-                        <img class="product-photo" width="200" height="200" src="{% static 'images/meat.jpg' %}"
-                             alt="Meal Photo">
-                    {% endif %}
-                    <a href="{% url 'details animal'  item.product.pk %}">{{ item.product.name }}</a>
-                {% elif item.item_type == 'DairyProduct' %}
-                    {% if not  item.product.photo %}
-                        <img class="product-photo" width="200" height="200"
-                             src="{% static 'images/milk-products.jpg' %}"
-                             alt="Dairy Photo">
-                    {% endif %}
-                    <a href="{% url 'details dairy'  item.product.pk %}">{{ item.product.name }}</a>
-                {% elif item.item_type == 'Nut' %}
-                    {% if not  item.product.photo %}
-                        <img class="product-photo" width="200" height="200"
-                             src="{% static 'images/nuts-and-dry-fruits.jpg' %}"
-                             alt="Nut Photo">
-                    {% endif %}
-                    <a href="{% url 'details nut'  item.product.pk %}">{{ item.product.name }}</a>
-                {% endif %}
-
-
-                <p>${{ item.total_price|floatformat:2 }}</p>
-            </div>
-            <hr>
-
-            <div>
-                <a
-                        hx-get="{% url 'update cart'  item.product.id  'increment'  item.item_type %}"
-                        hx-target="#cart-item-{{ item.product.id }}"
-                        hx-swap="outerHTML"
-                >-</a>
-                <span>{{ item.quantity }}</span>
-                <a
-                        hx-get="{% url 'update cart'  item.product.id  'decrement' item.item_type %}"
-                        hx-target="#cart-item-{{ item.product.id }}"
-                        hx-swap="outerHTML"
-                >+</a>
-            </div>
+        {% endif %}
+    </a>
+    <div class="counter">
+        <a
+                type="button"
+                class="btn"
+                hx-get="{% url 'update cart'  item.product.id  'increment'  item.item_type %}"
+                hx-target="#cart-item-{{ item.product.id }}"
+                hx-swap="outerHTML"
+        >-</a>
+        <span class="count">{{ item.quantity }}</span>
+        <a
+                type="button"
+                class="btn"
+                hx-get="{% url 'update cart'  item.product.id  'decrement' item.item_type %}"
+                hx-target="#cart-item-{{ item.product.id }}"
+                hx-swap="outerHTML"
+        >+</a>
+    </div>
+    <div class="about">
+        <div class="title">
+            {{ item.product }}
         </div>
+        <div class="subtitle">
+            <p class="prices">${{ item.total_price|floatformat:2 }}</p>
+        </div>
+        <hr>
     </div>
 
-{% endif %}
+</div>
+
+
+
