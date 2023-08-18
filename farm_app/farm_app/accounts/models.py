@@ -64,7 +64,8 @@ class FarmerUser(AbstractUser):
                 {'last_name': "Last name should have at least 2 letters"})
 
 
-
+    class Meta:
+        ordering = ['-date_of_birth', 'username']
 
 
 # class Profile(models.Model):
