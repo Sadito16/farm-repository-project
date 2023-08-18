@@ -15,7 +15,30 @@
                      alt="Meat Photo">
             {% endif %}
         </div>
-        <div class="details-name"><h1 class="big-text">{{ meat }}</h1></div>
+        <div class="profile-details">
+            <div class="details-profile-icon">
+                <a href="{% url 'profile details' profile.id %}">
+                    {% if  profile.profile_picture %}
+                        <img class="details-image-profile" src="{{ profile.profile_picture.url }}" alt="Profile Photo">
+                    {% else %}
+                        {% if profile.gender == 'Female' %}
+                            <img class="details-image-profile"
+                                 src="{% static 'images/undraw_female_avatar_efig.svg' %}"
+                                 alt="Meat Photo">
+                        {% else %}
+                            <img class="details-image-profile"
+                                 src="{% static 'images/undraw_male_avatar_g98d.svg' %}"
+                                 alt="Meat Photo">
+                        {% endif %}
+                    {% endif %}
+                </a>
+            </div>
+            <div class="details-profile-name">
+                <p><a href="{% url 'profile details' profile.id %} "
+                      class="name-profile">{{ profile.get_user_name }}</a></p>
+            </div>
+        </div>
+        <div class="details-name"><h2 class="details-product-name">{{ meat }}</h2></div>
         <div class="details-information">
             <div class="details-detail"><h3>Type:</h3><br>
                 {{ meat.type }}
@@ -33,9 +56,9 @@
         </div>
         {% if meat.user_id != request.user.pk %}
             {% if  request.user.is_authenticated %}
-                <div class="btns">
+                <div class="add-item">
                     <a href="#"
-                       class="buy-button cust-button"
+                       class="buy-button cust-button animal-add"
                        hx-get="{% url 'add to cart' 'AnimalProduct' meat.id %}"
                        hx-target="#menu-cart-button"
                        hx-swap="outerHTML"
@@ -44,13 +67,13 @@
             {% endif %}
         {% else %}
             <div class="btns">
-        {% else %}
-            <a class="cust-button editBtn" href="{% url 'edit animal' meat.pk %}">Edit</a>
-            <a id="deleteProfileBtn" class="cust-button prof-button"
-               onclick="document.getElementById('modal-delete').style.display='block'">Delete</a>
+                <a class="cust-button editBtn" href="{% url 'edit animal' meat.pk %}">Edit</a>
+                <a id="deleteProfileBtn" class="cust-button prof-button"
+                   onclick="document.getElementById('modal-delete').style.display='block'">Delete</a>
+            </div>
         {% endif %}
-        </div>
     </div>
+
 
     <div id="modal-delete" class="modal">
     <span onclick="document.getElementById('modal-delete').style.display='none'" class="close"

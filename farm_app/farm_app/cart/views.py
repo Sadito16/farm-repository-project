@@ -40,12 +40,11 @@ def update_cart(request, product_id, action, item_type):
     product = product_model.objects.get(pk=product_id)
     quantity = cart.get_item(product_id)
 
-
     if quantity:
         quantity = quantity['quantity']
 
         item = {
-            product_model: {
+            'product': {
                 'id': product.id,
                 'name': product.name,
                 'photo': product.photo,
@@ -56,6 +55,7 @@ def update_cart(request, product_id, action, item_type):
         }
     else:
         item = None
+
     context = {
         'item': item,
         'total_cart_price': cart.get_total_cost,

@@ -15,6 +15,29 @@
                      alt="Nut Photo">
             {% endif %}
         </div>
+        <div class="profile-details">
+            <div class="details-profile-icon">
+                <a href="{% url 'profile details' profile.id %}">
+                    {% if  profile.profile_picture %}
+                        <img class="details-image-profile" src="{{ profile.profile_picture.url }}" alt="Profile Photo">
+                    {% else %}
+                        {% if profile.gender == 'Female' %}
+                            <img class="details-image-profile"
+                                 src="{% static 'images/undraw_female_avatar_efig.svg' %}"
+                                 alt="Meat Photo">
+                        {% else %}
+                            <img class="details-image-profile"
+                                 src="{% static 'images/undraw_male_avatar_g98d.svg' %}"
+                                 alt="Meat Photo">
+                        {% endif %}
+                    {% endif %}
+                </a>
+            </div>
+            <div class="details-profile-name">
+                <p><a href="{% url 'profile details' profile.id %} "
+                      class="name-profile">{{ profile.get_user_name }}</a></p>
+            </div>
+        </div>
         <div class="details-name"><h1 class="big-text">{{ nut }}</h1></div>
         <div class="details-information">
             <div class="details-detail"><h3>Type:</h3><br>
@@ -26,18 +49,17 @@
         </div>
         {% if nut.user_id != request.user.pk %}
             {% if  request.user.is_authenticated %}
-            <div class="add-item veg-add">
-
-                <a href="#"
-                   class="buy-button cust-button"
-                   hx-get="{% url 'add to cart' 'Nut' nut.id %}"
-                   hx-target="#menu-cart-button"
-                   hx-swap="outerHTML"
-                >Add to cart</a>
-            </div>
-                {% endif %}
+                <div class="add-item">
+                    <a href="#"
+                       class="buy-button cust-button animal-add"
+                       hx-get="{% url 'add to cart' 'Nut' nut.id %}"
+                       hx-target="#menu-cart-button"
+                       hx-swap="outerHTML"
+                    >Add to cart</a>
+                </div>
+            {% endif %}
         {% else %}
-            <div class="btns veg-btns">
+            <div class="btns ">
 
             <a class="cust-button editBtn" href="{% url 'edit nut' nut.pk %}">Edit</a>
             <a id="deleteProfileBtn" class="cust-button prof-button"

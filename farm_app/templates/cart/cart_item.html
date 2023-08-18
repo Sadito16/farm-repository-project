@@ -1,5 +1,5 @@
 {% load static %}
-
+{% if item %}
 <div class="cart-product" id="cart-item-{{ item.product.id }}">
     <a href="#">
         {% if item.product.photo %}
@@ -49,8 +49,8 @@
         </div>
         <hr>
     </div>
-
 </div>
+{% endif %}
 
 
 

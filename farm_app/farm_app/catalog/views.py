@@ -89,6 +89,9 @@ class VegetableDetailsView(views.DetailView):
     photo = static('images/fruit-and-veg.jpg')
     model_name = object.__class__.__name__
 
+    def get_profile(self):
+        profile = FarmerUser.objects.all().get(id=self.object.user_id)
+        return profile
     def get_photo(self):
         if self.object.photo is not None:
             return self.object.photo
@@ -99,6 +102,7 @@ class VegetableDetailsView(views.DetailView):
         context.update({
             'photo': self.get_photo,
             'model_name': self.model_name,
+            'profile': self.get_profile,
         })
 
         return context
@@ -157,6 +161,9 @@ class NutDetailsView(views.DetailView):
     photo = static('images/nuts-and-dry-fruits.jpg')
     model_name = object.__class__.__name__
 
+    def get_profile(self):
+        profile = FarmerUser.objects.all().get(id=self.object.user_id)
+        return profile
     def get_photo(self):
         if self.object.photo is not None:
             return self.object.photo
@@ -167,6 +174,7 @@ class NutDetailsView(views.DetailView):
         context.update({
             'photo': self.get_photo,
             'model_name': self.model_name,
+            'profile': self.get_profile,
         })
 
         return context
@@ -224,6 +232,9 @@ class DairyDetailsView(views.DetailView):
     photo = static('images/milk-products.jpg')
     model_name = object.__class__.__name__
 
+    def get_profile(self):
+        profile = FarmerUser.objects.all().get(id=self.object.user_id)
+        return profile
     def get_photo(self):
         if self.object.photo is not None:
             return self.object.photo
@@ -234,6 +245,7 @@ class DairyDetailsView(views.DetailView):
         context.update({
             'photo': self.get_photo,
             'model_name': self.model_name,
+            'profile': self.get_profile,
         })
 
         return context
@@ -291,6 +303,9 @@ class AnimalDetailsView(views.DetailView):
     photo = static('images/meat.jpg')
     model_name = object.__class__.__name__
 
+    def get_profile(self):
+        profile = FarmerUser.objects.all().get(id=self.object.user_id)
+        return profile
     def get_photo(self):
         if self.object.photo is not None:
             return self.object.photo
@@ -301,6 +316,7 @@ class AnimalDetailsView(views.DetailView):
         context.update({
             'photo': self.get_photo,
             'model_name': self.model_name,
+            'profile': self.get_profile,
         })
 
         return context

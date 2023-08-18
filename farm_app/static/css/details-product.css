@@ -1,49 +1,77 @@
-.details-content{
+.details-content {
 
     position: absolute;
     width: 70%;
     padding: 0 0 0 100px;
     margin: 50px 0 0 -100px;
 }
-.details-image > img{
+
+.details-image > img {
     width: 400px;
     height: 400px;
     margin: 40px 0 0 80px;
     border-radius: 50px;
 }
-.details-information{
-    margin: -350px 0 0 540px;
-    position: absolute;
-    color: #352503;
-}
-.details-detail{
-    margin:15px 0 0 0;
-}
 
-.add-item{
-    margin: -60px 0 0 370px;
+.details-information {
+    margin: 80px 0 0 540px;
     position: absolute;
     color: #352503;
 }
 
-.btns{
-    margin: 20px 0 0 550px;
-    position: absolute;
+.details-detail {
+    margin: 15px 0 0 0;
+}
+
+.btns {
+    margin: 380px 0 0 550px;
+    /*position: absolute;*/
     color: #352503;
 }
-.editBtn{
+
+.editBtn {
     margin: 0 20px 0 0;
 }
-.details-name{
-        margin: -410px 0 0 540px;
+
+.details-name {
+    margin: 20px 0 0 540px;
     position: absolute;
     color: #352503;
 }
 
 
-.veg-btns{
+.veg-btns {
     margin: -120px 0 0 550px;
 }
-.veg-add{
+
+.veg-add {
     margin: -200px 0 0 370px;
+}
+
+
+.profile-details {
+    margin: -450px 0 0 540px;
+}
+
+.details-image-profile {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: #f9c33b solid;
+}
+
+.details-profile-name > p {
+    margin: -45px 0 0 70px;
+    font-size: 25px;
+}
+
+.details-product-name {
+    font-size: 30px;
+    margin: 20px 0 0 0;
+    align-self: center;
+
+}
+
+.animal-add{
+    margin: 380px 0 0 550px;
 }

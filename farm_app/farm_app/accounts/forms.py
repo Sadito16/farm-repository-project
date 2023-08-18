@@ -20,12 +20,13 @@ class CreateProfileForm(auth_forms.UserCreationForm):
 
     class Meta(auth_forms.UserCreationForm.Meta):
         model = FarmerUser
-        fields = ('first_name', 'last_name', 'username', 'email', 'profile_picture', 'password1', 'password2')
+        fields = ('first_name', 'last_name', 'username','gender', 'email', 'profile_picture', 'password1', 'password2')
 
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-field'}),
             'last_name': forms.TextInput(attrs={'class': 'form-field'}),
             'username': forms.TextInput(attrs={'class': 'form-field'}),
+            'gender': forms.Select(attrs={'class': 'form-field'}),
             'email': forms.EmailInput(attrs={'class': 'form-field'}),
             'profile_picture': forms.FileInput(attrs={'class': 'form-field'}),
         }
