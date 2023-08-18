@@ -129,7 +129,7 @@ class DairyProduct(models.Model):
         return '{"name": "%s"}' % self.name
     def __str__(self):
         if self.percent:
-            return f'{self.percent}% {self.name}'
+            return f'{self.name} {self.percent}%'
         return f'{self.name}'
 
 

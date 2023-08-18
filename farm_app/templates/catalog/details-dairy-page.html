@@ -24,7 +24,7 @@
                 ${{ dairy.price }}
             </div>
         </div>
-        <div class="add-item">
+        <div class="add-item veg-add">
 
             <a href="#"
                class="buy-button cust-button"
@@ -33,8 +33,8 @@
                hx-swap="outerHTML"
             >Add to cart</a>
         </div>
-        <div class="btns">
-            {% if nut.user_id == request.user.pk %}
+        <div class="btns veg-btns">
+            {% if dairy.user_id == request.user.pk %}
                 <a class="cust-button editBtn" href="{% url 'edit dairy' dairy.pk %}">Edit</a>
                 <a class="cust-button editBtn" href="{% url 'delete dairy' dairy.pk %}">Delete</a>
             {% endif %}

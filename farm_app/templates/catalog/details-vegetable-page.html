@@ -7,7 +7,7 @@
 
         <div class="details-image">
             {% if  plant.photo %}
-                <img class="details-image" src="{{ meat.photo.url }}" alt="Photo">
+                <img class="details-image" src="{{ plant.photo.url }}" alt="Photo">
 
             {% else %}
                 <img class="details-image"
@@ -24,7 +24,7 @@
                 <div class="details-detail"><h3>Country production:</h3><br> {{ plant.production }}</div>
             {% endif %}
         </div>
-        <div class="add-item">
+        <div class="add-item veg-add">
             <a href="#"
                class="buy-button cust-button"
                hx-get="{% url 'add to cart' 'VegetableAndFruit' plant.id %}"
@@ -32,7 +32,7 @@
                hx-swap="outerHTML"
             >Add to cart</a>
         </div>
-    <div class="btns">
+    <div class="btns veg-btns">
             {% if plant.user_id == request.user.pk %}
                 <a class="cust-button editBtn" href="{% url 'edit vegetable' plant.pk %}">Edit</a>
                 <a class="cust-button editBtn" href="{% url 'delete vegetable' plant.pk %}">Delete</a>

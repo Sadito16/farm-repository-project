@@ -24,7 +24,7 @@
                 ${{ nut.price }}
             </div>
         </div>
-        <div class="add-item">
+        <div class="add-item veg-add">
 
             <a href="#"
                class="buy-button cust-button"
@@ -33,7 +33,7 @@
                hx-swap="outerHTML"
             >Add to cart</a>
         </div>
-    <div class="btns">
+    <div class="btns veg-btns">
             {% if nut.user_id == request.user.pk %}
                 <a class="cust-button editBtn" href="{% url 'edit nut' nut.pk %}">Edit</a>
                 <a class="cust-button editBtn" href="{% url 'delete nut' nut.pk %}">Delete</a>

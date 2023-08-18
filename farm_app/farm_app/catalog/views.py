@@ -70,7 +70,7 @@ class VegetableCreateView(views.CreateView):
 class VegetableEditView(views.UpdateView):
     model = VegetableAndFruit
     template_name = 'catalog/edit-vegetable-page.html'
-    fields = ['name', 'price','production']
+    form_class = VegetableCreationForm
     context_object_name = 'plant'
     def get_success_url(self):
         return reverse('details vegetable', kwargs={
@@ -138,7 +138,7 @@ class NutCreateView(views.CreateView):
 class NutEditView(views.UpdateView):
     model = Nut
     template_name = 'catalog/edit-nut-page.html'
-    fields = ['type','name', 'price']
+    form_class = NutCreationForm
     context_object_name = 'nut'
 
     def get_success_url(self):
@@ -206,7 +206,7 @@ class DairyCreateView(views.FormView):
 class DairyEditView(views.UpdateView):
     model = DairyProduct
     template_name = 'catalog/edit-dairy-page.html'
-    fields = ['name','percent', 'price']
+    form_class = DairyCreationForm
     context_object_name = 'dairy'
 
     def get_success_url(self):
@@ -274,7 +274,7 @@ class AnimalCreateView(views.FormView):
 class AnimalEditView(views.UpdateView):
     model = AnimalProduct
     template_name = 'catalog/edit-animal-page.html'
-    fields = ['type','name', 'price', 'production']
+    form_class = AnimalCreationForm
     context_object_name = 'animal'
 
     def get_success_url(self):
