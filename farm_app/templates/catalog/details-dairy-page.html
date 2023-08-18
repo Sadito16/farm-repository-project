@@ -3,35 +3,50 @@
 {% block title %} {{ dairy.name }} - {{ dairy.percent }} {% endblock %}
 
 {% block page_content %}
-    {% if dairy.user_id != request.user.id %}
-    <a href="#"
-       class="buy-button"
-       hx-get="{% url 'add to cart' 'DairyProduct' dairy.id %}"
-       hx-target="#menu-cart-button"
-       hx-swap="outerHTML"
-    >Add to cart</a>
-    {% endif %}
+    <div class="details-content">
 
-    {% if   item.product.photo %}
-        <img class="details-image" width="200" height="200" src="{{ photo.url }}" alt="Photo">
+        <div class="details-image">
+            {% if  dairy.photo %}
+                <img class="details-image" src="{{ dairy.photo.url }}" alt="Dairy Photo">
 
-    {% else %}
-        <img class="details-image" width="200" height="200"
-             src="{% static 'images/milk-products.jpg' %}"
-             alt="Milk Photo">
-    {% endif %}
+            {% else %}
+                <img class="details-image"
+                     src="{% static 'images/milk-products.jpg' %}"
+                     alt="Dairy Photo">
+            {% endif %}
+        </div>
+        <div class="details-name"><h1 class="big-text">{{ dairy }}</h1></div>
+        <div class="details-information">
+            <div class="details-detail"><h3>Percent:</h3><br>
+                {{ dairy.percent }}%
+            </div>
+            <div class="details-detail"><h3>Price:</h3><br>
+                ${{ dairy.price }}
+            </div>
+        </div>
+        <div class="add-item">
+
+            <a href="#"
+               class="buy-button cust-button"
+               hx-get="{% url 'add to cart' 'DairyProduct' dairy.id %}"
+               hx-target="#menu-cart-button"
+               hx-swap="outerHTML"
+            >Add to cart</a>
+        </div>
+        <div class="btns">
+            {% if nut.user_id == request.user.pk %}
+                <a class="cust-button editBtn" href="{% url 'edit dairy' dairy.pk %}">Edit</a>
+                <a class="cust-button editBtn" href="{% url 'delete dairy' dairy.pk %}">Delete</a>
+            {% endif %}
+        </div>
+    </div>
 
 
-    <br>
-    {% if dairy.user_id == request.user.pk %}
-        <a href="{% url 'edit dairy' dairy.pk %}">Edit</a>
-        <a href="{% url 'delete dairy' dairy.pk %}">Delete</a>
-        <br>
-    {% endif %}
 
-    {{ dairy.name }}
-    <br>
-    {{ dairy.percent }}
-    <br>
-    {{ dairy.price }}
+
+
+
+
+
+
 {% endblock %}

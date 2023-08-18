@@ -3,34 +3,40 @@
 
 {% load static %}
 {% block page_content %}
-    {% if plant.user_id != request.user.id %}
-    <a href="#"
-       class="buy-button"
-       hx-get="{% url 'add to cart' 'VegetableAndFruit' plant.id %}"
-       hx-target="#menu-cart-button"
-       hx-swap="outerHTML"
-    >Add to cart</a>
-    {% endif %}
+    <div class="details-content">
 
-    {% if   item.product.photo %}
-        <img class="details-image" width="200" height="200" src="{{ photo.url }}" alt="Photo">
+        <div class="details-image">
+            {% if  plant.photo %}
+                <img class="details-image" src="{{ meat.photo.url }}" alt="Photo">
 
-    {% else %}
-        <img class="details-image" width="200" height="200"
-             src="{% static 'images/fruit-and-veg.jpg' %}"
-             alt="Vegetable Photo">
-    {% endif %}
-    <br>
-    {% if plant.user_id == request.user.pk %}
-        <a href="{% url 'edit vegetable' plant.pk %}">Edit</a>
-        <a href="{% url 'delete vegetable' plant.pk %}">Delete</a>
-    {% endif %}
-    <br>
-    {{ plant.name }}
-    <br>
-    {{ plant.price }}
-    <br>
-    {{ plant.production }}
-    <br>
-
+            {% else %}
+                <img class="details-image"
+                     src="{% static 'images/fruit-and-veg.jpg' %}"
+                     alt="Vegetable Photo">
+            {% endif %}
+        </div>
+            <div class="details-name"><h1 class="big-text">{{ plant }}</h1></div>
+        <div class="details-information">
+            <div class="details-detail"><h3>Price:</h3><br>
+                ${{ plant.price }}
+            </div>
+            {% if plant.production %}
+                <div class="details-detail"><h3>Country production:</h3><br> {{ plant.production }}</div>
+            {% endif %}
+        </div>
+        <div class="add-item">
+            <a href="#"
+               class="buy-button cust-button"
+               hx-get="{% url 'add to cart' 'VegetableAndFruit' plant.id %}"
+               hx-target="#menu-cart-button"
+               hx-swap="outerHTML"
+            >Add to cart</a>
+        </div>
+    <div class="btns">
+            {% if plant.user_id == request.user.pk %}
+                <a class="cust-button editBtn" href="{% url 'edit vegetable' plant.pk %}">Edit</a>
+                <a class="cust-button editBtn" href="{% url 'delete vegetable' plant.pk %}">Delete</a>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

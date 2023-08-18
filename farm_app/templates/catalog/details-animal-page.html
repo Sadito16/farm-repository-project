@@ -3,41 +3,47 @@
 {% block title %} {{ meat }} {% endblock %}
 
 {% block page_content %}
-    <div>
-        {% if meat.user_id != request.user.id %}
+    <div class="details-content">
+
+        <div class="details-image">
+            {% if  meat.photo %}
+                <img class="details-image" src="{{ meat.photo.url }}" alt="Meat Photo">
+
+            {% else %}
+                <img class="details-image"
+                     src="{% static 'images/meat.jpg' %}"
+                     alt="Meat Photo">
+            {% endif %}
+        </div>
+        <div class="details-name"><h1 class="big-text">{{ meat }}</h1></div>
+        <div class="details-information">
+            <div class="details-detail"><h3>Type:</h3><br>
+                {{ meat.type }}
+            </div>
+            <div class="details-detail"><h3>Price:</h3><br>
+                ${{ meat.price }}
+            </div>
+
+            {% if meat.production %}
+                <div class="details-detail"><h3>Country production:</h3><br> {{ meat.production }}</div>
+            {% endif %}
+            {% if meat.date_of_birth %}
+                <div class="details-detail"><h3>Birthdate of the animal:</h3><br> {{ meat.date_of_birth }}</div>
+            {% endif %}
+        </div>
+        <div class="add-item">
             <a href="#"
-               class="buy-button"
+               class="buy-button cust-button"
                hx-get="{% url 'add to cart' 'AnimalProduct' meat.id %}"
                hx-target="#menu-cart-button"
                hx-swap="outerHTML"
             >Add to cart</a>
-        {% endif %}
-
-        {% if   item.product.photo %}
-            <img class="details-image" width="200" height="200" src="{{ photo.url }}" alt="Photo">
-
-        {% else %}
-            <img class="details-image" width="200" height="200"
-                 src="{% static 'images/meat.jpg' %}"
-                 alt="Animal Photo">
-        {% endif %}
-
-
-        <br>
-        {% if meat.user_id == request.user.pk %}
-            <a href="{% url 'edit animal' meat.pk %}">Edit</a>
-            <a href="{% url 'delete animal' meat.pk %}">Delete</a>
-        {% endif %}
-        <br>
-        {{ meat.name }}
-
-        <br>
-        {{ meat.type }}
-        <br>
-        {{ meat.price }}
-        <br>
-        {{ meat.date_of_birth }}
-        <br>
-        {{ meat.production }}
+        </div>
+        <div class="btns">
+            {% if meat.user_id == request.user.pk %}
+                <a class="cust-button editBtn" href="{% url 'edit animal' meat.pk %}">Edit</a>
+                <a class="cust-button editBtn" href="{% url 'delete animal' meat.pk %}">Delete</a>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

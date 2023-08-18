@@ -3,37 +3,43 @@
 {% block title %} {{ nut.type }} {{ nut.name }} {% endblock %}
 
 {% block page_content %}
-    {% if nut.user_id != request.user.id %}
-    <a href="#"
-       class="buy-button"
-       hx-get="{% url 'add to cart' 'Nut' nut.id %}"
-       hx-target="#menu-cart-button"
-       hx-swap="outerHTML"
-    >Add to cart</a>
-    {% endif %}
+        <div class="details-content">
 
-         {% if  photo %}
-        <img class="details-image" width="200" height="200" src="{{ photo.url }}" alt="Photo">
+        <div class="details-image">
+            {% if  nut.photo %}
+                <img class="details-image" src="{{ nut.photo.url }}" alt="Nut Photo">
 
-    {% else %}
-        <img class="details-image" width="200" height="200"
-             src="{% static 'images/nuts-and-dry-fruits.jpg' %}"
-             alt="Nut Photo">
-    {% endif %}
+            {% else %}
+                <img class="details-image"
+                     src="{% static 'images/nuts-and-dry-fruits.jpg' %}"
+                     alt="Nut Photo">
+            {% endif %}
+        </div>
+            <div class="details-name"><h1 class="big-text">{{ nut }}</h1></div>
+        <div class="details-information">
+                    <div class="details-detail"><h3>Type:</h3><br>
+                {{ nut.type }}
+            </div>
+            <div class="details-detail"><h3>Price:</h3><br>
+                ${{ nut.price }}
+            </div>
+        </div>
+        <div class="add-item">
 
+            <a href="#"
+               class="buy-button cust-button"
+               hx-get="{% url 'add to cart' 'Nut' nut.id %}"
+               hx-target="#menu-cart-button"
+               hx-swap="outerHTML"
+            >Add to cart</a>
+        </div>
+    <div class="btns">
+            {% if nut.user_id == request.user.pk %}
+                <a class="cust-button editBtn" href="{% url 'edit nut' nut.pk %}">Edit</a>
+                <a class="cust-button editBtn" href="{% url 'delete nut' nut.pk %}">Delete</a>
+            {% endif %}
+        </div>
+    </div>
 
-    <br>
-    {% if nut.user_id == request.user.pk %}
-        <a href="{% url 'edit nut' nut.pk %}">Edit</a>
-        <a href="{% url 'delete nut' nut.pk %}">Delete</a>
-        <br>
-    {% endif %}
-    {{ nut.name }}
-    <br>
-    {{ nut.type }}
-    <br>
-    {{ nut.price }}
-    <br>
-    {{ nut.package }}
 
 {% endblock %}
