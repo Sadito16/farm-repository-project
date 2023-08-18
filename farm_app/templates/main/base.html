@@ -14,18 +14,35 @@
 
 
 <ul class="navbar">
-    <li class="left-item navitem first-nav" style="background-color: #f9c33b">
-        <a href="{% url 'home' %}">Farm</a>
-    </li>
-    <div class="vertical-line"></div>
-    <li class="left-item navitem"><a href="{% url 'add vegetable' %}">Add Vegetable and Fruit</a></li>
-    <div class="vertical-line"></div>
-    <li class="left-item navitem"><a href="{% url 'add animal' %}">Add Animal Product</a></li>
-    <div class="vertical-line"></div>
-    <li class="left-item navitem"><a href="{% url 'add dairy' %}">Add Dairy Product</a></li>
-    <div class="vertical-line"></div>
-    <li class="left-item navitem first-nav"><a href="{% url 'add nut' %}">Add Nut</a></li>
+    {% if not request.user.is_authenticated %}
+    <button class="left-item navitem first-nav all navbtn activebtn" onclick="filterSelection('all')">
+        <a href="{% url 'home' %}">
+            Farm</a>
+    </button>
+        {% else %}
+        <li class="left-item first-nav  navitem" style="background-color: #c58f07;"><a href="{% url 'home' %}">Farm</a></li>
+{% endif %}
 
+
+    {% if request.user.is_authenticated %}
+        <div class="vertical-line"></div>
+        <li class="left-item navitem"><a href="{% url 'add vegetable' %}">Add Vegetable and Fruit</a></li>
+        <div class="vertical-line"></div>
+        <li class="left-item navitem"><a href="{% url 'add animal' %}">Add Animal Product</a></li>
+        <div class="vertical-line"></div>
+        <li class="left-item navitem"><a href="{% url 'add dairy' %}">Add Dairy Product</a></li>
+        <div class="vertical-line"></div>
+        <li class="left-item navitem first-nav"><a href="{% url 'add nut' %}">Add Nut</a></li>
+    {% else %}
+        <div class="vertical-line" id="myBtnContainer"></div>
+        <button class="left-item navitem navbtn" onclick="filterSelection('vegetables')">Vegetables and Fruits</button>
+        <div class="vertical-line"></div>
+        <button class="left-item navitem navbtn" onclick="filterSelection('animals')">Animal Products</button>
+        <div class="vertical-line"></div>
+        <button class="left-item navitem navbtn" onclick="filterSelection('dairies')">Dairy Products</button>
+        <div class="vertical-line"></div>
+        <button class="left-item navitem first-nav navbtn" onclick="filterSelection('nuts')">Nut Products</button>
+    {% endif %}
     {#    <li class="left-item dropdownli">#}
     {#        <div class="dropdown">#}
     {#            <button class="dropbtn"><a>Catalog</a></button>#}

@@ -20,7 +20,6 @@ class VegetableCreationForm(forms.ModelForm):
         widgets = {
             'name': forms.Select(attrs={'class': 'form-field'}),
             'price': forms.NumberInput(attrs={'class': 'form-field'}),
-            'photo': forms.FileInput(attrs={'class': 'form-field'}),
             'production': forms.TextInput(attrs={'class': 'form-field'}),
         }
         labels = labels
@@ -29,27 +28,25 @@ class VegetableCreationForm(forms.ModelForm):
 class DairyCreationForm(forms.ModelForm):
     class Meta:
         model = DairyProduct
-        fields = ('name', 'percent', 'price', 'photo')
+        fields = ('name', 'percent', 'price','photo')
         labels = labels
         widgets = {
             'name': forms.Select(attrs={'class': 'form-field'}),
             'percent': forms.NumberInput(attrs={'class': 'form-field'}),
             'price': forms.NumberInput(attrs={'class': 'form-field'}),
-            'photo': forms.FileInput(attrs={'class': 'form-field'}),
         }
 
 
 class AnimalCreationForm(forms.ModelForm):
     class Meta:
         model = AnimalProduct
-        fields = ('type', 'name', 'price', 'date_of_birth', 'production', 'photo')
+        fields = ('type', 'name', 'price' ,'photo', 'date_of_birth', 'production')
         labels = labels
         widgets = {
             'type': forms.Select(attrs={'class': 'form-field'}),
             'name': forms.TextInput(attrs={'class': 'form-field'}),
             'date_of_birth': forms.DateInput(attrs={'class': 'form-field'}),
             'price': forms.NumberInput(attrs={'class': 'form-field'}),
-            'photo': forms.FileInput(attrs={'class': 'form-field'}),
             'production': forms.TextInput(attrs={'class': 'form-field'}),
         }
 
@@ -57,11 +54,10 @@ class AnimalCreationForm(forms.ModelForm):
 class NutCreationForm(forms.ModelForm):
     class Meta:
         model = Nut
-        fields = ('type', 'name', 'price', 'photo')
+        fields = ('type', 'name', 'price','photo')
         widgets = {
             'type': forms.Select(attrs={'class': 'form-field'}),
             'name': forms.TextInput(attrs={'class': 'form-field'}),
             'price': forms.NumberInput(attrs={'class': 'form-field'}),
-            'photo': forms.FileInput(attrs={'class': 'form-field'}),
 
         }

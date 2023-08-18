@@ -108,8 +108,7 @@ class VegetableAndFruit(models.Model):
     def __str__(self):
         return f'{self.name}'
 
-    class Meta:
-        unique_together = ('user', 'name')
+
 
 class DairyProduct(models.Model):
     MAX_LENGTH_OF_PACKAGE= 100

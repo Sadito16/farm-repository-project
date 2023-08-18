@@ -1,5 +1,6 @@
 from itertools import chain
 
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.conf.urls.static import static
 from django.shortcuts import render

@@ -226,3 +226,39 @@ html, body {
     text-align: center;
 }
 
+.filterDiv {
+  float: left;
+  background-color: #2196F3;
+  color: #ffffff;
+  width: 100px;
+  line-height: 100px;
+  text-align: center;
+  margin: 2px;
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+
+.navbtn:hover {
+  background-color: #c58f07;
+}
+
+
+.navbtn{
+    background-color: #fbe19d;
+    border: none;
+    padding: 0 15px 0 15px;
+    border-right:#c58f07 solid;
+}
+.activebtn {
+  background-color:#c58f07;
+  color: #352503;
+}
+
+.welcome-text{
+
+    text-align: center;
+}
