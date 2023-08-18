@@ -1,16 +1,17 @@
 {% load static %}
-    <div class="card dairies">
-        <a href="{% url 'details dairy' dairy.pk %}">
-            {% if dairy.photo %}
-                <img class="product-card-image" src="{{ dairy.photo.url }}" alt="post">
-            {% else %}
-                <img class="product-card-image" src="{% static 'images/milk-products.jpg' %}" alt="post">
-            {% endif %}
+<div class="card dairies">
+    <a href="{% url 'details dairy' dairy.pk %}">
+        {% if dairy.photo %}
+            <img class="product-card-image" src="{{ dairy.photo.url }}" alt="post">
+        {% else %}
+            <img class="product-card-image" src="{% static 'images/milk-products.jpg' %}" alt="post">
+        {% endif %}
 
-            <h1>{{ dairy }}</h1>
-            <p class="price">${{ dairy.price|floatformat:2 }}</p>
+        <h1>{{ dairy }}</h1>
+        <p class="price">${{ dairy.price|floatformat:2 }}</p>
 
-            {% if dairy.user != request.user %}
+        {% if request.user.is_authenticated %}
+            {% if request.user.id != dairy.user_id %}
                 <button id="add-to-cart-{{ dairy.pk }}" onclick="addToCart({{ dairy.pk }})">
                     <a
                             hx-get="{% url 'add to cart' item_type='DairyProduct' product_id=dairy.id %}"
@@ -21,6 +22,7 @@
                     </a>
                 </button>
             {% endif %}
-        </a>
-    </div>
+        {% endif %}
+    </a>
+</div>
 

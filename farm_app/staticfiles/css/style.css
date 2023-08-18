@@ -1,2 +1,13 @@
 @import 'main.css';
-@import 'registration.css';
+@import "common.css";
+@import "register.css";
+@import "login.css";
+@import "details-profile.css";
+@import "edit-profile.css";
+@import "delete-profile.css";
+@import "add-product.css";
+@import "dropdown.css";
+@import "cart.css";
+@import "checkout.css";
+@import "details-product.css";
+@import "error.css";

@@ -1,0 +1,166 @@
+
+.cart-container {
+    position: absolute;
+    width: 70%;
+    height: 75%;
+    background-color: #fcf8ed;
+    border-radius: 20px;
+    box-shadow: 0px 25px 40px #c58f07;
+    margin: 60px 0 0 0;
+    color: white;
+    padding: 15px;
+    overflow: scroll;
+    border: 1px solid #ccc;
+}
+
+.header {
+    margin: auto;
+    width: 90%;
+    height: 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    font-family: ‘Open Sans’, serif;
+    font-weight: 700;
+    color: #2F3841;
+}
+
+
+.cart-product {
+    margin: auto;
+    width: 90%;
+    height: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.product-photo {
+    width: 20%;
+    text-align: center;
+}
+
+.about {
+    height: 100%;
+}
+
+.title {
+    padding-top: 5px;
+    line-height: 10px;
+    font-size:21px;
+    font-family: ‘Open Sans’, serif;
+    font-weight: 800;
+    color: #202020;
+    margin:0 0 0 20px;
+    position: absolute;
+}
+
+.subtitle {
+    line-height: 10px;
+    font-size: 18px;
+    font-family: ‘Open Sans’, serif;
+    font-weight: 600;
+    color: #909090;
+    padding:20px;
+    margin:0 0 0 10px;
+
+}
+
+
+.counter {
+    width: 15%;
+    display: inline-flex;
+    /*justify-content: space-between;*/
+    align-items: center;
+    margin: 20px;
+}
+
+.btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #d9d9d9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-family: ‘Open Sans’, serif;
+    font-weight: 900;
+    color: #202020;
+    cursor: pointer;
+}
+
+.count {
+    font-size: 20px;
+    font-family: ‘Open Sans’, serif;
+    font-weight: 900;
+    color: #202020;
+    padding: 10px;
+}
+
+.prices {
+    height: 100%;
+    text-align: right;
+    margin: 30px 0 -10px 0;
+}
+
+.amount {
+    padding-top: 20px;
+    font-size: 26px;
+    font-family: ‘Open Sans’, serif;
+    font-weight: 800;
+    color: #202020;
+}
+
+hr#cart {
+    width: 66%;
+    float: right;
+    margin-right: 5%;
+}
+
+.checkout {
+    float: right;
+    margin-right: 5%;
+    width: 28%;
+}
+
+.total {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Subtotal {
+    font-size: 22px;
+    font-family: ‘Open Sans’, serif;
+
+    font-weight: 700;
+    color: #202020;
+}
+
+.items {
+    font-size: 16px;
+    font-family: ‘Open Sans’, serif;
+
+    font-weight: 500;
+    color: #909090;
+    line-height: 10px;
+}
+
+.total-amount {
+    font-size: 36px;
+    font-family: ‘Open Sans’, serif;
+
+    font-weight: 900;
+    color: #202020;
+}
+
+.checkoutbtn {
+    margin : 15px 0 0 700px;
+}
+
+.total, .total-amount{
+    margin: 0 0 0 90px
+}

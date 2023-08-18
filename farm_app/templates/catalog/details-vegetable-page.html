@@ -25,14 +25,16 @@
             {% endif %}
         </div>
         {% if plant.user_id != request.user.pk %}
-            <div class="add-item veg-add">
-                <a href="#"
-                   class="buy-button cust-button"
-                   hx-get="{% url 'add to cart' 'VegetableAndFruit' plant.id %}"
-                   hx-target="#menu-cart-button"
-                   hx-swap="outerHTML"
-                >Add to cart</a>
-            </div>
+            {% if  request.user.is_authenticated %}
+                <div class="add-item veg-add">
+                    <a href="#"
+                       class="buy-button cust-button"
+                       hx-get="{% url 'add to cart' 'VegetableAndFruit' plant.id %}"
+                       hx-target="#menu-cart-button"
+                       hx-swap="outerHTML"
+                    >Add to cart</a>
+                </div>
+            {% endif %}
         {% else %}
             <div class="btns veg-btns">
 

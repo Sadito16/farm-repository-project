@@ -3,6 +3,7 @@ from itertools import chain
 
 from django.conf.urls.static import static
 from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render
 from django.views import generic as views
 from django.contrib.auth import views as auth_views, login, get_user_model
 from django.urls import reverse_lazy, reverse
@@ -98,3 +99,7 @@ class ProfileDeleteView(views.DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+
+def error_404_view(request, exception):
+    return render(request, 'main/404page.html')

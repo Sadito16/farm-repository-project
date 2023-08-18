@@ -25,6 +25,7 @@
             </div>
         </div>
         {% if nut.user_id != request.user.pk %}
+            {% if  request.user.is_authenticated %}
             <div class="add-item veg-add">
 
                 <a href="#"
@@ -34,6 +35,7 @@
                    hx-swap="outerHTML"
                 >Add to cart</a>
             </div>
+                {% endif %}
         {% else %}
             <div class="btns veg-btns">
 

@@ -1,0 +1,49 @@
+.details-content{
+
+    position: absolute;
+    width: 70%;
+    padding: 0 0 0 100px;
+    margin: 50px 0 0 -100px;
+}
+.details-image > img{
+    width: 400px;
+    height: 400px;
+    margin: 40px 0 0 80px;
+    border-radius: 50px;
+}
+.details-information{
+    margin: -350px 0 0 540px;
+    position: absolute;
+    color: #352503;
+}
+.details-detail{
+    margin:15px 0 0 0;
+}
+
+.add-item{
+    margin: -60px 0 0 370px;
+    position: absolute;
+    color: #352503;
+}
+
+.btns{
+    margin: 20px 0 0 550px;
+    position: absolute;
+    color: #352503;
+}
+.editBtn{
+    margin: 0 20px 0 0;
+}
+.details-name{
+        margin: -410px 0 0 540px;
+    position: absolute;
+    color: #352503;
+}
+
+
+.veg-btns{
+    margin: -120px 0 0 550px;
+}
+.veg-add{
+    margin: -200px 0 0 370px;
+}

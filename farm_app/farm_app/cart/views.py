@@ -14,11 +14,12 @@ _default.default = JSONEncoder().default
 JSONEncoder.default = _default
 
 
-@login_required
+@login_required(login_url='/login/')
 def add_to_cart(request, item_type, product_id):
     cart = Cart(request)
     cart.add(product_id, item_type)
     cart.save()
+
 
     return render(request, 'cart/menu_cart.html')
 

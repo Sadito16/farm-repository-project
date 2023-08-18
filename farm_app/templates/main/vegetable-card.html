@@ -8,22 +8,25 @@
         {% else %}
             <img class="product-card-image" src="{% static 'images/fruit-and-veg.jpg' %}" alt="vegetable photo">
         {% endif %}
-
-        <h1>{{ vegetable }}</h1>
-        <p class="price">${{ vegetable.price|floatformat:2 }}</p>
-
-
-        <button id="add-to-cart-{{ vegetable.pk }}" onclick="addToCart({{ vegetable.pk }})">
-            <a
-                    hx-get="{% url 'add to cart' item_type='VegetableAndFruit' product_id=vegetable.id %}"
-                    hx-target="#menu-cart-button"
-                    hx-swap="outerHTML"
-            >
-                Add to cart
-            </a>
-        </button>
-
     </a>
+    <h1>{{ vegetable }}</h1>
+    <p class="price">${{ vegetable.price|floatformat:2 }}</p>
+
+    {% if request.user.is_authenticated %}
+        {% if request.user.id != vegetable.user_id  %}
+            <button id="add-to-cart-{{ vegetable.pk }}" onclick="addToCart({{ vegetable.pk }})">
+                <a
+                        hx-get="{% url 'add to cart' item_type='VegetableAndFruit' product_id=vegetable.id %}"
+                        hx-target="#menu-cart-button"
+                        hx-swap="outerHTML"
+                >
+                    Add to cart
+                </a>
+            </button>
+        {% endif %}
+    {% endif %}
+
+
 </div>
 
 
