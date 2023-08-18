@@ -111,19 +111,20 @@
                     <img class="small-card-image" src="{{ item.product.photo.url }}" alt="Photo">
                 {% endif %}
 
-                <h1>{{ product }}</h1>
+                <h1>{{ item.product }}</h1>
                 <p class="price">${{ item.product.price|floatformat:2 }}</p>
 
-
-                <button id="add-to-cart-{{ item.product.pk }}" onclick="addToCart({{ item.product.id }})">
-                    <a
-                            hx-get="{% url 'add to cart' item_type=item.model_name product_id=item.product.id %}"
-                            hx-target="#menu-cart-button"
-                            hx-swap="outerHTML"
-                    >
-                        Add to cart
-                    </a>
-                </button>
+                {% if request.user.id != item.product.user_id %}
+                    <button id="add-to-cart-{{ item.product.pk }}" onclick="addToCart({{ item.product.id }})">
+                        <a
+                                hx-get="{% url 'add to cart' item_type=item.model_name product_id=item.product.id %}"
+                                hx-target="#menu-cart-button"
+                                hx-swap="outerHTML"
+                        >
+                            Add to cart
+                        </a>
+                    </button>
+                {% endif %}
             </div>
             </a>
             </a>

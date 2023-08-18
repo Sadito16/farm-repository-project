@@ -57,7 +57,7 @@ th, td {
     max-width: fit-content;
     display: flex;
     flex-flow: row;
-
+    align-items: center;
     position: relative;
     margin: 10px 0 0 320px;
     flex-wrap: wrap;
@@ -87,6 +87,7 @@ div.product-card {
     align-items: center;
     text-decoration: none;
     opacity: 0.8;
+    align-self: center;
 }
 
 .product-card:hover {

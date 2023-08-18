@@ -109,7 +109,6 @@ class VegetableDetailsView(views.DetailView):
 class VegetableDeleteView(views.DeleteView):
     model = VegetableAndFruit
     context_object_name = 'product'
-    template_name = 'catalog/delete-page.html'
     success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
@@ -177,7 +176,6 @@ class NutDetailsView(views.DetailView):
 class NutDeleteView(views.DeleteView):
     model = Nut
     context_object_name = 'product'
-    template_name = 'catalog/delete-page.html'
     success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
@@ -245,7 +243,6 @@ class DairyDetailsView(views.DetailView):
 class DairyDeleteView(views.DeleteView):
     model = DairyProduct
     context_object_name = 'product'
-    template_name = 'catalog/delete-page.html'
     success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
@@ -313,7 +310,6 @@ class AnimalDetailsView(views.DetailView):
 class AnimalDeleteView(views.DeleteView):
     model = AnimalProduct
     context_object_name = 'product'
-    template_name = 'catalog/delete-page.html'
     success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
