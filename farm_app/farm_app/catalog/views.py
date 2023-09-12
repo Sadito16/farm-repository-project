@@ -145,6 +145,10 @@ class NutEditView(views.UpdateView):
     form_class = NutCreationForm
     context_object_name = 'nut'
 
+    def user_do_not_have_access(self):
+        if UserModel.id != object.user_id:
+            reverse_lazy()
+
     def get_success_url(self):
         return reverse('details nut', kwargs={
             'pk': self.object.pk,
