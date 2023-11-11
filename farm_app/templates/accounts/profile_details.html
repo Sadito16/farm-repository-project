@@ -6,8 +6,8 @@
     <div class="everything">
 
         <div class="profile-image">
-            {% if profile_picture %}
-                <img src="{{ profile_picture.url }}" alt="Photo">
+            {% if profile.profile_picture %}
+                <img src="{{ profile.profile_picture.url }}" alt="Photo">
 
             {% elif profile.gender == 'Female' %}
                 <img src="{% static 'images/undraw_female_avatar_efig.svg' %}" alt="Female Icon">

@@ -6,7 +6,7 @@
 
         <div class="edit-item item3">
             <h1 class="big-text">Edit Your Profile</h1>
-            <form action="{% url 'profile edit' object.pk %}" method="post">
+            <form action="{% url 'profile edit' object.pk %}" method="post"  enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button class="cust-button edit-button" type="submit">Save Changes</button>
