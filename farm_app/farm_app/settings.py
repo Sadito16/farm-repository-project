@@ -1,6 +1,12 @@
 import os
 from pathlib import Path
 
+import environ
+
+
+env = environ.Env()
+environ.Env.read_env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -8,12 +14,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@e0r%+2z5_c$%h(o_f4y6g(&)=iee$zq+3awp=*wdf$#n_yr(p'
+SECRET_KEY = os.environ.get('SECRET_KRY', ' ')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', ' ').split(' ')
 
 SESSION_COOKIE_AGE = 86400
 CART_SESSION_ID = 'cart'
@@ -72,11 +78,11 @@ WSGI_APPLICATION = 'farm_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db_farm_2023',
-        'USER': 'postgres',
-        'PASSWORD': '1123QwER',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': os.getenv('DATABASE_NAME', None),
+        'USER': os.getenv('DATABASE_USER', None),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', None),
+        'HOST': os.getenv('DATABASE_HOST', None),
+        'PORT': os.getenv('DATABASE_PORT', None),
     },
 }
 
