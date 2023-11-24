@@ -29,7 +29,6 @@ def cart(request):
 
 
 def update_cart(request, product_id, action, item_type):
-    print(f"item_type: {item_type}")
     cart = Cart(request)
     if action == 'increment':
         cart.add(product_id, item_type, 1, True)

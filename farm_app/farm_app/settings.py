@@ -37,6 +37,7 @@ INSTALLED_APPS = [
 
     'farm_app.catalog',
     'farm_app.cart',
+    'farm_app.order',
 ]
 
 MIDDLEWARE = [
