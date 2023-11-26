@@ -13,9 +13,6 @@ from farm_app.catalog.validators import validate_image_size
 UserModel = 'accounts.FarmerUser'
 
 
-
-
-
 class ChoicesMixin:
     @classmethod
     def choice(cls):
@@ -26,7 +23,6 @@ class ChoicesLengthMixin(ChoicesMixin):
     @classmethod
     def max_length(cls):
         return max(len(ch.value) for ch in cls)
-
 
 class VegFruitChoice(ChoicesLengthMixin, Enum):
     CARROT = 'Carrot'
@@ -86,6 +82,7 @@ class NutChoices(ChoicesLengthMixin, Enum):
     DRIED_FRUIT = 'Dried'
     OTHER = 'Other'
 
+
 class VegetableAndFruit(models.Model):
     MAX_LENGTH_OF_PRODUCTION_COUNTRY = 40
 
@@ -94,7 +91,8 @@ class VegetableAndFruit(models.Model):
                             default=VegFruitChoice.OTHER.value)
 
     price = models.FloatField()
-    production = models.CharField(null=True, blank=True, max_length=MAX_LENGTH_OF_PRODUCTION_COUNTRY , validators=[validate_only_letter_value])
+    production = models.CharField(null=True, blank=True, max_length=MAX_LENGTH_OF_PRODUCTION_COUNTRY,
+                                  validators=[validate_only_letter_value])
 
     photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
 
@@ -102,6 +100,7 @@ class VegetableAndFruit(models.Model):
         UserModel,
         on_delete=models.CASCADE,
     )
+
     def clean(self):
         if len(self.name) > 15:
             raise ValidationError(
@@ -125,8 +124,9 @@ class VegetableAndFruit(models.Model):
     class Meta:
         ordering = ['-price']
 
+
 class DairyProduct(models.Model):
-    MAX_LENGTH_OF_PACKAGE= 100
+    MAX_LENGTH_OF_PACKAGE = 100
     name = models.CharField(choices=DairyChoice.choice(),
                             max_length=DairyChoice.max_length(),
                             default=DairyChoice.OTHER.value)
@@ -138,6 +138,7 @@ class DairyProduct(models.Model):
         UserModel,
         on_delete=models.CASCADE,
     )
+
     def clean(self):
         if len(self.name) > 15:
             raise ValidationError(
@@ -148,29 +149,32 @@ class DairyProduct(models.Model):
 
     def to_json(self):
         return '{"name": "%s"}' % self.name
+
     def __str__(self):
         if self.percent:
             return f'{self.name} {self.percent}%'
         return f'{self.name}'
+
     class Meta:
         ordering = ['-price']
+
 
 class AnimalProduct(models.Model):
     MAX_LENGTH_OF_PRODUCTION_COUNTRY = 40
     PRODUCT_MAX_LENGTH = 40
 
-
     type = models.CharField(choices=AnimalChoice.choice(),
                             max_length=AnimalChoice.max_length(),
                             default=AnimalChoice.OTHER.value)
     name = models.CharField(
-        max_length=PRODUCT_MAX_LENGTH, validators = [validate_only_letter_value]
+        max_length=PRODUCT_MAX_LENGTH, validators=[validate_only_letter_value]
     )
     price = models.FloatField()
     photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
-    date_of_birth = models.DateField(null=True,blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
 
-    production = models.CharField(null=True, blank=True, max_length=MAX_LENGTH_OF_PRODUCTION_COUNTRY , validators=[validate_only_letter_value])
+    production = models.CharField(null=True, blank=True, max_length=MAX_LENGTH_OF_PRODUCTION_COUNTRY,
+                                  validators=[validate_only_letter_value])
     user = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
@@ -179,6 +183,7 @@ class AnimalProduct(models.Model):
     @property
     def age(self):
         return datetime.datetime.now().year - self.date_of_birth.year
+
     def clean(self):
         if len(self.name) > 15:
             raise ValidationError(
@@ -192,13 +197,17 @@ class AnimalProduct(models.Model):
         elif len(self.production) <= 2:
             raise ValidationError(
                 {'name': "Production should have at least 3 letters"})
+
     def to_json(self):
         return '{"name": "%s"}' % self.name
+
     def __str__(self):
         return f'{self.name} from {self.type}'
 
     class Meta:
         ordering = ['-price']
+
+
 class Nut(models.Model):
     NUTS_MAX_LENGTH = 35
 
@@ -227,9 +236,9 @@ class Nut(models.Model):
 
     def to_json(self):
         return '{"name": "%s"}' % self.name
+
     def __str__(self):
         return f'{self.type} {self.name}'
-
 
     class Meta:
         ordering = ['-price']

@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+{% block title %} My Orders {% endblock %}
+
+{% block page_content %}
+
+
+    <div class="whole-page">
+    <h1>Orders</h1>
+        <div class="header-orders">Orders</div>
+        <div>27 orders</div>
+
+
+        <div class="orders-window">
+            <table>
+                <tr>
+                    <th>Order</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Paid</th>
+                    <th>Total</th>
+                </tr>
+                {% for order in request.user.orders.all %}
+                    <tr>
+                        <td><a href="{% url 'detail order' order.id %}">#{{ order.id }}</a></td>
+                        <td>{{ order.created_at }}</td>
+                        <td>{{ order.status }}</td>
+                        <td>{{ order.paid }}</td>
+                        <td>${{ order.paid_amount }}</td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

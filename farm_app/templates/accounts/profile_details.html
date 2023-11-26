@@ -20,6 +20,8 @@
         <div class="profile-information">
             <div id="profile-buttons">
                 {% if request.user.id == object.id %}
+                    <a class="cust-button prof-button orders-btn" style="margin: 0 0 10px 30px; " href="{% url 'my orders' object.id %}">My Orders</a>
+                    <br>
                     <a class="cust-button prof-button" href="{% url 'profile edit' object.pk %}">Edit</a>
 
                     <a id="deleteProfileBtn" class="cust-button prof-button"

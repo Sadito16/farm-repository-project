@@ -21,7 +21,7 @@ class Order(models.Model):
     email = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
     zipcode = models.CharField(max_length=100)
-    place = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -33,10 +33,10 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
-    fruit = models.ForeignKey(VegetableAndFruit, related_name='fruit', on_delete=models.CASCADE)
-    dairy = models.ForeignKey(DairyProduct, related_name='dairy', on_delete=models.CASCADE)
-    meat = models.ForeignKey(AnimalProduct, related_name='meat', on_delete=models.CASCADE)
-    nut = models.ForeignKey(Nut, related_name='nut', on_delete=models.CASCADE)
+    fruit = models.ForeignKey(VegetableAndFruit, related_name='VegetableAndFruit', on_delete=models.CASCADE,null=True,blank=True)
+    dairy = models.ForeignKey(DairyProduct, related_name='DairyProduct', on_delete=models.CASCADE,null=True,blank=True)
+    meat = models.ForeignKey(AnimalProduct, related_name='AnimalProduct', on_delete=models.CASCADE,null=True,blank=True)
+    nut = models.ForeignKey(Nut, related_name='Nut', on_delete=models.CASCADE,null=True,blank=True)
 
 
     price = models.IntegerField()

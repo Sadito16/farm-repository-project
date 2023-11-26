@@ -2,78 +2,79 @@
 {% block title %} Checkout {% endblock %}
 {% block page_content %}
     <div>
-        <h1>Checkout</h1>
-
-        <div class="checkout-content">
-            <h2>Shipping information</h2>
-
+        <form method="post" action="{% url 'start order' %}">
+            {% csrf_token %}
             <div>
-                <label>First name</label>
-                <input class="form-field checkfirld" type="text" value="{{ request.user.first_name }}">
+                <h1>Checkout</h1>
+
+
+                <div class="checkout-content">
+                    <h2>Shipping information</h2>
+
+                    <div>
+                        <label>First name</label>
+                        <input name="first_name" class="form-field checkfirld" type="text" value="{{ request.user.first_name }}">
+                    </div>
+                    <div>
+                        <label>Last name</label>
+                        <input name="last_name" class="form-field checkfirld" type="text" value="
+
+             {% if request.user.last_name is None %}{{ '' }}{% else %}{{ request.user.last_name }}{% endif %}">
+                    </div>
+                    <div>
+                        <label>Address</label>
+                        <input name="address" class="form-field checkfirld" type="text">
+                    </div>
+                    <div>
+                        <label>Zip code</label>
+                        <input name="zipcode" class="form-field checkfirld" type="text">
+                    </div>
+                    <div>
+                        <label>City</label>
+                        <input name="city" class="form-field checkfirld" type="text">
+                    </div>
+
+                </div>
+                <div class="checkout-content">
+                    <h2>Contact information</h2>
+
+                    <div>
+                        <label>Email</label>
+                        <input name="email" class="form-field checkfirld" type="email" value="{{ request.user.email }}">
+                    </div>
+                    <div>
+                        <label>Phone</label>
+                        <input name="phone" class="form-field checkfirld" type="phone">
+                    </div>
+                </div>
+                <div class="checkout-content">
+                    <h2>Payment information</h2>
+                    <lable for="methods">Payment method</lable>
+                    <select class="form-field checkfirld" name="methods">
+                        <option value="cash">Cash</option>
+                        <option value="credit">Credit/Debit Card</option>
+                        <option value="banktransfer">Bank Transfer</option>
+                        <option value="mobile">Mobile wallet</option>
+                        <option value="easypay">EasyPay</option>
+                        <option value="cryptocurrency">Cryptocurrency</option>
+                    </select>
+
+                </div>
             </div>
-            <div>
-                <label>Last name</label>
-                <input class="form-field checkfirld" type="text" value="
 
 
+            <hr>
+            <div class="summary">
+                <h2> Summary</h2>
 
+                <div>
+                    <span>Total</span>
+                    <span>${{ cart.get_total_cost|floatformat:2 }}</span>
+                </div>
 
-
-                        {% if request.user.last_name is None %}{{ '' }}{% else %}{{ request.user.last_name }}{% endif %}">
+                <button class="cust-button confirm-button">Confirm</button>
             </div>
-            <div>
-                <label>Address</label>
-                <input class="form-field checkfirld" type="text">
-            </div>
-            <div>
-                <label>Zip code</label>
-                <input class="form-field checkfirld" type="text">
-            </div>
-            <div>
-                <label>City</label>
-                <input class="form-field checkfirld" type="text">
-            </div>
-
-        </div>
-        <div class="checkout-content">
-            <h2>Contact information</h2>
-
-            <div>
-                <label>Email</label>
-                <input class="form-field checkfirld" type="email" value="{{ request.user.email }}">
-            </div>
-            <div>
-                <label>Phone</label>
-                <input class="form-field checkfirld" type="phone">
-            </div>
-        </div>
-        <div class="checkout-content">
-            <h2>Payment information</h2>
-            <lable for="methods">Payment method</lable>
-            <select class="form-field checkfirld" name="methods">
-                <option value="cash">Cash</option>
-                <option value="credit">Credit/Debit Card</option>
-                <option value="banktransfer">Bank Transfer</option>
-                <option value="mobile">Mobile wallet</option>
-                <option value="easypay">EasyPay</option>
-                <option value="cryptocurrency">Cryptocurrency</option>
-            </select>
-
-        </div>
-
-    </div>
-
-
-    <hr>
-    <div>
-        <h2> Summary</h2>
-
-        <div>
-            <span>Total</span>
-            <span>${{ cart.get_total_cost|floatformat:2 }}</span>
-        </div>
-
-        <button class="cust-button confirm-button"><a href="#">Confirm</a></button>
+        </form>
     </div>
 
 

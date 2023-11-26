@@ -17,3 +17,13 @@
     text-decoration: none;
     color:#352503;
 }
+
+.whole-page{
+    position: absolute;
+    top: 310px;
+    border: red solid;
+}
+
+.orders-window{
+    border: blue solid;
+}

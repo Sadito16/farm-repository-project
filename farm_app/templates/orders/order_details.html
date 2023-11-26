@@ -1,0 +1,40 @@
+{% extends 'main/base.html' %}
+{% block title %} Order Details {% endblock %}
+{% block page_content %}
+    <div class="whole-page">
+        <h1>Order NOMER65432</h1>
+        <h1>Order #{{ order.id }}</h1>
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+
+            {% for item in order.items.all %}
+                <tr>
+                    <td>1-{{ item.id }}</td>
+                    {% if item.fruit != None %}
+                        <td>{{ item.fruit }}</td>
+
+                    {% elif item.meat != None %}
+                        <td>{{ item.meat }}</td>
+
+                    {% elif item.dairy != None %}
+                        <td>{{ item.dairy }}</td>
+
+                    {% elif item.nut != None %}
+                        <td>{{ item.nut }}</td>
+                    {% endif %}
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>$1000.00</td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
+{% endblock %}
