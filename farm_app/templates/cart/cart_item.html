@@ -27,15 +27,15 @@
         <a
                 type="button"
                 class="btn"
-                hx-get="{% url 'update cart'  item.product.id  'increment'  item.item_type %}"
+                hx-get="{% url 'update cart'  item.product.id  'decrement'  item.item_type %}"
                 hx-target="#cart-item-{{ item.product.id }}"
                 hx-swap="outerHTML"
         >-</a>
-        <span class="count">{{ item.quantity }}</span>
+        <span class="count">{{ item.quantity }} kg</span>
         <a
                 type="button"
                 class="btn"
-                hx-get="{% url 'update cart'  item.product.id  'decrement' item.item_type %}"
+                hx-get="{% url 'update cart'  item.product.id  'increment' item.item_type %}"
                 hx-target="#cart-item-{{ item.product.id }}"
                 hx-swap="outerHTML"
         >+</a>
@@ -45,7 +45,7 @@
             {{ item.product }}
         </div>
         <div class="subtitle">
-            <p class="prices">${{ item.total_price|floatformat:2 }}</p>
+            ${{ item.total_price|floatformat:2 }}
         </div>
         <hr>
     </div>

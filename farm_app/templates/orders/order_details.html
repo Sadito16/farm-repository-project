@@ -1,40 +1,37 @@
 {% extends 'main/base.html' %}
-{% block title %} Order Details {% endblock %}
+{% load static %}
+{% block title %} Order {{ order.id }}{% endblock %}
 {% block page_content %}
+
+
     <div class="whole-page">
-        <h1>Order NOMER65432</h1>
-        <h1>Order #{{ order.id }}</h1>
-        <table>
-            <tr>
-                <th>Product</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-            </tr>
+        <div class="header-orders">
+            <div class="head-ord"><b>Order #{{ order.id }}</b></div>
+            <div class="count-orders">{{ order_items }} items | <b>Total : ${{ order_total }}</b></div>
+        </div>
 
-            {% for item in order.items.all %}
+
+        <div class="orders-window">
+            <div class="fill"></div>
+            <table class="my-orders">
                 <tr>
-                    <td>1-{{ item.id }}</td>
-                    {% if item.fruit != None %}
-                        <td>{{ item.fruit }}</td>
-
-                    {% elif item.meat != None %}
-                        <td>{{ item.meat }}</td>
-
-                    {% elif item.dairy != None %}
-                        <td>{{ item.dairy }}</td>
-
-                    {% elif item.nut != None %}
-                        <td>{{ item.nut }}</td>
-                    {% endif %}
-                    <td>{{ item.price }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>$1000.00</td>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Sub-Total</th>
                 </tr>
-            {% endfor %}
+                {% for item in order.items.all %}
+                    <tr>
+                        <td>{{ item.get_name }}</td>
+                        <td>${{ item.price|floatformat:2 }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.get_total_price }}</td>
+                    </tr>
+                {% endfor %}
 
-        </table>
+            </table>
+
+        </div>
     </div>
 
 {% endblock %}

@@ -41,7 +41,6 @@ class Cart(object):
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity': 1, 'id': product_id,'item_type':item_type, item_type:None}
 
-
         if update_quantity:
             self.cart[product_id]['quantity'] += int(quantity)
 
@@ -56,6 +55,10 @@ class Cart(object):
             del self.cart[product_id]
 
             self.save()
+
+    def clear(self):
+        del self.session[settings.CART_SESSION_ID]
+        self.session.modified = True
 
 
     def get_total_cost(self):

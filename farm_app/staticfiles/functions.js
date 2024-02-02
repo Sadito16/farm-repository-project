@@ -1,5 +1,12 @@
-function addToCart(productId) {
-    document.getElementById("add-to-cart-" + productId).innerText = "Added!";
+function addToCart(item_type, productId) {
+    var isAdded = localStorage.getItem("addedToCart_" + item_type + "_" + productId);
+    console.log(item_type);
+    console.log('-----------------------')
+    if (!isAdded) {
+        document.getElementById("add-to-cart-" + item_type + "-" + productId).innerText = "Added!";
+        localStorage.setItem("addedToCart_"+ item_type + "_" + productId, "true");
+    }
+    console.log(localStorage);
 }
 
 filterSelection("all")
@@ -15,7 +22,7 @@ function filterSelection(c) {
         if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
 
     }
-            w3RemoveClass(welcome_text, "show");
+    w3RemoveClass(welcome_text, "show");
 
 
 }
@@ -53,13 +60,7 @@ for (var i = 0; i < btns.length; i++) {
         this.className += " activebtn";
     });
 }
-//
-// var btnContainer = document.getElementById("myBtnContainer");
-// var btns = btnContainer.getElementsByClassName("btn");
-// for (var i = 0; i < btns.length; i++) {
-//   btns[i].addEventListener("click", function(){
-//     var current = document.getElementsByClassName("active");
-//     current[0].className = current[0].className.replace(" active", "");
-//     this.className += " active";
-//   });
-// }
+
+
+
+

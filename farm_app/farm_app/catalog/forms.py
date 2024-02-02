@@ -1,3 +1,5 @@
+from datetime import date
+
 from django import forms
 from django.forms import ImageField
 
@@ -19,11 +21,10 @@ class VegetableCreationForm(forms.ModelForm):
         fields = ('name', 'price', 'photo', 'production')
         widgets = {
             'name': forms.Select(attrs={'class': 'form-field'}),
-            'price': forms.NumberInput(attrs={'class': 'form-field'}),
-            'production': forms.TextInput(attrs={'class': 'form-field'}),
+            'price': forms.NumberInput(attrs={'class': 'form-field','min' : 0}),
+            'production': forms.TextInput(attrs={'class': 'form-field', 'required': True}),
         }
         labels = labels
-
 
 class DairyCreationForm(forms.ModelForm):
     class Meta:
@@ -32,8 +33,8 @@ class DairyCreationForm(forms.ModelForm):
         labels = labels
         widgets = {
             'name': forms.Select(attrs={'class': 'form-field'}),
-            'percent': forms.NumberInput(attrs={'class': 'form-field'}),
-            'price': forms.NumberInput(attrs={'class': 'form-field'}),
+            'percent': forms.NumberInput(attrs={'class': 'form-field','min' : 0, 'required': True}),
+            'price': forms.NumberInput(attrs={'class': 'form-field','min' : 0}),
         }
 
 
@@ -44,10 +45,10 @@ class AnimalCreationForm(forms.ModelForm):
         labels = labels
         widgets = {
             'type': forms.Select(attrs={'class': 'form-field'}),
-            'name': forms.TextInput(attrs={'class': 'form-field'}),
-            'date_of_birth': forms.DateInput(attrs={'class': 'form-field'}),
-            'price': forms.NumberInput(attrs={'class': 'form-field'}),
-            'production': forms.TextInput(attrs={'class': 'form-field'}),
+            'name': forms.TextInput(attrs={'class': 'form-field', 'required': True}),
+            'date_of_birth': forms.DateInput(attrs={'class': 'form-field date-input','type':'date', 'required': True, 'max': date.today()}),
+            'price': forms.NumberInput(attrs={'class': 'form-field','min' : 0}),
+            'production': forms.TextInput(attrs={'class': 'form-field', 'required': True}),
         }
 
 
@@ -57,7 +58,8 @@ class NutCreationForm(forms.ModelForm):
         fields = ('type', 'name', 'price','photo')
         widgets = {
             'type': forms.Select(attrs={'class': 'form-field'}),
-            'name': forms.TextInput(attrs={'class': 'form-field'}),
-            'price': forms.NumberInput(attrs={'class': 'form-field'}),
+            'name': forms.TextInput(attrs={'class': 'form-field', 'required': True}),
+            'price': forms.NumberInput(attrs={'class': 'form-field','min' : 0}),
 
         }
+

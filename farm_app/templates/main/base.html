@@ -15,13 +15,13 @@
 
 <ul class="navbar">
     {% if not request.user.is_authenticated %}
-    <button class="left-item navitem first-nav all navbtn activebtn" onclick="filterSelection('all')">
-        <a href="{% url 'home' %}">
-            Farm</a>
-    </button>
-        {% else %}
-        <li class="left-item first-nav  navitem" style="background-color: #c58f07;"><a href="{% url 'home' %}">Farm</a></li>
-{% endif %}
+        <button class="left-item navitem first-nav all navbtn activebtn" onclick="filterSelection('all')">
+            Farm
+        </button>
+    {% else %}
+        <li class="left-item first-nav  navitem" style="background-color: #c58f07;"><a href="{% url 'home' %}">Farm</a>
+        </li>
+    {% endif %}
 
 
     {% if request.user.is_authenticated %}
@@ -94,7 +94,8 @@
             <a class="nav-link" href="{% url 'profile details' pk=request.user.pk %}">Profile</a>
         </li>
         <li
-                class="right-item navitem"
+                class="right-item navitem menu-cart"
+                id="menu-cart"
                 hx-get="{% url 'menu cart' %}"
                 hx-trigger="update-menu-cart from:body"
                 hx-swap="innerHTML"
@@ -130,16 +131,9 @@
 </div>
 
 <div id="footer">
-    <div class="container p-4"></div>
-    <div class="text-center p-3">
-        <a>
-            © 2023, June:
-            <a class="farm-link" href="{% url 'home' %}">
-                <img alt="Icon" src="{% static 'images/favicon.ico' %}">
-                Farm</a>
-            , Sadi's project
-        </a>
-    </div>
+    © 2023, June:
+    <img alt="Icon" src="{% static 'images/favicon.ico' %}">
+    Farm, Sadi's project
 </div>
 
 <script src="https://unpkg.com/htmx.org@1.9.4"></script>

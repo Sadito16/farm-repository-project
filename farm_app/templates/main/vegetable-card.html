@@ -1,60 +1,64 @@
 {% load static %}
 
 {% if not request.user.is_authenticated %}
-<div class="card vegetables filterDiv" >
-    <a href="{% url 'details vegetable' vegetable.pk %}">
-        {% if vegetable.photo %}
-            <img class="product-card-image" src="{{ vegetable.photo.url }}" alt="vegetable photo">
-        {% else %}
-            <img class="product-card-image" src="{% static 'images/fruit-and-veg.jpg' %}" alt="vegetable photo">
+    <div class="card vegetables filterDiv">
+        <a href="{% url 'details vegetable' vegetable.pk %}">
+            {% if vegetable.photo %}
+                <img class="product-card-image" src="{{ vegetable.photo.url }}" alt="vegetable photo">
+            {% else %}
+                <img class="product-card-image" src="{% static 'images/fruit-and-veg.jpg' %}" alt="vegetable photo">
+            {% endif %}
+        </a>
+        <h1>{{ vegetable }}</h1>
+        <p class="price">${{ vegetable.price|floatformat:2 }}</p>
+
+        {% if request.user.is_authenticated %}
+            {% if request.user.id != vegetable.user_id %}
+                <button id="add-to-cart-VegetableAndFruit-{{ vegetable.pk }}"
+                        onclick="addToCart('VegetableAndFruit',{{ vegetable.pk }})">
+                    <a
+                            hx-trigger="click"
+                            hx-get="{% url 'add to cart' item_type='VegetableAndFruit' product_id=vegetable.pk %}"
+                            hx-target="#menu-cart-button"
+                            hx-swap="outerHTML"
+                    >
+                        Add to cart
+                    </a>
+                </button>
+            {% endif %}
         {% endif %}
-    </a>
-    <h1>{{ vegetable }}</h1>
-    <p class="price">${{ vegetable.price|floatformat:2 }}</p>
-
-    {% if request.user.is_authenticated %}
-        {% if request.user.id != vegetable.user_id  %}
-            <button id="add-to-cart-{{ vegetable.pk }}" onclick="addToCart({{ vegetable.pk }})">
-                <a
-                        hx-get="{% url 'add to cart' item_type='VegetableAndFruit' product_id=vegetable.id %}"
-                        hx-target="#menu-cart-button"
-                        hx-swap="outerHTML"
-                >
-                    Add to cart
-                </a>
-            </button>
-        {% endif %}
-    {% endif %}
 
 
-</div>
+    </div>
 {% else %}
-<div class="card vegetables" >
-    <a href="{% url 'details vegetable' vegetable.pk %}">
-        {% if vegetable.photo %}
-            <img class="product-card-image" src="{{ vegetable.photo.url }}" alt="vegetable photo">
-        {% else %}
-            <img class="product-card-image" src="{% static 'images/fruit-and-veg.jpg' %}" alt="vegetable photo">
+    <div class="card vegetables">
+        <a href="{% url 'details vegetable' vegetable.pk %}">
+            {% if vegetable.photo %}
+                <img class="product-card-image" src="{{ vegetable.photo.url }}" alt="vegetable photo">
+            {% else %}
+                <img class="product-card-image" src="{% static 'images/fruit-and-veg.jpg' %}" alt="vegetable photo">
+            {% endif %}
+        </a>
+        <h1>{{ vegetable }}</h1>
+        <p class="price">${{ vegetable.price|floatformat:2 }}</p>
+
+        {% if request.user.is_authenticated %}
+            {% if request.user.id != vegetable.user_id %}
+                <button id="add-to-cart-VegetableAndFruit-{{ vegetable.pk }}"
+                        onclick="addToCart('VegetableAndFruit', {{ vegetable.pk }})">
+                    <a
+                            hx-trigger="click"
+                            hx-get="{% url 'add to cart' item_type='VegetableAndFruit' product_id=vegetable.id %}"
+                            hx-target="#menu-cart-button"
+                            hx-swap="outerHTML"
+                    >
+                        Add to cart
+                    </a>
+                </button>
+            {% endif %}
         {% endif %}
-    </a>
-    <h1>{{ vegetable }}</h1>
-    <p class="price">${{ vegetable.price|floatformat:2 }}</p>
-
-    {% if request.user.is_authenticated %}
-        {% if request.user.id != vegetable.user_id  %}
-            <button id="add-to-cart-{{ vegetable.pk }}" onclick="addToCart({{ vegetable.pk }})">
-                <a
-                        hx-get="{% url 'add to cart' item_type='VegetableAndFruit' product_id=vegetable.id %}"
-                        hx-target="#menu-cart-button"
-                        hx-swap="outerHTML"
-                >
-                    Add to cart
-                </a>
-            </button>
-        {% endif %}
-    {% endif %}
 
 
-</div>
+    </div>
 
 {% endif %}

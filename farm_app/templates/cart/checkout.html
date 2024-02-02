@@ -12,26 +12,26 @@
                     <h2>Shipping information</h2>
 
                     <div>
-                        <label>First name</label>
-                        <input name="first_name" class="form-field checkfirld" type="text" value="{{ request.user.first_name }}">
+                        <label for="first_name">First name</label>
+                        <input id="first_name" class="form-field checkfirld" type="text" value="{{ request.user.first_name }}">
                     </div>
                     <div>
-                        <label>Last name</label>
-                        <input name="last_name" class="form-field checkfirld" type="text" value="
+                        <label for="last_name">Last name</label>
+                        <input id="last_name" class="form-field checkfirld" type="text" value="
 
              {% if request.user.last_name is None %}{{ '' }}{% else %}{{ request.user.last_name }}{% endif %}">
                     </div>
                     <div>
-                        <label>Address</label>
-                        <input name="address" class="form-field checkfirld" type="text">
+                        <label for="address">Address</label>
+                        <input required id="address" class="form-field checkfirld" type="text">
                     </div>
                     <div>
-                        <label>Zip code</label>
-                        <input name="zipcode" class="form-field checkfirld" type="text">
+                        <label for="zipcode">Zip code</label>
+                        <input required id="zipcode" minlength="4" maxlength="4" class="form-field checkfirld" type="number">
                     </div>
                     <div>
-                        <label>City</label>
-                        <input name="city" class="form-field checkfirld" type="text">
+                        <label for="city">City</label>
+                        <input id="city" required class="form-field checkfirld" type="text">
                     </div>
 
                 </div>
@@ -39,18 +39,18 @@
                     <h2>Contact information</h2>
 
                     <div>
-                        <label>Email</label>
-                        <input name="email" class="form-field checkfirld" type="email" value="{{ request.user.email }}">
+                        <label for="email">Email</label>
+                        <input id="email" required class="form-field checkfirld" type="email" value="{{ request.user.email }}">
                     </div>
                     <div>
-                        <label>Phone</label>
-                        <input name="phone" class="form-field checkfirld" type="phone">
+                        <label for="phone" >Phone</label>
+                        <input id="phone" required maxlength="10" minlength="10" class="form-field checkfirld" type="number">
                     </div>
                 </div>
                 <div class="checkout-content">
                     <h2>Payment information</h2>
-                    <lable for="methods">Payment method</lable>
-                    <select class="form-field checkfirld" name="methods">
+                    <label for="methods">Payment method</label>
+                    <select id="methods" class="form-field checkfirld" name="methods">
                         <option value="cash">Cash</option>
                         <option value="credit">Credit/Debit Card</option>
                         <option value="banktransfer">Bank Transfer</option>

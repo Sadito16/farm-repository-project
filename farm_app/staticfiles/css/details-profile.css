@@ -14,11 +14,16 @@ h1, p {
     position: absolute;
     margin: 0 70px 0 30px;
     float: left;
+    overflow: hidden;
 }
 
 .profile-image img {
     width: 250px;
     height: 250px;
+    background-size: cover;
+    background: no-repeat center;
+    object-fit: cover;
+    object-position: center;
 
 }
 
@@ -105,6 +110,7 @@ div.product-card {
     color: grey;
     font-size: 22px;
     text-decoration: none;
+    margin-bottom: 10px;
 }
 
 

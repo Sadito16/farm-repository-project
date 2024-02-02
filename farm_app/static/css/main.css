@@ -23,8 +23,8 @@ html, body {
     flex-wrap: wrap;
     height: 100%;
     justify-content: space-evenly;
-    padding: 40px 0;
-
+    padding: 40px 0 20px 0;
+    overflow: auto;
 }
 
 .main::after {
@@ -63,7 +63,7 @@ html, body {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    margin:10px
+    margin: 10px
 }
 
 .right-item {
@@ -73,18 +73,19 @@ html, body {
 .left-item {
     float: left;
 }
-.navitem:hover{
+
+.navitem:hover {
     background-color: #c58f07;
 }
-.navitem{
+
+.navitem {
     height: 100%;
     border-right: 1px solid #c58f07;
 }
-.first-nav{
+
+.first-nav {
     border-right: none;
 }
-
-
 
 
 /*.dropdown-menu {*/
@@ -163,7 +164,6 @@ html, body {
 
 
 .card {
-    display: inline-block;
     transition: 0.3s;
     width: 40%;
     border-radius: 5px;
@@ -175,6 +175,11 @@ html, body {
     align-items: center;
     text-decoration: none;
     opacity: 0.8;
+
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-between;*/
+    height: 100%
 }
 
 .card:hover {
@@ -195,7 +200,7 @@ html, body {
 }
 
 .card button {
-    position: relative;
+    width: 100%;
     border: none;
     outline: 0;
     padding: 12px;
@@ -203,7 +208,6 @@ html, body {
     background-color: #c58f07;
     text-align: center;
     cursor: pointer;
-    width: 100%;
     font-size: 18px;
 }
 
@@ -227,38 +231,55 @@ html, body {
 }
 
 .filterDiv {
-  float: left;
-  background-color: #2196F3;
-  color: #ffffff;
-  width: 100px;
-  line-height: 100px;
-  text-align: center;
-  margin: 2px;
-  display: none;
+    float: left;
+    background-color: #2196F3;
+    color: #ffffff;
+    width: 100px;
+    line-height: 100px;
+    text-align: center;
+    margin: 2px;
+    display: none;
 }
 
 .show {
-  display: block;
+    display: block;
 }
 
 
 .navbtn:hover {
-  background-color: #c58f07;
+    background-color: #c58f07;
 }
 
 
-.navbtn{
+.navbtn {
     background-color: #fbe19d;
     border: none;
     padding: 0 15px 0 15px;
-    border-right:#c58f07 solid;
-}
-.activebtn {
-  background-color:#c58f07;
-  color: #352503;
+    border-right: #c58f07 solid;
 }
 
-.welcome-text{
+.activebtn {
+    background-color: #c58f07;
+    color: #352503;
+}
+
+.welcome-text {
 
     text-align: center;
 }
+
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Ensures cards take up the same height */
+    /* Additional styles for card appearance */
+}
+
+.product-card a {
+    /* Styles for the product link/image */
+}
+
+/* Other styles for h1, p, and button elements within the product card */
+

@@ -1,5 +1,45 @@
-function addToCart(productId) {
-    document.getElementById("add-to-cart-" + productId).innerText = "Added!";
+var addToCartUrl = "cart/add/''/0/";
+
+
+function addToCart(item_type, productId) {
+    fetch(addToCartUrl.replace("''",  item_type).replace("0", productId), {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': getCookie('csrftoken'),
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('menu-cart').innerHTML = data.cart_html;
+            let text = "Successfully added a product to the cart!\nGo see your cart.";
+            if (confirm(text) === true) {
+                window.location.href = data.redirect_url;
+            }
+        } else {
+            alert("Failed to add the product to the cart.");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
+}
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Check if the cookie name matches the requested name
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }
 
 filterSelection("all")
@@ -15,7 +55,7 @@ function filterSelection(c) {
         if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
 
     }
-            w3RemoveClass(welcome_text, "show");
+    w3RemoveClass(welcome_text, "show");
 
 
 }
@@ -52,10 +92,6 @@ for (var i = 0; i < btns.length; i++) {
         current[0].className = current[0].className.replace(" activebtn", "");
         this.className += " activebtn";
     });
-}
-
-function changeQuantity(){
-
 }
 
 

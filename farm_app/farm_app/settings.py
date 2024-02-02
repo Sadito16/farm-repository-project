@@ -23,6 +23,7 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', ' ').split(' ')
 
 SESSION_COOKIE_AGE = 86400
 CART_SESSION_ID = 'cart'
+STRIPE_KEY_ID_PUBLISHABLE = ''
 
 # Application definition
 

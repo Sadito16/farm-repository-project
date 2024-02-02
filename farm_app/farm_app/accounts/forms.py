@@ -1,3 +1,5 @@
+from datetime import date
+
 from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
 
@@ -20,14 +22,15 @@ class CreateProfileForm(auth_forms.UserCreationForm):
 
     class Meta(auth_forms.UserCreationForm.Meta):
         model = FarmerUser
-        fields = ('first_name', 'last_name', 'username','gender', 'email','profile_picture', 'password1', 'password2')
+        fields = ('first_name', 'last_name', 'username','gender', 'date_of_birth', 'email','profile_picture', 'password1', 'password2')
 
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-field'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-field'}),
-            'username': forms.TextInput(attrs={'class': 'form-field'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-field', 'required': True}),
+            'last_name': forms.TextInput(attrs={'class': 'form-field', 'required': True}),
+            'username': forms.TextInput(attrs={'class': 'form-field', 'required': True}),
             'gender': forms.Select(attrs={'class': 'form-field'}),
             'email': forms.EmailInput(attrs={'class': 'form-field'}),
+            'date_of_birth': forms.DateInput(attrs={'class':'form-field', 'type':'date','max':date.today(), 'required': True})
         }
 
     def __init__(self, *args, **kwargs):
@@ -78,6 +81,7 @@ class EditProfileForm(forms.ModelForm):
             'date_of_birth': forms.DateInput(
                 attrs={
                     'class': 'form-field',
+                    'type':'date', 'max': date.today()
                 }
             ),
             'gender': forms.Select(
