@@ -58,7 +58,10 @@ def update_cart(request, product_id, action, item_type):
     if action == 'increment':
         cart.add(product_id, item_type, 1, True)
     else:
-        cart.add(product_id, item_type, -1, True)
+        if cart.get_item(product_id)['quantity'] == 1:
+            cart.remove(product_id)
+        else:
+            cart.add(product_id, item_type, quantity=-1, update_quantity=True)
 
     product_model = apps.get_model(app_label='catalog', model_name=item_type)
     product = product_model.objects.get(pk=product_id)

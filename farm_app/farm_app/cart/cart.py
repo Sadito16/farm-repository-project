@@ -1,3 +1,5 @@
+from itertools import count
+
 from _decimal import Decimal
 from django.apps import apps
 from django.conf import settings
@@ -24,17 +26,16 @@ class Cart(object):
         for item in self.cart.values():
             product_model = item['item_type']
             item['total_price'] = Decimal(item[product_model].price * item['quantity'])
-
             yield item
 
     def __len__(self):
-        return sum(item['quantity'] for item in self.cart.values())
+        return self.cart.values().__len__()
 
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.cart
         self.session.modified = True
 
-    def add(self, product_id, item_type, quantity=1,update_quantity=False):
+    def add(self, product_id, item_type, quantity,update_quantity=False):
         product_id = str(product_id)
         product_model = apps.get_model(app_label='catalog',model_name=item_type)
 
@@ -51,9 +52,8 @@ class Cart(object):
         self.save()
 
     def remove(self,product_id):
-        if product_id in self.cart:
-            del self.cart[product_id]
-
+        if str(product_id) in self.cart:
+            del self.cart[str(product_id)]
             self.save()
 
     def clear(self):
