@@ -15,7 +15,7 @@
                      alt="Vegetable Photo">
             {% endif %}
         </div>
-    <div class="profile-details">
+        <div class="profile-details">
             <div class="details-profile-icon">
                 <a href="{% url 'profile details' profile.id %}">
                     {% if  profile.profile_picture %}
@@ -50,12 +50,15 @@
         {% if plant.user_id != request.user.pk %}
             {% if  request.user.is_authenticated %}
                 <div class="add-item">
-                    <a href="#"
-                       class="buy-button cust-button animal-add"
-                       hx-get="{% url 'add to cart' 'VegetableAndFruit' plant.id %}"
-                       hx-target="#menu-cart-button"
-                       hx-swap="outerHTML"
-                    >Add to cart</a>
+                    <button id="add-to-cart-VegetableAndFruit-{{ plant.id }}"
+                            onclick="addToCart('VegetableAndFruit',{{ plant.id }})"
+                            class="buy-button cust-button animal-add"
+                            hx-trigger="click"
+                            hx-get="{% url 'add to cart' item_type='VegetableAndFruit' product_id=plant.id %}"
+                            hx-target="#menu-cart-button"
+                            hx-swap="outerHTML"
+                    >Add to cart
+                    </button>
                 </div>
             {% endif %}
         {% else %}

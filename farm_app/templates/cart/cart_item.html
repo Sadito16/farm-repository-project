@@ -42,13 +42,16 @@
         </div>
         <div class="about">
             <div class="title">
-                {{ item.product }}
+                {{ item.product.name }}
             </div>
             <div class="subtitle">
                 ${{ item.total_price|floatformat:2 }}
             </div>
             <hr>
         </div>
+        <a onclick="deleteCartItem('{{ item.item_type }}', '{{ item.product.id }}')">
+        <img src="{% static 'images/bin.png' %}" alt="Bin">
+        </a>
     </div>
 {% endif %}
 

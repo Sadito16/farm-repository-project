@@ -19,18 +19,17 @@ JSONEncoder.default = _default
 
 @login_required(login_url='/login/')
 def add_to_cart(request, item_type, product_id):
-    cart = Cart(request)
+    current_cart = Cart(request)
     model = apps.get_model('catalog', item_type)
     product = get_object_or_404(model, pk=product_id)
 
-    cart_item = cart.get_item(product_id)
+    cart_item = current_cart.get_item(product_id)
     if cart_item:
-        cart.add(product_id, item_type, quantity=1, update_quantity=True)
+        current_cart.add(product_id, item_type, quantity=1, update_quantity=True)
     else:
-        # Product is not in the cart, add it
-        cart.add(product_id, item_type)
+        current_cart.add(product_id, item_type,quantity=0, update_quantity=True)
 
-    cart.save()
+    current_cart.save()
 
     product.is_in_the_cart = True
     product.save()
@@ -54,18 +53,18 @@ def cart(request):
 
 
 def update_cart(request, product_id, action, item_type):
-    cart = Cart(request)
+    current_cart = Cart(request)
     if action == 'increment':
-        cart.add(product_id, item_type, 1, True)
+        current_cart.add(product_id, item_type, 1, True)
     else:
-        if cart.get_item(product_id)['quantity'] == 1:
-            cart.remove(product_id)
+        if current_cart.get_item(product_id)['quantity'] == 1:
+            current_cart.remove(product_id)
         else:
-            cart.add(product_id, item_type, quantity=-1, update_quantity=True)
+            current_cart.add(product_id, item_type, quantity=-1, update_quantity=True)
 
     product_model = apps.get_model(app_label='catalog', model_name=item_type)
     product = product_model.objects.get(pk=product_id)
-    quantity = cart.get_item(product_id)
+    quantity = current_cart.get_item(product_id)
 
     if quantity:
         quantity = quantity['quantity']
@@ -73,7 +72,7 @@ def update_cart(request, product_id, action, item_type):
         item = {
             'product': {
                 'id': product.id,
-                'name': product.name,
+                'name': str(product),
                 'photo': product.photo,
                 'price': product.price,
             },
@@ -87,13 +86,22 @@ def update_cart(request, product_id, action, item_type):
 
     context = {
         'item': item,
-        'total_cart_price': cart.get_total_cost,
+        'total_cart_price': current_cart.get_total_cost,
     }
     response = render(request, 'cart/cart_item.html', context)
     response['HX-Trigger'] = 'update-menu-cart'
 
     return response
 
+@login_required(login_url='/login/')
+def delete_item(request, item_type, product_id):
+    current_cart = Cart(request)
+    current_cart.remove(product_id)
+    current_cart.save()
+
+    cart_count = len(current_cart)
+    response_data = {'success': True, 'cart_count': cart_count}
+    return JsonResponse(response_data)
 
 @login_required
 def checkout(request):

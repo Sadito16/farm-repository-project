@@ -14,6 +14,7 @@
 
         {% if request.user.is_authenticated %}
             {% if request.user.id != vegetable.user_id %}
+
                 <button id="add-to-cart-VegetableAndFruit-{{ vegetable.pk }}"
                         onclick="addToCart('VegetableAndFruit',{{ vegetable.pk }})">
                     <a
