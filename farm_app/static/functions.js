@@ -3,57 +3,58 @@ var deleteItemUrl = "delete/''/0/"
 
 
 function addToCart(item_type, productId) {
-    fetch(addToCartUrl.replace("''",  item_type).replace("0", productId), {
+    fetch(addToCartUrl.replace("''", item_type).replace("0", productId), {
         method: 'POST',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'X-CSRFToken': getCookie('csrftoken'),
         },
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            document.getElementById('menu-cart').innerHTML = data.cart_html;
-            let text = "Successfully added a product to the cart!\nGo see your cart.";
-            if (confirm(text) === true) {
-                window.location.href = data.redirect_url;
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                let text = "Successfully added a product to the cart!\nGo see your cart.";
+                document.getElementById('menu-cart').innerHTML = data.cart_html;
+                if (confirm(text) === true) {
+                    window.location.href = data.redirect_url;
+                }
+            } else {
+                alert("Failed to add the product to the cart.");
             }
-        } else {
-            alert("Failed to add the product to the cart.");
-        }
-    })
-    .catch(error => {
-        console.error("Error:", error);
-    });
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
 }
 
 function deleteCartItem(item_type, productId) {
     let confirmation = confirm("Are you sure you want to delete this item from the cart?");
 
     if (confirmation === true) {
-        fetch(deleteItemUrl.replace("''",  item_type).replace("0", productId), {
+        fetch(deleteItemUrl.replace("''", item_type).replace("0", productId), {
             method: 'POST',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
                 'X-CSRFToken': getCookie('csrftoken'),
             },
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                document.getElementById(`cart-item-${productId}`).remove();
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(`cart-item-${productId}`).remove();
 
-                document.getElementById('menu-cart').innerText = data.cart_count;
-            } else {
-                console.error('Failed to delete item from the cart');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+                    document.getElementById('cart-length-text').innerText = data.cart_length + ' items';
+
+                    document.getElementById('menu-cart').innerHTML = data.cart_html;
+                } else {
+                    console.error('Failed to delete item from the cart');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 }
-
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
