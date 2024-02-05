@@ -7,7 +7,7 @@
     <div class="whole-page">
         <div class="header-orders">
             <div class="head-ord"><b>Order #{{ order.id }}</b></div>
-            <div class="count-orders">{{ order_items }} items | <b>Total : ${{ order_total }}</b></div>
+            <div class="count-orders">{{ order_items }} items | <b>Total : ${{ order_total|floatformat:2 }}</b></div>
         </div>
 
 
@@ -20,12 +20,20 @@
                     <th>Quantity</th>
                     <th>Sub-Total</th>
                 </tr>
-                {% for item in order.items.all %}
+                {% for item, item_type,item_id in items %}
                     <tr>
-                        <td>{{ item.get_name }}</td>
+                        {% if item_type == 'VegetableAndFruit' %}
+                            <td><a href="{% url 'details vegetable' item_id %}">{{ item.get_name }}</a></td>
+                        {% elif item_type == 'AnimalProduct' %}
+                            <td><a href="{% url 'details animal' item_id %}">{{ item.get_name }}</a></td>
+                        {% elif item_type == 'DairyProduct' %}
+                            <td><a href="{% url 'details dairy' item_id %}">{{ item.get_name }}</a></td>
+                        {% else %}
+                            <td><a href="{% url 'details nut' item_id %}">{{ item.get_name }}</a></td>
+                        {% endif %}
                         <td>${{ item.price|floatformat:2 }}</td>
                         <td>{{ item.quantity }}</td>
-                        <td>{{ item.get_total_price }}</td>
+                        <td>${{ item.get_total_price|floatformat:2 }}</td>
                     </tr>
                 {% endfor %}
 

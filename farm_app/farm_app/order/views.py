@@ -59,11 +59,11 @@ def start_order(request):
             item = OrderItem.objects.create(order=order, fruit=fruit, meat=meat, dairy=dairy, nut=nut, price=price,
                                             quantity=quantity)
 
-            cart.clear()
+        cart.clear()
 
-            return redirect('profile details', request.user.id)
+        return redirect('profile details', request.user.id)
 
-        return redirect('cart')
+    return redirect('cart')
 
 
 class MyOrders(views.ListView):
@@ -100,10 +100,27 @@ def order_details(request, pk):
     order = get_object_or_404(Order, pk=pk)
     order_items = order.items.all()
     order_total = 0
+    items = []
 
-    for item in order_items:
-        order_total += item.price
+    for item in order_items :
+        if item.meat_id is not None:
+            item_id = item.meat_id
+            item_type = 'AnimalProduct'
+        elif item.nut_id is not None:
+            item_id = item.nut_id
+            item_type ='Nut'
+        elif item.dairy_id is not None:
+            item_id = item.dairy_id
+            item_type = 'DairyProduct'
+        else:
+            item_id = item.fruit_id
+            item_type = 'VegetableAndFruit'
+
+        order_total += item.get_total_price()
+        items.append((item, item_type, item_id))
+
     context = {
+        'items' : items,
         'order': order,
         'order_items': order_items.count(),
         'order_total': order_total,
