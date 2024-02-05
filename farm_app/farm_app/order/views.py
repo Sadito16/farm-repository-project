@@ -1,7 +1,6 @@
-from django.apps import apps
+from itertools import count
+
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
 from django.views import generic as views
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -10,12 +9,10 @@ from farm_app.order.models import Order, OrderItem
 
 UserModel = get_user_model()
 
-# @login_required
 def start_order(request):
     cart = Cart(request)
 
     if request.method == "POST":
-        print(request.POST.get('address'))
         user = request.user
         first_name = user.first_name
         last_name = user.last_name
@@ -83,19 +80,19 @@ class MyOrders(views.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        orders = self.get_queryset()
 
-        # Calculate total price for each order and add it to the context
-        total_prices = []
-        for order in orders:
-            total_price_of_order = order.items.aggregate(total=Sum('price'))['total']
-            total_prices.append(total_price_of_order if total_price_of_order else 0)
+        order_total_prices = {}
 
-        context = {
-            'order_total_prices': total_prices,
+        for order in context['order']:
+            total_price = sum(item.get_total_price() for item in order.items.all())
+            order_total_prices[order.id] = total_price
+            order.update_status()
 
+
+        context={
+            'order_total_prices' :order_total_prices,
+            'count_of_my_orders': len(order_total_prices)
         }
-
 
         return context
 
@@ -104,13 +101,12 @@ def order_details(request, pk):
     order_items = order.items.all()
     order_total = 0
 
-
     for item in order_items:
         order_total += item.price
     context = {
         'order': order,
         'order_items': order_items.count(),
-        'order_total' : order_total,
+        'order_total': order_total,
     }
 
     return render(request, 'orders/order_details.html', context)
