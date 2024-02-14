@@ -1,6 +1,6 @@
 {% load static %}
 {% if not request.user.is_authenticated %}
-    <div class="card animals filterDiv">
+    <div class=" show card animals filterDiv">
         <a href="{% url 'details animal' animal.pk %}">
             {% if animal.photo %}
                 <img class="product-card-image" src="{{ animal.photo.url }}" alt="animal photo">

@@ -1,8 +1,6 @@
-from collections import Counter
 from itertools import chain
 
 from django.conf.urls.static import static
-from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.views import generic as views
 from django.contrib.auth import views as auth_views, login, get_user_model

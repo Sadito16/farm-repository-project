@@ -1,23 +1,24 @@
-.add-product-form {
-    top: 100px;
-    align-content: center;
-    padding: 55px 50px;
-    margin: 15px 0 0 0;
-    position: fixed;
-    width: 100%;
-    height: 100%;
+.add-product {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: row;
 }
+
 
 .addProductDiv {
-    float: left;
-    position: absolute;
-    margin: 0 0 0 140px;
+    margin: 50px 20px 0 0;
 }
 
-.farmerGirlDiv {
-    float: right;
-    margin: -30px 80px 0 0;
-    position: relative;
+@media screen and (max-width: 600px) {
+    .addProductDiv > input {
+        width: 100%;
+    }
+
+    .farmerGirlDiv img {
+        width: 100%;
+        height: 450px;
+    }
 }
 
 .farmerGirlDiv img {
@@ -25,47 +26,3 @@
     height: 450px;
 }
 
-.cust-button.add-veg{
-    margin: 10px 0 0 190px;
-}
-.farmerGirlDiv.animal{
-    margin: -30px 110px 0 0;
-}
-
-
-.addProductDiv.animal{
-    margin: -65px 0 0 140px;
-}
-.big-text.animal{
-    text-align: center;
-    font-size: 50px;
-    margin: 0 !important;
-    color: #C58F07;
-
-}
-.cust-button.animal{
-    margin:5px 0 0 110px;
-}
-
-.addProductDiv.dairy{
-    margin: -30px 0 0 170px;
-
-}
-.farmerGirlDiv.dairy{
-    margin: -70px 140px 0 0;
-
-}
-.cust-button.dairy{
-    margin: 10px 0 0 100px;
-}
-
-.farmerGirlDiv.nut{
-    margin: -50px 130px 0 0;
-}
-.addProductDiv.nut{
-    margin: 0 0 0 230px;
-}
-
-.cust-button.nut{
-    margin: 10px 0 0 130px;
-}

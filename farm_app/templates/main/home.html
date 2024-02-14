@@ -12,7 +12,7 @@
 {% block page_content %}
 
 
-    <div class="main">
+    <div class="catalog">
         {% if not request.user.is_authenticated %}
             <div class="show welcome">
                 <div class="login-form">
@@ -30,21 +30,26 @@
                 </div>
             </div>
         {% endif %}
-        {% for vegetable in veg_fruit %}
-            {% include 'main/vegetable-card.html' %}
-        {% endfor %}
+        <div class="all-products">
 
-        {% for dairy in dairies %}
-            {% include 'main/dairy-card.html' %}
-        {% endfor %}
 
-        {% for animal in animal_products %}
-            {% include 'main/animal-card.html' %}
-        {% endfor %}
+            {% for vegetable in veg_fruit %}
+                {% include 'main/vegetable-card.html' %}
+            {% endfor %}
 
-        {% for nut in nuts %}
-            {% include 'main/nut-card.html' %}
-        {% endfor %}
+            {% for dairy in dairies %}
+                {% include 'main/dairy-card.html' %}
+            {% endfor %}
+
+            {% for animal in animal_products %}
+                {% include 'main/animal-card.html' %}
+            {% endfor %}
+
+            {% for nut in nuts %}
+                {% include 'main/nut-card.html' %}
+            {% endfor %}
+        </div>
+
 
     </div>
 {% endblock %}

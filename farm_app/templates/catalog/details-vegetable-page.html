@@ -15,41 +15,44 @@
                      alt="Vegetable Photo">
             {% endif %}
         </div>
-        <div class="profile-details">
-            <div class="details-profile-icon">
-                <a href="{% url 'profile details' profile.id %}">
-                    {% if  profile.profile_picture %}
-                        <img class="details-image-profile" src="{{ profile.profile_picture.url }}" alt="Profile Photo">
-                    {% else %}
-                        {% if profile.gender == 'Female' %}
-                            <img class="details-image-profile"
-                                 src="{% static 'images/undraw_female_avatar_efig.svg' %}"
-                                 alt="Meat Photo">
+
+        <div>
+            <div class="profile-details">
+                <div class="details-profile-icon">
+                    <a href="{% url 'profile details' profile.id %}">
+                        {% if  profile.profile_picture %}
+                            <img class="details-image-profile" src="{{ profile.profile_picture.url }}"
+                                 alt="Profile Photo">
                         {% else %}
-                            <img class="details-image-profile"
-                                 src="{% static 'images/undraw_male_avatar_g98d.svg' %}"
-                                 alt="Meat Photo">
+                            {% if profile.gender == 'Female' %}
+                                <img class="details-image-profile"
+                                     src="{% static 'images/undraw_female_avatar_efig.svg' %}"
+                                     alt="Meat Photo">
+                            {% else %}
+                                <img class="details-image-profile"
+                                     src="{% static 'images/undraw_male_avatar_g98d.svg' %}"
+                                     alt="Meat Photo">
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
-                </a>
+                    </a>
+                </div>
+                <div class="details-profile-name">
+                    <p><a href="{% url 'profile details' profile.id %} "
+                          class="name-profile">{{ profile.get_user_name }}</a></p>
+                </div>
             </div>
-            <div class="details-profile-name">
-                <p><a href="{% url 'profile details' profile.id %} "
-                      class="name-profile">{{ profile.get_user_name }}</a></p>
+            <div class="details-name"><h1 class="big-text">{{ plant }}</h1></div>
+            <div class="details-information">
+                <div class="details-detail"><h3>Price:</h3>
+                    ${{ plant.price }}
+                </div>
+                <br>
+                {% if plant.production %}
+                    <div class="details-detail"><h3>Country production:</h3> {{ plant.production }}</div><br>
+                {% endif %}
             </div>
-        </div>
-        <div class="details-name"><h1 class="big-text">{{ plant }}</h1></div>
-        <div class="details-information">
-            <div class="details-detail"><h3>Price:</h3><br>
-                ${{ plant.price }}
-            </div>
-            {% if plant.production %}
-                <div class="details-detail"><h3>Country production:</h3><br> {{ plant.production }}</div>
-            {% endif %}
-        </div>
-        {% if plant.user_id != request.user.pk %}
-            {% if  request.user.is_authenticated %}
-                <div class="add-item">
+            {% if plant.user_id != request.user.pk %}
+                {% if  request.user.is_authenticated %}
                     <button id="add-to-cart-VegetableAndFruit-{{ plant.id }}"
                             onclick="addToCart('VegetableAndFruit',{{ plant.id }})"
                             class="buy-button cust-button animal-add"
@@ -59,15 +62,16 @@
                             hx-swap="outerHTML"
                     >Add to cart
                     </button>
-                </div>
-            {% endif %}
-        {% else %}
-            <div class="btns">
 
-            <a class="cust-button editBtn" href="{% url 'edit vegetable' plant.pk %}">Edit</a>
-            <a id="deleteProfileBtn" class="cust-button prof-button"
-               onclick="document.getElementById('modal-delete').style.display='block'">Delete</a>
-        {% endif %}
+                {% endif %}
+            {% else %}
+
+
+                <a class="cust-button editBtn" href="{% url 'edit vegetable' plant.pk %}">Edit</a>
+                <a id="deleteProfileBtn" class="cust-button editBtn"
+                   onclick="document.getElementById('modal-delete').style.display='block'">Delete</a>
+
+            {% endif %}
         </div>
     </div>
 

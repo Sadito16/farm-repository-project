@@ -14,14 +14,8 @@
 
 
 <ul class="navbar">
-    {% if not request.user.is_authenticated %}
-        <button class="left-item navitem first-nav all navbtn activebtn" onclick="filterSelection('all')">
-            Farm
-        </button>
-    {% else %}
-        <li class="left-item first-nav  navitem" style="background-color: #c58f07;"><a href="{% url 'home' %}">Farm</a>
-        </li>
-    {% endif %}
+    <li class="left-item first-nav  navitem" style="background-color: #c58f07;"><a href="{% url 'home' %}">Farm</a>
+    </li>
 
 
     {% if request.user.is_authenticated %}
@@ -42,51 +36,8 @@
         <button class="left-item navitem navbtn" onclick="filterSelection('dairies')">Dairy Products</button>
         <div class="vertical-line"></div>
         <button class="left-item navitem first-nav navbtn" onclick="filterSelection('nuts')">Nut Products</button>
+        
     {% endif %}
-    {#    <li class="left-item dropdownli">#}
-    {#        <div class="dropdown">#}
-    {#            <button class="dropbtn"><a>Catalog</a></button>#}
-    {#            <div class="dropdown-content">#}
-    {#                <a class="filter-btn" id="animals-button" onclick="filterSelection('animals')">Animals</a>#}
-    {#                <a class="filter-btn" id="dairies-button" onclick="filterSelection('dairies')">Dairy Products</a>#}
-    {#                <a class="filter-btn" id="nuts-button" onclick="filterSelection('nuts')">Nuts</a>#}
-    {#                <a class="filter-btn" id="vegetables-button" onclick="filterSelection('vegetables')">Vegetables and#}
-    {#                    Fruits</a>#}
-    {#                <hr class="dropdown-divider">#}
-    {#                <a class="filter-btn active" id="mine-button" onclick="filterSelection('all')">Mine</a>#}
-    {#            </div>#}
-    {#        </div>#}
-    {##}
-    {##}
-    {#    </li>#}
-
-    {#    <li class="left-item dropdownli">#}
-
-    {#        <div class="dropdown">#}
-    {#            <button class="dropbtn"><a>Add Product</a></button>#}
-    {#            <div class="dropdown-content">#}
-    {#                <a class="filter-btn" id="animals-button" href="{% url 'add vegetable' %}">Add Vegetable and Fruit</a>#}
-    {#                <a class="filter-btn" id="dairies-button" href="{% url 'add animal' %}">Add Animal Product</a>#}
-    {#                <a class="filter-btn" id="nuts-button" href="{% url 'add dairy' %}">Add Dairy Product</a>#}
-    {#                <a class="filter-btn" id="vegetables-button" href="{% url 'add nut' %}">Add Nut</a>#}
-    {#                <hr class="dropdown-divider">#}
-    {#                <a class="filter-btn active" id="mine-button" onclick="filterSelection('all')">Mine</a>#}
-    {#            </div>#}
-    {##}
-    {#        </div>#}
-    {#    </li>#}
-
-    {#    <li class="left-item">#}
-    {#        <form method="get" action=".">#}
-    {#            <a><label for="query">Search:</label></a>#}
-    {#            <input type="text" id="query" name="query" placeholder="Search...">#}
-    {#            <button>#}
-    {#                <img alt="Search" width="10px" height="10px" src="{% static 'images/search-icon.png' %}">#}
-    {#            </button>#}
-    {##}
-    {#        </form>#}
-    {#    </li>#}
-
 
 
     {% if request.user.is_authenticated %}

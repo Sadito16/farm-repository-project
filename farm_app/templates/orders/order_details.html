@@ -20,7 +20,7 @@
                     <th>Quantity</th>
                     <th>Sub-Total</th>
                 </tr>
-                {% for item, item_type,item_id in items %}
+                {% for item, item_type,item_id, item_price in items %}
                     <tr>
                         {% if item_type == 'VegetableAndFruit' %}
                             <td><a href="{% url 'details vegetable' item_id %}">{{ item.get_name }}</a></td>
@@ -31,9 +31,9 @@
                         {% else %}
                             <td><a href="{% url 'details nut' item_id %}">{{ item.get_name }}</a></td>
                         {% endif %}
-                        <td>${{ item.price|floatformat:2 }}</td>
+                        <td>${{ item_price|floatformat:2 }}</td>
                         <td>{{ item.quantity }}</td>
-                        <td>${{ item.get_total_price|floatformat:2 }}</td>
+                        <td>${{ item.price|floatformat:2 }}</td>
                     </tr>
                 {% endfor %}
 

@@ -1,7 +1,7 @@
 {% load static %}
 
 {% if not request.user.is_authenticated %}
-    <div class="card nuts filterDiv">
+    <div class="show card nuts filterDiv">
         <a href="{% url 'details nut' nut.pk %}">
             {% if nut.photo %}
                 <img class="product-card-image" src="{{ nut.photo.url }}" alt="nut photo">

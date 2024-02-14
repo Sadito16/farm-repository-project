@@ -4,7 +4,6 @@
 
 {% block page_content %}
     <div class="details-content">
-
         <div class="details-image">
             {% if  meat.photo %}
                 <img class="details-image" src="{{ meat.photo.url }}" alt="Meat Photo">
@@ -15,48 +14,51 @@
                      alt="Meat Photo">
             {% endif %}
         </div>
-        <div class="profile-details">
-            <div class="details-profile-icon">
-                <a href="{% url 'profile details' profile.id %}">
-                    {% if  profile.profile_picture %}
-                        <img class="details-image-profile" src="{{ profile.profile_picture.url }}" alt="Profile Photo">
-                    {% else %}
-                        {% if profile.gender == 'Female' %}
-                            <img class="details-image-profile"
-                                 src="{% static 'images/undraw_female_avatar_efig.svg' %}"
-                                 alt="Meat Photo">
+        <div class="test">
+            <div class="profile-details">
+                <div class="details-profile-icon">
+                    <a href="{% url 'profile details' profile.id %}">
+                        {% if  profile.profile_picture %}
+                            <img class="details-image-profile" src="{{ profile.profile_picture.url }}"
+                                 alt="Profile Photo">
                         {% else %}
-                            <img class="details-image-profile"
-                                 src="{% static 'images/undraw_male_avatar_g98d.svg' %}"
-                                 alt="Meat Photo">
+                            {% if profile.gender == 'Female' %}
+                                <img class="details-image-profile"
+                                     src="{% static 'images/undraw_female_avatar_efig.svg' %}"
+                                     alt="Meat Photo">
+                            {% else %}
+                                <img class="details-image-profile"
+                                     src="{% static 'images/undraw_male_avatar_g98d.svg' %}"
+                                     alt="Meat Photo">
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
-                </a>
+                    </a>
+                </div>
+                <div class="details-profile-name">
+                    <p><a href="{% url 'profile details' profile.id %} "
+                          class="name-profile">{{ profile.get_user_name }}</a></p>
+                </div>
             </div>
-            <div class="details-profile-name">
-                <p><a href="{% url 'profile details' profile.id %} "
-                      class="name-profile">{{ profile.get_user_name }}</a></p>
-            </div>
-        </div>
-        <div class="details-name"><h2 class="details-product-name">{{ meat }}</h2></div>
-        <div class="details-information">
-            <div class="details-detail"><h3>Type:</h3><br>
-                {{ meat.type }}
-            </div>
-            <div class="details-detail"><h3>Price:</h3><br>
-                ${{ meat.price }}
-            </div>
+            <div class="details-name"><h1 class="big-text">{{ meat }}</h1></div>
+            <div class="details-information">
+                <div class="details-detail"><h3>Type:</h3>
+                    {{ meat.type }}
+                </div>
+                <br>
+                <div class="details-detail"><h3>Price:</h3>
+                    ${{ meat.price }}
+                </div>
+                <br>
 
-            {% if meat.production %}
-                <div class="details-detail"><h3>Country production:</h3><br> {{ meat.production }}</div>
-            {% endif %}
-            {% if meat.date_of_birth %}
-                <div class="details-detail"><h3>Birthdate of the animal:</h3><br> {{ meat.date_of_birth }}</div>
-            {% endif %}
-        </div>
-        {% if meat.user_id != request.user.pk %}
-            {% if  request.user.is_authenticated %}
-                <div class="add-item">
+                {% if meat.production %}
+                    <div class="details-detail"><h3>Country production:</h3>{{ meat.production }}</div><br>
+                {% endif %}
+                {% if meat.date_of_birth %}
+                    <div class="details-detail"><h3>Birthdate of the animal:</h3> {{ meat.date_of_birth }}</div>
+                {% endif %}
+            </div>
+            {% if meat.user_id != request.user.pk %}
+                {% if  request.user.is_authenticated %}
                     <button id="add-to-cart-AnimalProduct-{{ meat.id }}"
                             onclick="addToCart('AnimalProduct',{{ meat.id }})"
                             class="buy-button cust-button animal-add"
@@ -66,15 +68,15 @@
                             hx-swap="outerHTML"
                     >Add to cart
                     </button>
+                {% endif %}
+            {% else %}
+                <div class="btns">
+                    <a class="cust-button editBtn" href="{% url 'edit animal' meat.pk %}">Edit</a>
+                    <a id="deleteProfileBtn" class="cust-button editBtn"
+                       onclick="document.getElementById('modal-delete').style.display='block'">Delete</a>
                 </div>
             {% endif %}
-        {% else %}
-            <div class="btns">
-                <a class="cust-button editBtn" href="{% url 'edit animal' meat.pk %}">Edit</a>
-                <a id="deleteProfileBtn" class="cust-button prof-button"
-                   onclick="document.getElementById('modal-delete').style.display='block'">Delete</a>
-            </div>
-        {% endif %}
+        </div>
     </div>
 
 

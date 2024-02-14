@@ -47,6 +47,7 @@ class Order(models.Model):
             self.status = Order.DELIVERED
             self.save()
 
+
     class Meta:
         ordering = ('-created_at',)
 
@@ -61,11 +62,10 @@ class OrderItem(models.Model):
                              blank=True)
     nut = models.ForeignKey(Nut, related_name='Nut', on_delete=models.CASCADE, null=True, blank=True)
 
-    price = models.IntegerField()
+    price = models.FloatField()
     quantity = models.IntegerField(default=1)
 
-    def get_total_price(self):
-        return self.price * self.quantity
+
 
     def get_name(self):
         if self.fruit:

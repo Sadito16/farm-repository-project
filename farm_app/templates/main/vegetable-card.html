@@ -1,7 +1,7 @@
 {% load static %}
 
 {% if not request.user.is_authenticated %}
-    <div class="card vegetables filterDiv">
+    <div class=" show card vegetables filterDiv">
         <a href="{% url 'details vegetable' vegetable.pk %}">
             {% if vegetable.photo %}
                 <img class="product-card-image" src="{{ vegetable.photo.url }}" alt="vegetable photo">

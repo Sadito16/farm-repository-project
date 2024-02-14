@@ -5,6 +5,7 @@ from django.views import generic as views
 from django.shortcuts import render, redirect, get_object_or_404
 
 from farm_app.cart.cart import Cart
+from farm_app.catalog.models import AnimalProduct, Nut, DairyProduct, VegetableAndFruit
 from farm_app.order.models import Order, OrderItem
 
 UserModel = get_user_model()
@@ -84,7 +85,7 @@ class MyOrders(views.ListView):
         order_total_prices = {}
 
         for order in context['order']:
-            total_price = sum(item.get_total_price() for item in order.items.all())
+            total_price = sum(item.price for item in order.items.all())
             order_total_prices[order.id] = total_price
             order.update_status()
 
@@ -106,18 +107,29 @@ def order_details(request, pk):
         if item.meat_id is not None:
             item_id = item.meat_id
             item_type = 'AnimalProduct'
+            product = get_object_or_404(AnimalProduct, pk=item_id)
+            item_price = float(product.price)
+
         elif item.nut_id is not None:
             item_id = item.nut_id
             item_type ='Nut'
+            product = get_object_or_404(Nut, pk=item_id)
+            item_price = float(product.price)
+
         elif item.dairy_id is not None:
             item_id = item.dairy_id
             item_type = 'DairyProduct'
+            product = get_object_or_404(DairyProduct, pk=item_id)
+            item_price = float(product.price)
+
         else:
             item_id = item.fruit_id
             item_type = 'VegetableAndFruit'
+            product = get_object_or_404(VegetableAndFruit, pk=item_id)
+            item_price = float(product.price)
 
-        order_total += item.get_total_price()
-        items.append((item, item_type, item_id))
+        order_total += item.price
+        items.append((item, item_type, item_id, item_price))
 
     context = {
         'items' : items,

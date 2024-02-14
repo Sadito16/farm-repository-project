@@ -1,56 +1,36 @@
-.details-content {
 
-    position: absolute;
+.details-content {
     width: 70%;
-    padding: 0 0 0 100px;
-    margin: 50px 0 0 -100px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    position: relative;
+    top: 70px;
+}
+
+@media screen and (max-width: 600px) {
+    .details-content {
+        flex-wrap: wrap;
+    }
+    .details-name{
+        width: auto;
+    }
 }
 
 .details-image > img {
     width: 400px;
     height: 400px;
-    margin: 40px 0 0 80px;
     border-radius: 50px;
+    margin-right: 30px;
+}
+.profile-details{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
 }
 
-.details-information {
-    margin: 80px 0 0 540px;
-    position: absolute;
+.details-information, .details-name {
     color: #352503;
-}
-
-.details-detail {
-    margin: 15px 0 0 0;
-}
-
-.btns {
-    margin: 380px 0 0 550px;
-    /*position: absolute;*/
-    color: #352503;
-}
-
-.editBtn {
-    margin: 0 20px 0 0;
-}
-
-.details-name {
-    margin: 20px 0 0 540px;
-    position: absolute;
-    color: #352503;
-}
-
-
-.veg-btns {
-    margin: -120px 0 0 550px;
-}
-
-.veg-add {
-    margin: -200px 0 0 370px;
-}
-
-
-.profile-details {
-    margin: -450px 0 0 540px;
 }
 
 .details-image-profile {
@@ -60,19 +40,21 @@
     border: #f9c33b solid;
 }
 
-.details-profile-name > p {
-    margin: -45px 0 0 70px;
+.details-profile-name  {
     font-size: 25px;
+    margin: 10px;
 }
 
 .details-product-name {
     font-size: 30px;
-    margin: 20px 0 0 0;
-    align-self: center;
-
 }
 
-.animal-add{
-    margin: 380px 0 0 550px;
+.buy-button, .editBtn{
+    width: 100%;
+    height: auto;
+    margin-left:0;
 }
 
+.details-name{
+    width: 440px;
+}

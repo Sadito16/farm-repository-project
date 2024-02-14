@@ -1,6 +1,6 @@
 from itertools import chain
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.conf.urls.static import static
 from django.shortcuts import render
@@ -11,6 +11,8 @@ from django.views import generic as views
 from farm_app.accounts.models import FarmerUser
 from farm_app.catalog.forms import *
 from farm_app.catalog.models import *
+
+UserModel = get_user_model()
 
 def search(request):
     products = VegetableAndFruit.objects.all() + Nut.objects.all() + AnimalProduct.objects.all() + DairyProduct.objects.all()
@@ -109,17 +111,20 @@ class VegetableDetailsView(views.DetailView):
         return context
 
 
-
-
 class VegetableDeleteView(views.DeleteView):
     model = VegetableAndFruit
     context_object_name = 'product'
-    success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context ['product_model'] = 'VegetableAndFruit'
         return context
+    def get_success_url(self):
+        return reverse('profile details', kwargs={
+            'pk': self.request.user.id
+        })
+
+
 
 
 class NutCreateView(views.CreateView):
@@ -189,13 +194,16 @@ class NutDetailsView(views.DetailView):
 class NutDeleteView(views.DeleteView):
     model = Nut
     context_object_name = 'product'
-    success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context ['product_model'] = 'Nut'
         return context
 
+    def get_success_url(self):
+        return reverse('profile details', kwargs={
+            'pk': self.request.user.id
+        })
 
 class DairyCreateView(views.FormView):
     template_name = 'catalog/create-dairy-page.html'
@@ -260,12 +268,15 @@ class DairyDetailsView(views.DetailView):
 class DairyDeleteView(views.DeleteView):
     model = DairyProduct
     context_object_name = 'product'
-    success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context ['product_model'] = 'DairyProduct'
         return context
+    def get_success_url(self):
+        return reverse('profile details', kwargs={
+            'pk': self.request.user.id
+        })
 
 
 class AnimalCreateView(views.FormView):
@@ -331,9 +342,12 @@ class AnimalDetailsView(views.DetailView):
 class AnimalDeleteView(views.DeleteView):
     model = AnimalProduct
     context_object_name = 'product'
-    success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context ['product_model'] = 'AnimalProduct'
         return context
+    def get_success_url(self):
+        return reverse('profile details', kwargs={
+            'pk': self.request.user.id
+        })
