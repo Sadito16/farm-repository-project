@@ -54,7 +54,6 @@
 .counter {
     width: 15%;
     display: inline-flex;
-    /*justify-content: space-between;*/
     align-items: center;
     margin: 20px;
 }
@@ -98,23 +97,10 @@ hr#cart {
 }
 
 .checkout {
-    float: right;
-    margin-right: 5%;
-    width: 28%;
-}
-
-.total {
-    width: 100%;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-}
-
-.Subtotal {
-    font-size: 22px;
-    font-family: ‘Open Sans’, serif;
-
-    font-weight: 700;
-    color: #202020;
+    margin: 0 50px;
 }
 
 .items {
@@ -126,20 +112,18 @@ hr#cart {
     line-height: 10px;
 }
 
-.total-amount {
-    font-size: 36px;
+.total-amount, .Subtotal {
+    font-size: 26px;
     font-family: ‘Open Sans’, serif;
-
     font-weight: 900;
     color: #202020;
 }
-
-.checkoutbtn {
-    margin : 15px 0 0 700px;
+.checkoutbtn{
+    margin-bottom: 20px;
 }
 
-.total, .total-amount{
-    margin: 0 0 0 90px
-}
+
+
+
 
 

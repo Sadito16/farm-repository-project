@@ -55,6 +55,7 @@ function deleteCartItem(item_type, productId) {
             });
     }
 }
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -124,5 +125,15 @@ for (var i = 0; i < btns.length; i++) {
 }
 
 
+function toggleNavbar() {
+    var navbarElements = document.getElementsByClassName('navitem');
+    var arrayNavbarElements = Array.from(navbarElements);
 
-
+    arrayNavbarElements.forEach((element, index) => {
+        if (index === 0) {
+            element.classList.toggle('show-navitem', true);
+        } else {
+            element.classList.toggle('show-navitem');
+        }
+    });
+}

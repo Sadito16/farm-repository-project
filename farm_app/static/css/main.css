@@ -1,11 +1,19 @@
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
+body {
+    margin-top: 0;
+    padding-bottom: 30px;
+}
+
+.catalog, .add-product, .edit-product {
+    margin-top: 60px;
+
+}
+
+
 html, body {
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,10 +21,12 @@ html, body {
 }
 
 .main::after {
-    clear: right;
+    content: "";
+    display: table;
+    clear: both;
 }
 
-.navbar {
+.navbar-list {
     position: fixed;
     top: 0;
     width: 100%;
@@ -24,20 +34,21 @@ html, body {
     left: 0;
     list-style-type: none;
     margin: 0;
-    padding: 0;
+    padding: 10px 0;
     background-color: #FBE19D;
-    height: 75px;
     z-index: 20;
+    height: 60px;
 }
 
-.navbar li a {
+
+.navbar-list li a {
     font-size: 17px;
-    display: block;
     color: #1e1501;
+    display: block;
+
     text-align: center;
-    padding: 14px 16px;
     text-decoration: none;
-    margin: 10px
+    padding: 15px;
 }
 
 .right-item {
@@ -50,14 +61,16 @@ html, body {
 
 .navitem:hover {
     background-color: #c58f07;
+    transition: background-color 0.3s;
 }
 
 .navitem {
-    height: 100%;
-    border-right: 1px solid #c58f07;
+    margin-top: -10px;
+    height: 60px;
+    border-right: 2px solid #c58f07;
 }
 
-.first-nav {
+.last-nav {
     border-right: none;
 }
 
@@ -67,13 +80,14 @@ html, body {
     flex-wrap: wrap;
     justify-content: space-evenly;
     flex-direction: row;
+    min-height: 100vh
 }
 
 .card {
     background-color: #F2E9D2;
     width: 450px;
     line-height: 60px;
-    height: auto;
+    height: 100%;
     transition: 0.3s;
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -137,13 +151,6 @@ html, body {
 }
 
 .filterDiv {
-    float: left;
-    background-color: #2196F3;
-    color: #ffffff;
-    width: 100px;
-    line-height: 100px;
-    text-align: center;
-    margin: 2px;
     display: none;
 }
 
@@ -169,6 +176,19 @@ html, body {
     color: #352503;
 }
 
+.welcome {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    flex-direction: row;
+
+}
+
+.menu-icon {
+    display: none;
+}
+
+
 .welcome-text {
     text-align: center;
 }
@@ -181,3 +201,42 @@ html, body {
     height: 100%;
 }
 
+@media screen and (max-width: 960px) {
+    .welcome {
+        flex-wrap: wrap;
+    }
+
+    .menu-icon {
+        display: block;
+        top: 0;
+        position: fixed;
+        z-index: 1000;
+        right: 20px;
+        bottom: 0;
+        float: right;
+    }
+
+    .navitem:not(:first-child) {
+        display: none;
+    }
+
+    .navitem.show-navitem {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background-color: #FBE19D;
+    }
+
+    .show-navitem:nth-child(1) {
+        background-color: #c58f07;
+    }
+
+    .navbar-list {
+        z-index: 100;
+    }
+
+    .body{
+        padding-bottom: 50px;
+    }
+
+}

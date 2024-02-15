@@ -44,11 +44,9 @@
                 <div class="details-detail"><h3>Type:</h3>
                     {{ nut.type }}
                 </div>
-                <br>
                 <div class="details-detail"><h3>Price:</h3>
                     ${{ nut.price }}
                 </div>
-                <br>
             </div>
             {% if nut.user_id != request.user.pk %}
                 {% if  request.user.is_authenticated %}

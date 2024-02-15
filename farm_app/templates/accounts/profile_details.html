@@ -3,8 +3,7 @@
 {% load static %}
 {% block page_content %}
 
-    <div class="everything">
-
+    <div class="profile-details-whole-page" style="margin-top: 70px;">
         <div class="profile-image">
             {% if profile.profile_picture %}
                 <img src="{{ profile.profile_picture.url }}" alt="Photo">
@@ -20,9 +19,10 @@
         <div class="profile-information">
             <div id="profile-buttons">
                 {% if request.user.id == object.id %}
+                    <br>
                     <a class="cust-button prof-button orders-btn"
                        href="{% url 'my orders' object.id %}">My Orders</a>
-                    <br>
+                    <br><br>
                     <a class="cust-button prof-button" href="{% url 'profile edit' object.pk %}">Edit</a>
 
                     <a id="deleteProfileBtn" class="cust-button prof-button"
@@ -79,63 +79,66 @@
                 </tr>
             </table>
         </div>
+        {% if products_count > 0 %}
+            <h1 class="text-center big-text my-products">My Products</h1>
 
-        <h1 class="text-center big-text my-products">My Products</h1>
-        <div class="profile-products">
+            <div class="profile-products">
 
-            {% for item in all_my_products %}
+                {% for item in all_my_products %}
 
-                {% if item.model_name == 'VegetableAndFruit' %}
-                    <a href="{% url 'details vegetable' item.product.id %}">
-                {% elif item.model_name == 'Nut' %}
-                    <a href="{% url 'details nut' item.product.id %}">
-                {% elif item.model_name == 'DairyProduct' %}
-                    <a href="{% url 'details dairy' item.product.id %}">
-                {% elif item.model_name == 'AnimalProduct' %}
-                    <a href="{% url 'details animal' item.product.id %}">
-                {% endif %}
-            <div class="product-card">
-
-
-                {% if not  item.product.photo %}
                     {% if item.model_name == 'VegetableAndFruit' %}
-                        <img class="small-card-image" src="{% static 'images/fruit-and-veg.jpg' %}"
-                             alt="Veggie Photo">
+                        <a href="{% url 'details vegetable' item.product.id %}">
                     {% elif item.model_name == 'Nut' %}
-                        <img class="small-card-image" src="{% static 'images/nuts-and-dry-fruits.jpg' %}"
-                             alt="Nut Photo">
+                        <a href="{% url 'details nut' item.product.id %}">
                     {% elif item.model_name == 'DairyProduct' %}
-                        <img class="small-card-image" src="{% static 'images/milk-products.jpg' %}"
-                             alt="Milk Photo">
+                        <a href="{% url 'details dairy' item.product.id %}">
                     {% elif item.model_name == 'AnimalProduct' %}
-                        <img class="small-card-image" src="{% static 'images/meat.jpg' %}" alt="Meat Photo">
+                        <a href="{% url 'details animal' item.product.id %}">
                     {% endif %}
-                {% else %}
-                    <img class="small-card-image" src="{{ item.product.photo.url }}" alt="Photo">
-                {% endif %}
+                <div class="product-card">
 
-                <h1>{{ item.product }}</h1>
-                <p class="price">${{ item.product.price|floatformat:2 }}</p>
 
-                {% if request.user.id != item.product.user_id %}
-                    <button id="add-to-cart-{{ item.model_name }}-{{ item.product.pk }}"
-                            onclick="addToCart('{{ item.model_name }}',{{ item.product.id }})"><a
-                            hx-get="{% url 'add to cart' item_type=item.model_name product_id=item.product.id %}"
-                            hx-target="#menu-cart-button"
-                            hx-swap="outerHTML">
+                    {% if not  item.product.photo %}
+                        {% if item.model_name == 'VegetableAndFruit' %}
+                            <img class="small-card-image" src="{% static 'images/fruit-and-veg.jpg' %}"
+                                 alt="Veggie Photo">
+                        {% elif item.model_name == 'Nut' %}
+                            <img class="small-card-image" src="{% static 'images/nuts-and-dry-fruits.jpg' %}"
+                                 alt="Nut Photo">
+                        {% elif item.model_name == 'DairyProduct' %}
+                            <img class="small-card-image" src="{% static 'images/milk-products.jpg' %}"
+                                 alt="Milk Photo">
+                        {% elif item.model_name == 'AnimalProduct' %}
+                            <img class="small-card-image" src="{% static 'images/meat.jpg' %}" alt="Meat Photo">
+                        {% endif %}
+                    {% else %}
+                        <img class="small-card-image" src="{{ item.product.photo.url }}" alt="Photo">
+                    {% endif %}
 
-                        Add to cart
-                    </a>
-                    </button>
-                {% endif %}
+                    <h1>{{ item.product }}</h1>
+                    <p class="price">${{ item.product.price|floatformat:2 }}</p>
+
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.id != item.product.user_id %}
+                            <button id="add-to-cart-{{ item.model_name }}-{{ item.product.pk }}"
+                                    onclick="addToCart('{{ item.model_name }}',{{ item.product.id }})"><a
+                                    hx-get="{% url 'add to cart' item_type=item.model_name product_id=item.product.id %}"
+                                    hx-target="#menu-cart-button"
+                                    hx-swap="outerHTML">
+
+                                Add to cart
+                            </a>
+                            </button>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                </a>
+
+                </a>
+
+                {% endfor %}
             </div>
-            </a>
-            </a>
-            </a>
-            </a>
-
-            {% endfor %}
-        </div>
+        {% endif %}
     </div>
 
 
@@ -158,5 +161,6 @@
             </div>
         </form>
     </div>
+
 
 {% endblock %}

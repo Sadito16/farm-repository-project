@@ -13,66 +13,54 @@
 <body>
 
 
-<ul class="navbar">
-    <li class="left-item first-nav  navitem" style="background-color: #c58f07;"><a href="{% url 'home' %}">Farm</a>
-    </li>
+<div class="navbar">
 
+    <ul class="navbar-list" id="navbar-list">
+        <li class=" left-item navitem activebtn "><a href="{% url 'home' %}">Farm</a></li>
 
-    {% if request.user.is_authenticated %}
-        <div class="vertical-line"></div>
-        <li class="left-item navitem"><a href="{% url 'add vegetable' %}">Add Vegetable and Fruit</a></li>
-        <div class="vertical-line"></div>
-        <li class="left-item navitem"><a href="{% url 'add animal' %}">Add Animal Product</a></li>
-        <div class="vertical-line"></div>
-        <li class="left-item navitem"><a href="{% url 'add dairy' %}">Add Dairy Product</a></li>
-        <div class="vertical-line"></div>
-        <li class="left-item navitem first-nav"><a href="{% url 'add nut' %}">Add Nut</a></li>
-    {% else %}
-        <div class="vertical-line" id="myBtnContainer"></div>
-        <button class="left-item navitem navbtn" onclick="filterSelection('vegetables')">Vegetables and Fruits</button>
-        <div class="vertical-line"></div>
-        <button class="left-item navitem navbtn" onclick="filterSelection('animals')">Animal Products</button>
-        <div class="vertical-line"></div>
-        <button class="left-item navitem navbtn" onclick="filterSelection('dairies')">Dairy Products</button>
-        <div class="vertical-line"></div>
-        <button class="left-item navitem first-nav navbtn" onclick="filterSelection('nuts')">Nut Products</button>
-        
-    {% endif %}
-
-
-    {% if request.user.is_authenticated %}
-        <li class="right-item navitem first-nav">
-            <a class="nav-link" href="{% url 'profile details' pk=request.user.pk %}">Profile</a>
-        </li>
-        <li
-                class="right-item navitem menu-cart"
+        {% if request.user.is_authenticated %}
+            <li class="left-item navitem" ><a href="{% url 'add vegetable' %}">Add Vegetable and Fruit</a></li>
+            <li class="left-item navitem"><a href="{% url 'add animal' %}">Add Animal Product</a></li>
+            <li class="left-item navitem"><a href="{% url 'add dairy' %}">Add Dairy Product</a></li>
+            <li class="left-item navitem last-nav"><a href="{% url 'add nut' %}">Add Nut</a></li>
+            <li class="right-item navitem last-nav">
+                <a class="nav-link " href="{% url 'profile details' pk=request.user.pk %}">Profile</a>
+            </li>
+            <li class="right-item navitem menu-cart"
                 id="menu-cart"
                 hx-get="{% url 'menu cart' %}"
                 hx-trigger="update-menu-cart from:body"
                 hx-swap="innerHTML"
-        >
-            {% include 'cart/menu_cart.html' %}
-        </li>
-        <li class="right-item navitem">
-            <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-        </li>
+            >
+                {% include 'cart/menu_cart.html' %}
+            </li>
+            <li class="right-item navitem">
+                <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+            </li>
+        {% else %}
+            {% if current_page == 'home' %}
 
+                <li  class="left-item navitem"><a href="#" onclick="filterSelection('vegetables')">Vegetables and
+                    Fruits</a></li>
+                <li class="left-item navitem"><a href="#" onclick="filterSelection('animals')">Animal Products</a></li>
+                <li class="left-item navitem"><a href="#" onclick="filterSelection('dairies')">Dairy Products</a></li>
+                <li class="left-item navitem last-nav"><a href="#" onclick="filterSelection('nuts')">Nut Products</a>
+                </li>
+            {% endif %}
 
+            <li class="right-item navitem last-nav">
+                <a class="nav-link" href="{% url "login" %}">Log In</a>
+            </li>
+            <li class="right-item navitem ">
+                <a class="nav-link" href="{% url "register" %}">Register</a>
+            </li>
+        {% endif %}
+    </ul>
 
-    {% else %}
-
-        <li class="right-item navitem first-nav">
-            <a class="nav-link" href="{% url "login" %}">Log In</a>
-        </li>
-        <li class="right-item navitem ">
-            <a class="nav-link" href="{% url "register" %}">Register</a>
-        </li>
-
-
-    {% endif %}
-
-</ul>
-
+    <p class="menu-icon" onclick="toggleNavbar()">
+        &#9776;
+    </p>
+</div>
 
 <div class="main">
 

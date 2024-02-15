@@ -47,11 +47,9 @@
                 <div class="details-detail"><h3>Percent:</h3>
                     {{ dairy.percent }}%
                 </div>
-                <br>
                 <div class="details-detail"><h3>Price:</h3>
                     ${{ dairy.price }}
                 </div>
-                <br>
             </div>
             {% if dairy.user_id != request.user.pk %}
                 {% if  request.user.is_authenticated %}

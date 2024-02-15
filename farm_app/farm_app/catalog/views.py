@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.conf.urls.static import static
 from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy, resolve
 from django.views import generic as views
 
 
@@ -14,18 +14,6 @@ from farm_app.catalog.models import *
 
 UserModel = get_user_model()
 
-def search(request):
-    products = VegetableAndFruit.objects.all() + Nut.objects.all() + AnimalProduct.objects.all() + DairyProduct.objects.all()
-    query = request.GET.get('query')
-    if query:
-        products = products.filter(Q(name__icontains=query))
-
-    context = {
-        'products': products,
-        'query': query,
-    }
-
-    return render(request,'main/home.html', context)
 class IndexView(views.ListView):
 
     template_name = 'main/home.html'
@@ -41,6 +29,7 @@ class IndexView(views.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        current_page = resolve(self.request.path_info).url_name
 
         context['users'] = FarmerUser.objects.all()
         context['veg_fruit'] = VegetableAndFruit.objects.all()
@@ -48,6 +37,8 @@ class IndexView(views.ListView):
         context['nuts'] = Nut.objects.all()
         context['animal_products'] = AnimalProduct.objects.all()
         context['all_products'] = self.all_products
+        context['current_page'] = current_page
+        print(context['current_page'])
 
         return context
 

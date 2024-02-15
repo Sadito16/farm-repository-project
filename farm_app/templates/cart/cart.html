@@ -20,26 +20,31 @@
 
         </div>
         {% if total_items != 0 %}
+
             <div class="checkout">
                 <div class="total">
-                    <div class="Subtotal">Sub-Total</div>
-                    <div class="items">{{ cart.length }}</div>
-                </div>
-                <span
-                        class="total-amount"
-                        hx-get="{% url 'cart total' %}"
-                        hx-trigger="update-menu-cart from:body"
-                        hx-swap="innerHTML">
+                    <span class="Subtotal">Total: </span>
+
+                    <span
+                            class="total-amount"
+                            hx-get="{% url 'cart total' %}"
+                            hx-trigger="update-menu-cart from:body"
+                            hx-swap="innerHTML">
                     {% include 'cart/cart_total.html' %}
                 </span>
+                </div>
+                <a href="{% url 'checkout' %}">
+                    <button class="cust-button checkoutbtn">Checkout</button>
+                </a>
+
 
             </div>
 
-            <a href="{% url 'checkout' %}">
-                <button class="cust-button checkoutbtn">Checkout</button>
-            </a>
-            </div>
+
+
+
         {% endif %}
+    </div>
 
 
 

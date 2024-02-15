@@ -46,9 +46,9 @@
                 <div class="details-detail"><h3>Price:</h3>
                     ${{ plant.price }}
                 </div>
-                <br>
+
                 {% if plant.production %}
-                    <div class="details-detail"><h3>Country production:</h3> {{ plant.production }}</div><br>
+                    <div class="details-detail"><h3>Country production:</h3> {{ plant.production }}</div>
                 {% endif %}
             </div>
             {% if plant.user_id != request.user.pk %}

@@ -1,12 +1,75 @@
+var addToCartUrl = "cart/add/''/0/";
+var deleteItemUrl = "delete/''/0/"
+
+
 function addToCart(item_type, productId) {
-    var isAdded = localStorage.getItem("addedToCart_" + item_type + "_" + productId);
-    console.log(item_type);
-    console.log('-----------------------')
-    if (!isAdded) {
-        document.getElementById("add-to-cart-" + item_type + "-" + productId).innerText = "Added!";
-        localStorage.setItem("addedToCart_"+ item_type + "_" + productId, "true");
+    fetch(addToCartUrl.replace("''", item_type).replace("0", productId), {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': getCookie('csrftoken'),
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                let text = "Successfully added a product to the cart!\nGo see your cart.";
+                document.getElementById('menu-cart').innerHTML = data.cart_html;
+                if (confirm(text) === true) {
+                    window.location.href = data.redirect_url;
+                }
+            } else {
+                alert("Failed to add the product to the cart.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+}
+
+function deleteCartItem(item_type, productId) {
+    let confirmation = confirm("Are you sure you want to delete this item from the cart?");
+
+    if (confirmation === true) {
+        fetch(deleteItemUrl.replace("''", item_type).replace("0", productId), {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(`cart-item-${productId}`).remove();
+
+                    document.getElementById('cart-length-text').innerText = data.cart_length + ' items';
+
+                    document.getElementById('menu-cart').innerHTML = data.cart_html;
+                } else {
+                    console.error('Failed to delete item from the cart');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
-    console.log(localStorage);
+}
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Check if the cookie name matches the requested name
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }
 
 filterSelection("all")
@@ -50,7 +113,7 @@ function w3RemoveClass(element, name) {
     element.className = arr1.join(" ");
 }
 
-// Add active class to the current button (highlight it)
+
 var btnContainer = document.getElementById("myBtnContainer");
 var btns = btnContainer.getElementsByClassName("navbtn");
 for (var i = 0; i < btns.length; i++) {
@@ -62,5 +125,15 @@ for (var i = 0; i < btns.length; i++) {
 }
 
 
+function toggleNavbar() {
+    var navbarElements = document.getElementsByClassName('navitem');
+    var arrayNavbarElements = Array.from(navbarElements);
 
-
+    arrayNavbarElements.forEach((element, index) => {
+        if (index === 0) {
+            element.classList.toggle('show-navitem', true);
+        } else {
+            element.classList.toggle('show-navitem');
+        }
+    });
+}
