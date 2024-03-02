@@ -3,7 +3,6 @@ from enum import Enum
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.core.validators import MinLengthValidator
 from django.db import models
 
 from farm_app.accounts.validators import validate_only_letter_value

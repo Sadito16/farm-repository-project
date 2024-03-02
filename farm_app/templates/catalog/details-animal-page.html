@@ -57,24 +57,25 @@
                     <div class="details-detail"><h3>Birthdate of the animal:</h3> {{ meat.date_of_birth }}</div>
                 {% endif %}
             </div>
-            {% if meat.user_id != request.user.pk %}
-                {% if  request.user.is_authenticated %}
-                    <button id="add-to-cart-AnimalProduct-{{ meat.id }}"
-                            onclick="addToCart('AnimalProduct',{{ meat.id }})"
+            {% if  request.user.is_authenticated %}
+                {% if meat.user_id != request.user.pk %}
+                    <button
                             class="buy-button cust-button animal-add"
-                            hx-trigger="click"
+                            id="add-to-cart-AnimalProduct-{{ meat.id }}"
+                            onclick="addToCart('DairyProduct',{{ meat.id }})"
                             hx-get="{% url 'add to cart' item_type='AnimalProduct' product_id=meat.id %}"
                             hx-target="#menu-cart-button"
                             hx-swap="outerHTML"
-                    >Add to cart
+                    >
+                        Add to cart
                     </button>
+                {% else %}
+                    <div class="btns">
+                        <a class="cust-button editBtn" href="{% url 'edit animal' meat.pk %}">Edit</a>
+                        <a id="deleteProfileBtn" class="cust-button editBtn"
+                           onclick="document.getElementById('modal-delete').style.display='block'">Delete</a>
+                    </div>
                 {% endif %}
-            {% else %}
-                <div class="btns">
-                    <a class="cust-button editBtn" href="{% url 'edit animal' meat.pk %}">Edit</a>
-                    <a id="deleteProfileBtn" class="cust-button editBtn"
-                       onclick="document.getElementById('modal-delete').style.display='block'">Delete</a>
-                </div>
             {% endif %}
         </div>
     </div>

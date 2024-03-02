@@ -51,26 +51,20 @@
                     <div class="details-detail"><h3>Country production:</h3> {{ plant.production }}</div>
                 {% endif %}
             </div>
-            {% if plant.user_id != request.user.pk %}
-                {% if  request.user.is_authenticated %}
-                    <button id="add-to-cart-VegetableAndFruit-{{ plant.id }}"
-                            onclick="addToCart('VegetableAndFruit',{{ plant.id }})"
+            {% if  request.user.is_authenticated %}
+                {% if plant.user_id != request.user.pk %}
+                    <button id="add-to-cart-VegetableAndFruit-{{ plant.id }}" onclick="addToCart('VegetableAndFruit',{{ plant.id }})"
                             class="buy-button cust-button animal-add"
-                            hx-trigger="click"
                             hx-get="{% url 'add to cart' item_type='VegetableAndFruit' product_id=plant.id %}"
                             hx-target="#menu-cart-button"
-                            hx-swap="outerHTML"
-                    >Add to cart
+                            hx-swap="outerHTML">
+                        Add to cart
                     </button>
-
+                {% else %}
+                    <a class="cust-button editBtn" href="{% url 'edit vegetable' plant.pk %}">Edit</a>
+                    <a id="deleteProfileBtn" class="cust-button editBtn"
+                       onclick="document.getElementById('modal-delete').style.display='block'">Delete</a>
                 {% endif %}
-            {% else %}
-
-
-                <a class="cust-button editBtn" href="{% url 'edit vegetable' plant.pk %}">Edit</a>
-                <a id="deleteProfileBtn" class="cust-button editBtn"
-                   onclick="document.getElementById('modal-delete').style.display='block'">Delete</a>
-
             {% endif %}
         </div>
     </div>

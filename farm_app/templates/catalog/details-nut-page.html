@@ -48,26 +48,24 @@
                     ${{ nut.price }}
                 </div>
             </div>
-            {% if nut.user_id != request.user.pk %}
-                {% if  request.user.is_authenticated %}
-                    <div class="add-item">
-                        <button id="add-to-cart-VegetableAndFruit-{{ nut.id }}"
-                                onclick="addToCart('Nut',{{ nut.id }})"
+            {% if  request.user.is_authenticated %}
+                {% if nut.user_id != request.user.pk %}
+
+                        <button id="add-to-cart-Nut-{{ nut.id }}" onclick="addToCart('Nut',{{ nut.id }})"
                                 class="buy-button cust-button animal-add"
-                                hx-trigger="click"
                                 hx-get="{% url 'add to cart' item_type='Nut' product_id=nut.id %}"
                                 hx-target="#menu-cart-button"
-                                hx-swap="outerHTML"
-                        >Add to cart
+                                hx-swap="outerHTML">
+                            Add to cart
                         </button>
-                    </div>
-                {% endif %}
-            {% else %}
-                <div class="btns ">
 
-                <a class="cust-button editBtn" href="{% url 'edit nut' nut.pk %}">Edit</a>
-                <a id="deleteProfileBtn" class="cust-button editBtn"
-                   onclick="document.getElementById('modal-delete').style.display='block'">Delete</a>
+                {% else %}
+                    <div class="btns ">
+
+                    <a class="cust-button editBtn" href="{% url 'edit nut' nut.pk %}">Edit</a>
+                    <a id="deleteProfileBtn" class="cust-button editBtn"
+                       onclick="document.getElementById('modal-delete').style.display='block'">Delete</a>
+                {% endif %}
             {% endif %}
             </div>
         </div>

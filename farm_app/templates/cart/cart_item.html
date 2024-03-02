@@ -1,7 +1,8 @@
 {% load static %}
 {% if item %}
     <div class="cart-product" id="cart-item-{{ item.product.id }}">
-        <a href="#">
+
+        <div>
             {% if item.product.photo %}
                 <img class="product-photo" src="{{ item.product.photo.url }}" alt="Photo">
             {% else %}
@@ -22,7 +23,7 @@
                          alt="Nut Photo">
                 {% endif %}
             {% endif %}
-        </a>
+        </div>
         <div class="counter">
             <button
                     class="btn"
@@ -49,9 +50,11 @@
             </div>
             <hr>
         </div>
-        <a onclick="deleteCartItem('{{ item.item_type }}', '{{ item.product.id }}')">
-        <img src="{% static 'images/bin.png' %}" alt="Bin">
-        </a>
+        <div>
+            <a onclick="deleteCartItem('{{ item.item_type }}', '{{ item.product.id }}')">
+                <img src="{% static 'images/bin.png' %}" alt="Bin">
+            </a>
+        </div>
     </div>
 {% endif %}
 

@@ -17,10 +17,9 @@
                 {% include 'cart/cart_item.html' %}
             {% endfor %}
             <hr>
-
         </div>
-        {% if total_items != 0 %}
 
+        {% if total_items != 0 %}
             <div class="checkout">
                 <div class="total">
                     <span class="Subtotal">Total: </span>
@@ -36,14 +35,9 @@
                 <a href="{% url 'checkout' %}">
                     <button class="cust-button checkoutbtn">Checkout</button>
                 </a>
-
-
             </div>
-
-
-
-
         {% endif %}
+
     </div>
 
 

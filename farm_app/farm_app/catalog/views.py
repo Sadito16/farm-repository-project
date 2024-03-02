@@ -1,24 +1,22 @@
 from itertools import chain
 
 from django.contrib.auth import get_user_model
-from django.db.models import Q
 from django.conf.urls.static import static
-from django.shortcuts import render
-from django.urls import reverse, reverse_lazy, resolve
+from django.urls import reverse, resolve
 from django.views import generic as views
-
 
 from farm_app.accounts.models import FarmerUser
 from farm_app.catalog.forms import *
+from farm_app.catalog.mixins import UserPermissionMixin
 from farm_app.catalog.models import *
 
 UserModel = get_user_model()
 
+
 class IndexView(views.ListView):
-
     template_name = 'main/home.html'
-    all_products = list(chain(VegetableAndFruit.objects.all(),Nut.objects.all(),AnimalProduct.objects.all(),DairyProduct.objects.all()))
-
+    all_products = list(chain(VegetableAndFruit.objects.all(), Nut.objects.all(), AnimalProduct.objects.all(),
+                              DairyProduct.objects.all()))
 
     def get_queryset(self):
         veg_fruit = VegetableAndFruit.objects.all()
@@ -43,11 +41,14 @@ class IndexView(views.ListView):
         return context
 
 
-
 class VegetableCreateView(views.CreateView):
     template_name = 'catalog/create-vegetable-page.html'
     model = VegetableAndFruit
     form_class = VegetableCreationForm
+
+    def __init__(self, **kwargs):
+        super().__init__(kwargs)
+        self.object = None
 
     def get_success_url(self):
         return reverse('details vegetable', kwargs={
@@ -61,11 +62,12 @@ class VegetableCreateView(views.CreateView):
         return super().form_valid(form)
 
 
-class VegetableEditView(views.UpdateView):
+class VegetableEditView(views.UpdateView, UserPermissionMixin):
     model = VegetableAndFruit
     template_name = 'catalog/edit-vegetable-page.html'
     form_class = VegetableCreationForm
     context_object_name = 'plant'
+
     def get_success_url(self):
         return reverse('details vegetable', kwargs={
             'pk': self.object.pk,
@@ -86,6 +88,7 @@ class VegetableDetailsView(views.DetailView):
     def get_profile(self):
         profile = FarmerUser.objects.all().get(id=self.object.user_id)
         return profile
+
     def get_photo(self):
         if self.object.photo is not None:
             return self.object.photo
@@ -108,20 +111,23 @@ class VegetableDeleteView(views.DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context ['product_model'] = 'VegetableAndFruit'
+        context['product_model'] = 'VegetableAndFruit'
         return context
+
     def get_success_url(self):
         return reverse('profile details', kwargs={
             'pk': self.request.user.id
         })
 
 
-
-
 class NutCreateView(views.CreateView):
     template_name = 'catalog/create-nut-page.html'
     model = Nut
     form_class = NutCreationForm
+
+    def __init__(self, **kwargs):
+        super().__init__(kwargs)
+        self.object = None
 
     def get_success_url(self):
         return reverse('details nut', kwargs={
@@ -135,15 +141,11 @@ class NutCreateView(views.CreateView):
         return super().form_valid(form)
 
 
-class NutEditView(views.UpdateView):
+class NutEditView(views.UpdateView, UserPermissionMixin):
     model = Nut
     template_name = 'catalog/edit-nut-page.html'
     form_class = NutCreationForm
     context_object_name = 'nut'
-
-    def user_do_not_have_access(self):
-        if UserModel.id != object.user_id:
-            reverse_lazy()
 
     def get_success_url(self):
         return reverse('details nut', kwargs={
@@ -165,6 +167,7 @@ class NutDetailsView(views.DetailView):
     def get_profile(self):
         profile = FarmerUser.objects.all().get(id=self.object.user_id)
         return profile
+
     def get_photo(self):
         if self.object.photo is not None:
             return self.object.photo
@@ -181,14 +184,13 @@ class NutDetailsView(views.DetailView):
         return context
 
 
-
 class NutDeleteView(views.DeleteView):
     model = Nut
     context_object_name = 'product'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context ['product_model'] = 'Nut'
+        context['product_model'] = 'Nut'
         return context
 
     def get_success_url(self):
@@ -196,10 +198,15 @@ class NutDeleteView(views.DeleteView):
             'pk': self.request.user.id
         })
 
+
 class DairyCreateView(views.FormView):
     template_name = 'catalog/create-dairy-page.html'
     model = DairyProduct
     form_class = DairyCreationForm
+
+    def __init__(self, **kwargs):
+        super().__init__(kwargs)
+        self.object = None
 
     def get_success_url(self):
         return reverse('details dairy', kwargs={
@@ -213,7 +220,7 @@ class DairyCreateView(views.FormView):
         return super().form_valid(form)
 
 
-class DairyEditView(views.UpdateView):
+class DairyEditView(views.UpdateView, UserPermissionMixin):
     model = DairyProduct
     template_name = 'catalog/edit-dairy-page.html'
     form_class = DairyCreationForm
@@ -239,6 +246,7 @@ class DairyDetailsView(views.DetailView):
     def get_profile(self):
         profile = FarmerUser.objects.all().get(id=self.object.user_id)
         return profile
+
     def get_photo(self):
         if self.object.photo is not None:
             return self.object.photo
@@ -255,15 +263,15 @@ class DairyDetailsView(views.DetailView):
         return context
 
 
-
 class DairyDeleteView(views.DeleteView):
     model = DairyProduct
     context_object_name = 'product'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context ['product_model'] = 'DairyProduct'
+        context['product_model'] = 'DairyProduct'
         return context
+
     def get_success_url(self):
         return reverse('profile details', kwargs={
             'pk': self.request.user.id
@@ -274,6 +282,10 @@ class AnimalCreateView(views.FormView):
     template_name = 'catalog/create-animal-page.html'
     model = AnimalProduct
     form_class = AnimalCreationForm
+
+    def __init__(self, **kwargs):
+        super().__init__(kwargs)
+        self.object = None
 
     def get_success_url(self):
         return reverse('details animal', kwargs={
@@ -287,7 +299,7 @@ class AnimalCreateView(views.FormView):
         return super().form_valid(form)
 
 
-class AnimalEditView(views.UpdateView):
+class AnimalEditView(UserPermissionMixin, views.UpdateView):
     model = AnimalProduct
     template_name = 'catalog/edit-animal-page.html'
     form_class = AnimalCreationForm
@@ -313,6 +325,7 @@ class AnimalDetailsView(views.DetailView):
     def get_profile(self):
         profile = FarmerUser.objects.all().get(id=self.object.user_id)
         return profile
+
     def get_photo(self):
         if self.object.photo is not None:
             return self.object.photo
@@ -329,15 +342,15 @@ class AnimalDetailsView(views.DetailView):
         return context
 
 
-
 class AnimalDeleteView(views.DeleteView):
     model = AnimalProduct
     context_object_name = 'product'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context ['product_model'] = 'AnimalProduct'
+        context['product_model'] = 'AnimalProduct'
         return context
+
     def get_success_url(self):
         return reverse('profile details', kwargs={
             'pk': self.request.user.id

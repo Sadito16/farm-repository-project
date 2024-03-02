@@ -1,10 +1,10 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %} Update {{ meat }} {% endblock %}
+{% block title %} Update {{ animal }} {% endblock %}
 
 {% block page_content %}
 
-    {% if request.user.id == meat.user_id %}
+    {% if request.user.id == animal.user_id %}
         <div class="edit-form">
             <div class="edit-item item3">
                 <h1 class="big-text">Edit Your Animal Product</h1>

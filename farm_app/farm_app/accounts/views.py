@@ -1,7 +1,8 @@
 from itertools import chain
 
 from django.conf.urls.static import static
-from django.shortcuts import render
+from django.http import Http404
+from django.shortcuts import render, get_object_or_404
 from django.views import generic as views
 from django.contrib.auth import views as auth_views, login, get_user_model
 from django.urls import reverse_lazy, reverse, resolve
@@ -79,6 +80,13 @@ class ProfileEditView(views.UpdateView):
     model = FarmerUser
     form_class = EditProfileForm
     template_name = 'accounts/profile_edit.html'
+    def dispatch(self, request, *args, **kwargs):
+        user_in_url = get_object_or_404(FarmerUser, pk=self.kwargs['pk'])
+
+        if request.user.id != user_in_url.id:
+            return render(request, 'main/404page.html')
+
+        return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse('profile details', kwargs={

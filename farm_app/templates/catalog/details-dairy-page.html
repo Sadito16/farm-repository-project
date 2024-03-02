@@ -6,16 +6,16 @@
     <div class="details-content">
 
 
-            <div class="details-image">
-                {% if  dairy.photo %}
-                    <img class="details-image" src="{{ dairy.photo.url }}" alt="Dairy Photo">
+        <div class="details-image">
+            {% if  dairy.photo %}
+                <img class="details-image" src="{{ dairy.photo.url }}" alt="Dairy Photo">
 
-                {% else %}
-                    <img class="details-image"
-                         src="{% static 'images/milk-products.jpg' %}"
-                         alt="Dairy Photo">
-                {% endif %}
-            </div>
+            {% else %}
+                <img class="details-image"
+                     src="{% static 'images/milk-products.jpg' %}"
+                     alt="Dairy Photo">
+            {% endif %}
+        </div>
 
         <div>
             <div class="profile-details">
@@ -51,33 +51,29 @@
                     ${{ dairy.price }}
                 </div>
             </div>
-            {% if dairy.user_id != request.user.pk %}
-                {% if  request.user.is_authenticated %}
+            {% if request.user.is_authenticated %}
+                {% if request.user.id != dairy.user_id %}
+                    <button
+                            class="buy-button cust-button animal-add"
+                            id="add-to-cart-DairyProduct-{{ dairy.id }}"
+                            onclick="addToCart('DairyProduct',{{ dairy.id }})"
+                            hx-get="{% url 'add to cart' item_type='DairyProduct' product_id=dairy.id %}"
+                            hx-target="#menu-cart-button"
+                            hx-swap="outerHTML"
+                    >
+                        Add to cart
+                    </button>
+                {% else %}
+                    <div class="btns">
 
-                        <button id="add-to-cart-DairyProduct-{{ dairy.id }}"
-                                onclick="addToCart('DairyProduct',{{ dairy.id }})"
-                                class="buy-button cust-button animal-add"
-                                hx-trigger="click"
-                                hx-get="{% url 'add to cart' item_type='DairyProduct' product_id=dairy.id %}"
-                                hx-target="#menu-cart-button"
-                                hx-swap="outerHTML"
-                        >Add to cart
-                        </button>
-
+                    <a class="cust-button editBtn" href="{% url 'edit dairy' dairy.pk %}">Edit</a>
+                    <a id="deleteProfileBtn" class="cust-button editBtn"
+                       onclick="document.getElementById('modal-delete').style.display='block'">Delete</a>
                 {% endif %}
-            {% else %}
-                <div class="btns">
-
-                <a class="cust-button editBtn" href="{% url 'edit dairy' dairy.pk %}">Edit</a>
-                <a id="deleteProfileBtn" class="cust-button editBtn"
-                   onclick="document.getElementById('modal-delete').style.display='block'">Delete</a>
             {% endif %}
             </div>
         </div>
     </div>
-
-
-
 
 
     <div id="modal-delete" class="modal">
@@ -99,7 +95,6 @@
             </div>
         </form>
     </div>
-
 
 
 {% endblock %}

@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from farm_app.accounts.views import ProfileLoginView, ProfileRegisterView, ProfileDetailsView, ProfileLogoutView, \
-    ProfileEditView, ProfileDeleteView
+    ProfileEditView, ProfileDeleteView, error_404_view
 
 urlpatterns = (
     path('login/', ProfileLoginView.as_view(), name='login'),
@@ -14,4 +14,5 @@ urlpatterns = (
         path('delete/', ProfileDeleteView.as_view(), name='profile delete'),
 
     ])),
+    path('404/', error_404_view, name= 'error'),
 )
