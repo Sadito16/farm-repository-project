@@ -34,11 +34,11 @@
     margin-top: 75px;
     display: flex;
     flex-flow: column nowrap;
-    width: 300px ;
+    width: 300px;
 }
 
 .title {
-    font-size:21px;
+    font-size: 21px;
     font-family: ‘Open Sans’, serif;
     font-weight: 800;
     color: #202020;
@@ -103,6 +103,17 @@ hr#cart {
     margin: 0 50px;
 }
 
+@media screen and (max-width: 600px) {
+    .cart-product {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+    }
+}
+
 .items {
     font-size: 16px;
     font-family: ‘Open Sans’, serif;
@@ -118,7 +129,8 @@ hr#cart {
     font-weight: 900;
     color: #202020;
 }
-.checkoutbtn{
+
+.checkoutbtn {
     margin-bottom: 20px;
 }
 
