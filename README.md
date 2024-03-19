@@ -7,6 +7,7 @@ Welcome to the Farm App repository! This README provides essential information f
 - [Files and Directories](#files-and-directories)
 - [Setup and Installation](#setup-and-installation)
 - [License](#license)
+- [Contacts](#contacts)
 
 ## Introduction
 
@@ -39,3 +40,9 @@ pip install -r requirements.txt
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## Contacts
+
+If you want to contact me. You have questions or if you want to write a recommendation - write to the indicated email: 
+
+sadiiito123@gmail.com
