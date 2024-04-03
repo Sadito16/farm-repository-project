@@ -1,6 +1,7 @@
 # Farm App
 
 Welcome to the Farm App repository! This README provides essential information for setting up and using the Farm App project.
+The project is written on Python and JavaScript in Pycharm. I am using Django framework.
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -35,6 +36,12 @@ cd farm_app
 
 3. Install dependencies:
 pip install -r requirements.txt
+
+4. Start the development server(for example in pycharm):
+python manage.py runserver
+
+5.Open your browser and navigate to http://localhost:8000/ to view the app.
+
 
 
 ## License
