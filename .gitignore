@@ -127,11 +127,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# Ignore media files
-media/
-
-# Ignore .env file
-.env
-
-my_project_env
