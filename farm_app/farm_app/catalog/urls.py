@@ -4,7 +4,7 @@ from django.urls import path, include
 from farm_app import settings
 from farm_app.catalog import views as views
 
-urlpatterns = [
+urlpatterns = ([
     path('', views.IndexView.as_view(), name='home'),
     path('vegetable/add/', views.VegetableCreateView.as_view(), name='add vegetable'),
     path('vegetable/<int:pk>/', include([
@@ -32,4 +32,6 @@ urlpatterns = [
     ])),
 
 
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+])
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
