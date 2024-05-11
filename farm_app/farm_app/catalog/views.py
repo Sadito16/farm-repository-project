@@ -46,10 +46,6 @@ class VegetableCreateView(views.CreateView):
     model = VegetableAndFruit
     form_class = VegetableCreationForm
 
-    def __init__(self, **kwargs):
-        super().__init__(kwargs)
-        self.object = None
-
     def get_success_url(self):
         return reverse('details vegetable', kwargs={
             'pk': self.object.pk,
@@ -68,6 +64,13 @@ class VegetableEditView(views.UpdateView, UserPermissionMixin):
     form_class = VegetableCreationForm
     context_object_name = 'plant'
 
+
+    def form_valid(self, form):
+        photo = self.request.FILES.get('photo')
+        if photo:
+            form.instance.photo = photo
+        return super().form_valid(form)
+    
     def get_success_url(self):
         return reverse('details vegetable', kwargs={
             'pk': self.object.pk,
@@ -76,6 +79,9 @@ class VegetableEditView(views.UpdateView, UserPermissionMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+
+
 
 
 class VegetableDetailsView(views.DetailView):
@@ -125,9 +131,6 @@ class NutCreateView(views.CreateView):
     model = Nut
     form_class = NutCreationForm
 
-    def __init__(self, **kwargs):
-        super().__init__(kwargs)
-        self.object = None
 
     def get_success_url(self):
         return reverse('details nut', kwargs={
@@ -204,10 +207,6 @@ class DairyCreateView(views.FormView):
     model = DairyProduct
     form_class = DairyCreationForm
 
-    def __init__(self, **kwargs):
-        super().__init__(kwargs)
-        self.object = None
-
     def get_success_url(self):
         return reverse('details dairy', kwargs={
             'pk': self.object.pk,
@@ -283,9 +282,6 @@ class AnimalCreateView(views.FormView):
     model = AnimalProduct
     form_class = AnimalCreationForm
 
-    def __init__(self, **kwargs):
-        super().__init__(kwargs)
-        self.object = None
 
     def get_success_url(self):
         return reverse('details animal', kwargs={

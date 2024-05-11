@@ -11,9 +11,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', ' ')
 
-DEBUG = os.environ.get('DEBUG', False) == True
+DEBUG = os.environ.get('DEBUG', False)
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', ' ').split(' ')
+
 
 SESSION_COOKIE_AGE = 86400
 CART_SESSION_ID = 'cart'
@@ -79,7 +80,7 @@ DATABASES = {
         'USER': os.getenv('DATABASE_USER', None),
         'PASSWORD': os.getenv('DATABASE_PASSWORD', None),
         'HOST': os.getenv('DATABASE_HOST', None),
-        'PORT': os.getenv('DATABASE_PORT', None),
+        'PORT': os.getenv('DATABASE_PORT', '5432'),
     },
 }
 
@@ -118,13 +119,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT=os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT=os.environ.get('STATIC_ROOT', BASE_DIR/'staticfiles')
 
 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'farm_app', 'media')
-MEDIA_URL = '/media/photos/'
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
