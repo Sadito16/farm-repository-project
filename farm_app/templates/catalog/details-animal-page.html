@@ -6,7 +6,7 @@
     <div class="details-content">
         <div class="details-image">
             {% if  meat.photo %}
-                <img class="details-image" src="{{ meat.photo.url }}" alt="Meat Photo">
+                <img class="details-image" src="{{ meat.photo.url }}" alt="{{ meat }}">
 
             {% else %}
                 <img class="details-image"
@@ -70,6 +70,7 @@
                         Add to cart
                     </button>
                 {% else %}
+
                     <div class="btns">
                         <a class="cust-button editBtn" href="{% url 'edit animal' meat.pk %}">Edit</a>
                         <a id="deleteProfileBtn" class="cust-button editBtn"
@@ -79,6 +80,7 @@
             {% endif %}
         </div>
     </div>
+
 
 
     <div id="modal-delete" class="modal">

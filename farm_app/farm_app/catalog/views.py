@@ -52,6 +52,7 @@ class VegetableCreateView(views.CreateView):
         })
 
     def form_valid(self, form):
+        print(self.request.FILES)
         self.object = form.save(commit=False)
         self.object.user_id = self.request.user.pk
         self.object.save()
@@ -64,13 +65,17 @@ class VegetableEditView(views.UpdateView, UserPermissionMixin):
     form_class = VegetableCreationForm
     context_object_name = 'plant'
 
-
     def form_valid(self, form):
+        print(self.request.FILES)
+        instance = form.save(commit=False)
+
         photo = self.request.FILES.get('photo')
         if photo:
-            form.instance.photo = photo
+            instance.photo = photo
+        instance.save()
+
         return super().form_valid(form)
-    
+
     def get_success_url(self):
         return reverse('details vegetable', kwargs={
             'pk': self.object.pk,
@@ -79,8 +84,6 @@ class VegetableEditView(views.UpdateView, UserPermissionMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-
-
 
 
 

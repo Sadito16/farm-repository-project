@@ -7,7 +7,7 @@
 
         <div class="details-image">
             {% if  plant.photo %}
-                <img class="details-image" src="{{ plant.photo.url }}" alt="Photo">
+                <img class="details-image" src="{{ plant.photo.url }}" alt="{{ plant }}">
 
             {% else %}
                 <img class="details-image"
@@ -16,7 +16,7 @@
             {% endif %}
         </div>
 
-        <div>
+        <div class="test">
             <div class="profile-details">
                 <div class="details-profile-icon">
                     <a href="{% url 'profile details' profile.id %}">

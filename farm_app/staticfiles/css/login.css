@@ -7,7 +7,7 @@
 .login-item {
     float: right;
     position: relative;
-    margin: 50px;
+    margin: 45px;
 }
 
 .item1 {
@@ -16,7 +16,7 @@
 }
 
 .login-item img {
-    width: 400px;
+    width: 250px;
     height: 300px;
 }
 

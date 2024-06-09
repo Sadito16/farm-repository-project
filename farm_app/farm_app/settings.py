@@ -14,6 +14,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', ' ')
 DEBUG = os.environ.get('DEBUG', False)
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', ' ').split(' ')
+CSRF_TRUSTED_ORIGINS = [f'http://{x}:81' for x in os.getenv('ALLOWED_HOSTS', ' ').split(' ')]
 
 
 SESSION_COOKIE_AGE = 86400
@@ -117,15 +118,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT=os.environ.get('STATIC_ROOT', BASE_DIR/'staticfiles')
+STATIC_URL = 'static/'
+STATICFILES_DIRS = (BASE_DIR / 'staticfiles',)
+STATIC_ROOT=os.environ.get('STATIC_ROOT', BASE_DIR / 'static')
 
 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'farm_app', 'media')
-MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, '/media')
+MEDIA_URL = '/media/photos/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

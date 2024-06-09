@@ -1,3 +1,38 @@
+@media screen and (max-width: 960px) {
+    .details-content {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        top: 70px;
+
+    }
+    .details-image > img {
+        width: 200px;
+        height: 200px;
+
+    }
+    .profile-details{
+        flex-wrap: wrap !important;
+        justify-content: flex-start;
+    }
+    .details-name{
+        width: auto;
+    }
+    .test{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+
+
+
+
+}
+
+
+
 
 .details-content {
     width: 70%;
@@ -8,14 +43,6 @@
     top: 70px;
 }
 
-@media screen and (max-width: 600px) {
-    .details-content {
-        flex-wrap: wrap;
-    }
-    .details-name{
-        width: auto;
-    }
-}
 
 .details-image > img {
     width: 400px;

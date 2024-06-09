@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  web:
+    image: sadidocker/farm_app
+    build: .
+    command: gunicorn --bind=0.0.0.0:8000 farm_app.wsgi:application
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./envs/.env
+    volumes:
+      - /tmp/farm_app/static:/app/static
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: 1123QwER
+      POSTGRES_USER: postgres
+      POSTGRES_DB: db_farm_2023
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./postgresql:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx
+    ports:
+      - "81:80"
+      - "443:443"
+    volumes:
+      - /tmp/farm_app/static:/home/app/web/staticfiles
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/logs:/var/log/nginx
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+    links:
+      - web
