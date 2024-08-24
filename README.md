@@ -35,36 +35,55 @@ To set up and run the Farm App locally, follow these steps:
     ```
 
 2. **Navigate to the Project Directory:**
-
     ```bash
     cd farm-repository-project/farm_app
     ```
+3. **Ensure the Setup Script is Executable:**
 
-3. **Build Docker Containers:**
+   If you are using Git Bash or a similar terminal, make the `setup.sh` script executable:
+    ```bash
+    chmod +x setup.sh
+    ```
+
+4. **Run the Setup Script:**
+
+    ```bash
+    ./setup.sh
+    ```
+
+5. **Edit the `.env` File with Your Credentials Using the Examples:**
+
+    Open the `.env` file in a text editor:
+    ```bash
+    vim .env
+    ```
+    You can use any text editor to modify the `.env` file as needed.
+
+6. **Build Docker Containers:**
 
     ```bash
     docker-compose build
     ```
 
-4. **Run Docker Containers:**
+7. **Run Docker Containers:**
 
     ```bash
     docker-compose up -d
     ```
 
-5. **Apply Migrations:**
+8. **Apply Migrations:**
 
     ```bash
     docker-compose run web python manage.py migrate
     ```
 
-6. **Collect Static Files:**
+9. **Collect Static Files:**
 
     ```bash
     docker-compose run web python manage.py collectstatic --noinput
     ```
 
-7. **Open Your Browser:**
+10. **Open Your Browser:**
    Navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to view the app.
 
 ## Usage
