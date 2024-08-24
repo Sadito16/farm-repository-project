@@ -15,8 +15,6 @@ UserModel = get_user_model()
 
 class IndexView(views.ListView):
     template_name = 'main/home.html'
-    all_products = list(chain(VegetableAndFruit.objects.all(), Nut.objects.all(), AnimalProduct.objects.all(),
-                              DairyProduct.objects.all()))
 
     def get_queryset(self):
         veg_fruit = VegetableAndFruit.objects.all()
@@ -34,9 +32,7 @@ class IndexView(views.ListView):
         context['dairies'] = DairyProduct.objects.all()
         context['nuts'] = Nut.objects.all()
         context['animal_products'] = AnimalProduct.objects.all()
-        context['all_products'] = self.all_products
         context['current_page'] = current_page
-        print(context['current_page'])
 
         return context
 

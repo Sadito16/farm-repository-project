@@ -78,7 +78,7 @@ class AnimalChoice(ChoicesLengthMixin, Enum):
 
 class NutChoices(ChoicesLengthMixin, Enum):
     ROASTED = 'Roasted'
-    RAW = 'Row'
+    RAW = 'Raw'
     DRIED_FRUIT = 'Dried'
     OTHER = 'Other'
 
@@ -94,7 +94,7 @@ class VegetableAndFruit(models.Model):
     production = models.CharField(null=True, blank=True, max_length=MAX_LENGTH_OF_PRODUCTION_COUNTRY,
                                   validators=[validate_only_letter_value])
 
-    photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
+    photo = models.ImageField(upload_to='uploads/', blank=True, null=True, validators=(validate_image_size,))
 
     user = models.ForeignKey(
         UserModel,
@@ -132,7 +132,7 @@ class DairyProduct(models.Model):
                             default=DairyChoice.OTHER.value)
     percent = models.FloatField(null=True, blank=True)
     price = models.FloatField()
-    photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
+    photo = models.ImageField(upload_to='uploads/', blank=True, null=True, validators=(validate_image_size,))
 
     user = models.ForeignKey(
         UserModel,
@@ -170,7 +170,7 @@ class AnimalProduct(models.Model):
         max_length=PRODUCT_MAX_LENGTH, validators=[validate_only_letter_value]
     )
     price = models.FloatField()
-    photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
+    photo = models.ImageField(upload_to='uploads/', blank=True, null=True, validators=(validate_image_size,))
     date_of_birth = models.DateField(null=True, blank=True)
 
     production = models.CharField(null=True, blank=True, max_length=MAX_LENGTH_OF_PRODUCTION_COUNTRY,
@@ -219,7 +219,7 @@ class Nut(models.Model):
         max_length=NUTS_MAX_LENGTH, validators=[validate_only_letter_value]
     )
     price = models.FloatField()
-    photo = models.ImageField(upload_to='photos', blank=True, null=True, validators=(validate_image_size,))
+    photo = models.ImageField(upload_to='uploads/', blank=True, null=True, validators=(validate_image_size,))
 
     user = models.ForeignKey(
         UserModel,
