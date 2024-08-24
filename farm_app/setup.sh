@@ -1,6 +1,6 @@
 
 if [ -f .env ]; then
-	  echo ".env file already exists. Please edit it manually."
+	  echo ".env file already exists. Please edit it manually"
   else
 	      cp .env.example .env
 
