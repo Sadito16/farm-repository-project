@@ -22,26 +22,57 @@ The Farm App is store site for farmers and customers. In the site you can add va
 - `LICENSE`: This file contains the license for the project
 - `Procfile`: This file is used by Heroku to specify the commands that are executed by the app on startup.
 - `requirements.txt`: This file lists the dependencies required by your Python project, typically used with pip for package management.
+- `docker-compose.yml` : Defines the services, networks, and volumes for Docker Compose.
 
 ## Setup and Installation
 
 To set up and run the Farm App locally, follow these steps:
 
-1. Clone the repository:
-git clone https://github.com/Sadito16/farm-repository-project.git
+1. **Clone the Repository:**
 
+    ```bash
+    git clone https://github.com/Sadito16/farm-repository-project.git
+    ```
 
-2. Navigate to the project directory:
-cd farm_app
+2. **Navigate to the Project Directory:**
 
-3. Install dependencies:
-pip install -r requirements.txt
+    ```bash
+    cd farm-repository-project/farm_app
+    ```
 
-4. Start the development server(for example in pycharm):
-python manage.py runserver
+3. **Build Docker Containers:**
 
-5.Open your browser and navigate to http://localhost:8000/ to view the app.
+    ```bash
+    docker-compose build
+    ```
 
+4. **Run Docker Containers:**
+
+    ```bash
+    docker-compose up -d
+    ```
+
+5. **Apply Migrations:**
+
+    ```bash
+    docker-compose run web python manage.py migrate
+    ```
+
+6. **Collect Static Files:**
+
+    ```bash
+    docker-compose run web python manage.py collectstatic --noinput
+    ```
+
+7. **Open Your Browser:**
+   Navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to view the app.
+
+## Usage
+Once the application is running, you can:
+
+  - Add Products: Use the web interface to list farm products.
+  - Manage Orders: Track and manage orders through you profile.
+  - User Profiles: Create and manage user profiles
 
 
 ## License
@@ -50,6 +81,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Contacts
 
-If you want to contact me. You have questions or if you want to write a recommendation - write to the indicated email: 
+If you have any questions or feedback, feel free to reach out via email:
 
 sadiiito123@gmail.com
