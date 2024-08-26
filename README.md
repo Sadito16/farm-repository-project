@@ -77,12 +77,6 @@ To set up and run the Farm App locally, follow these steps:
     docker-compose run web python manage.py migrate
     ```
 
-9. **Collect Static Files:**
-
-    ```bash
-    docker-compose run web python manage.py collectstatic --noinput
-    ```
-
 10. **Open Your Browser:**
    Navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to view the app.
 
