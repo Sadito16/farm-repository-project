@@ -5,9 +5,9 @@ services:
     image: postgres
     restart: always
     environment:
-      - POSTGRES_DB=db_farm_2023
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=1123QwER
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
       - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
@@ -15,9 +15,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   web:
-    image: sadidocker/farm_app
     build: .
-    entrypoint: [ "./wait-for-it.sh", "postgres:5432", "--timeout=60", "--" ]
+    image: sadidocker/farm_app
+    entrypoint: [ "./wait-for-it.sh", "${DATABASE_HOST}:${DATABASE_PORT}",  "--timeout=60", "--" ]
     command: python manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
@@ -29,6 +29,8 @@ services:
       - media_data:/app/media/uploads
     depends_on:
       - postgres
+    environment:
+      - DATABASE_URL=postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
 
   nginx:
     image: nginx:latest
