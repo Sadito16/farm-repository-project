@@ -29,8 +29,6 @@ services:
       - media_data:/app/media/uploads
     depends_on:
       - postgres
-    environment:
-      - DATABASE_URL=postgres://postgres:1123QwER@postgres:5432/db_farm_2023
 
   nginx:
     image: nginx:latest
