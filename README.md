@@ -26,6 +26,10 @@ The Farm App is store site for farmers and customers. In the site you can add va
 
 ## Setup and Installation
 
+If you want to see the full potential of the app like how the products are visualize, the profile of the farmer and his cart and orders - first you should set up the project, you need to create a profile and add products and then with another profile you can buy the existing products.
+
+You need Docker, Bash CMD and existing database in PostgreSQL.
+
 To set up and run the Farm App locally, follow these steps:
 
 1. **Clone the Repository:**
